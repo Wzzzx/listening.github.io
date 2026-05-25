@@ -1,0 +1,1884 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>听写训练 Pro</title>
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --danger: #ef4444;
+        --bg-soft: #f9fafb;
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --text-sub: #6b7280;
+        --border: #e5e7eb;
+        --overlay-bg: rgba(0, 0, 0, 0.5);
+        --success: #059669;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--card-bg);
+        color: var(--text-main);
+        margin: 0 auto;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        min-height: 100vh;
+        max-width: 980px;
+      }
+
+      .upload-area {
+        border: 2px dashed var(--border);
+        border-radius: 8px;
+        padding: 3rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        background: var(--bg-soft);
+      }
+
+      .upload-area:hover {
+        border-color: var(--primary);
+        background: #eef2ff;
+      }
+
+      #fileInput {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .upload-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .mini-file-bar {
+        display: none;
+        background: #eff6ff;
+        border: 1px solid #dbeafe;
+        padding: 0.75rem;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--primary);
+      }
+
+      .btn-change-file,
+      .text-button {
+        background: white;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+
+      .btn-change-file:hover,
+      .text-button:hover {
+        background: #eef2ff;
+      }
+
+      .media-stage {
+        width: 100%;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+      }
+
+      video {
+        width: 100%;
+        max-height: 420px;
+        min-height: 220px;
+        display: block;
+        background-color: #000;
+      }
+
+      audio {
+        width: 100%;
+        outline: none;
+        background: #f1f3f4;
+      }
+
+      .mode-bar {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .mode-button {
+        flex: 1;
+        min-width: 160px;
+        border: 1px solid var(--border);
+        background: var(--bg-soft);
+        color: var(--text-main);
+        border-radius: 8px;
+        padding: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .mode-button.active {
+        border-color: var(--primary);
+        background: var(--primary);
+        color: white;
+      }
+
+      .panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .section-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 180px;
+        padding: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        line-height: 1.6;
+        resize: vertical;
+        font-family: Consolas, "Courier New", monospace;
+        background: #fafafa;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+
+      .answer-import.hidden {
+        display: none;
+      }
+
+      .dictation-textarea {
+        min-height: 280px;
+      }
+
+      .answer-import-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .lrc-toggle {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text-muted);
+        border-radius: 8px;
+        padding: 0.75rem 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        min-width: 4rem;
+      }
+
+      .lrc-toggle.active {
+        border-color: var(--primary);
+        background: rgba(79, 70, 229, 0.1);
+        color: var(--primary);
+      }
+
+      .primary-button {
+        border: none;
+        background: var(--primary);
+        color: white;
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .primary-button:hover {
+        background: var(--primary-hover);
+      }
+
+      .primary-button:disabled {
+        background: #d1d5db;
+        cursor: not-allowed;
+      }
+
+      .verify-dictation-block {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .verify-card-title {
+        padding: 0.75rem 1rem;
+        background: var(--bg-soft);
+        border-bottom: 1px solid var(--border);
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .verify-dictation-header {
+        background: var(--bg-soft);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .verify-dictation-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .verify-answer-main {
+        min-height: 86px;
+        padding: 0.75rem 1rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0 0.15em;
+        font-size: 1.1rem;
+        line-height: 1.65;
+        text-align: center;
+        word-break: break-word;
+        background: #fff;
+        border-top: 1px solid var(--border);
+      }
+
+      .verify-answer-main.empty {
+        color: var(--text-sub);
+        font-size: 1rem;
+        font-style: italic;
+      }
+
+      .verify-answer-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        color: var(--text-sub);
+        font-size: 0.85rem;
+      }
+
+      .verify-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .verify-nav button {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text-main);
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .verify-nav button:hover:not(:disabled) {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .verify-nav button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .verify-dictation-text {
+        width: 100%;
+        height: min(48vh, 460px);
+        min-height: 240px;
+        overflow: auto;
+        padding: 1rem;
+        background: #fff;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+        user-select: text;
+        cursor: text;
+      }
+
+      .verify-dictation-text:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 2px rgba(79, 70, 229, 0.12);
+      }
+
+      .issue-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+        border-top: 1px solid var(--border);
+        background: var(--bg-soft);
+        color: var(--text-sub);
+        font-size: 0.85rem;
+      }
+
+      .issue-summary {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .issue-filter-list {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .issue-filter {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text-sub);
+        border-radius: 999px;
+        padding: 0.1rem 0.45rem;
+        font-size: 0.75rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .issue-filter.active {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: #eef2ff;
+      }
+
+      .issue-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .issue-json-output {
+        min-height: 150px;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      .json-panel {
+        display: none;
+        padding: 0 1rem 1rem;
+        border-top: 1px solid var(--border);
+        background: #fff;
+      }
+
+      .json-panel.active {
+        display: block;
+      }
+
+      .issue-popover {
+        position: fixed;
+        display: none;
+        width: min(280px, calc(100vw - 24px));
+        padding: 0.85rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+        z-index: 1200;
+      }
+
+      .issue-popover-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 0.65rem;
+      }
+
+      .issue-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .issue-options label {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.85rem;
+      }
+
+      .issue-popover-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
+
+      .issue-highlight {
+        background: #fef3c7;
+        border-bottom: 2px solid #f59e0b;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .issue-highlight:hover {
+        background: #fde68a;
+      }
+
+      .danger-button {
+        background: #fff;
+        border: 1px solid var(--danger);
+        color: var(--danger);
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+
+      .danger-button:hover {
+        background: #fef2f2;
+      }
+
+      .answer-word {
+        display: inline-block;
+        border-radius: 4px;
+        cursor: pointer;
+        transition:
+          color 0.15s ease,
+          background-color 0.15s ease,
+          filter 0.15s ease;
+      }
+
+      .answer-word.masked {
+        color: transparent;
+        background: #d1d5db;
+        filter: blur(5px);
+        text-shadow: none;
+        user-select: none;
+      }
+
+      .answer-word.masked:hover {
+        background: #c7d2fe;
+      }
+
+      .answer-word.revealed {
+        color: var(--text-main);
+        background: transparent;
+        filter: none;
+        cursor: default;
+      }
+
+      .control-area {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .status-bar {
+        font-size: 0.875rem;
+        color: var(--text-sub);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .status-right {
+        display: flex;
+        gap: 1rem;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .markers-container {
+        display: none;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .marker-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.55rem;
+        background: #eef2ff;
+        color: var(--primary);
+        border-radius: 999px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .marker-pill:hover {
+        background: #e0e7ff;
+      }
+
+      .marker-delete {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-sub);
+      }
+
+      .marker-delete:hover {
+        background: rgba(79, 70, 229, 0.12);
+        color: var(--danger);
+      }
+
+      .fab-settings {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        min-width: 86px;
+        height: 44px;
+        padding: 0 14px;
+        background-color: white;
+        border-radius: 999px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        z-index: 100;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-main);
+        border: 1px solid var(--border);
+      }
+
+      .fab-settings::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px #eef2ff;
+      }
+
+      .fab-settings:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        background-color: var(--bg-soft);
+      }
+
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--overlay-bg);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+      }
+
+      .modal-panel {
+        background: white;
+        width: min(90vw, 460px);
+        border-radius: 12px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .btn-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-sub);
+        padding: 0;
+        line-height: 1;
+      }
+
+      .settings-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .settings-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .settings-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+      }
+
+      .number-input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .number-input-group label {
+        font-size: 0.9rem;
+      }
+
+      input[type="number"] {
+        width: 70px;
+        padding: 0.45rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      .shortcut-list {
+        background: var(--bg-soft);
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      .shortcut-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .shortcut-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .key-badge {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 1px 6px;
+        font-family: Consolas, "Courier New", monospace;
+        font-weight: 700;
+        color: var(--text-main);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 1rem;
+        }
+
+        .status-bar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .fab-settings {
+          right: 16px;
+          bottom: 16px;
+          min-width: 76px;
+          height: 40px;
+          padding: 0 12px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="upload-area" id="uploadArea">
+      <input type="file" id="fileInput" accept="audio/*,video/mp4,video/webm,video/quicktime" />
+      <div class="upload-icon">文件</div>
+      <div>点击或拖拽音频/视频文件到此处</div>
+    </div>
+
+    <div class="mini-file-bar" id="miniFileBar">
+      <span id="fileNameDisplay">Filename.mp3</span>
+      <button class="btn-change-file" type="button" id="btnChangeFile">更换文件</button>
+    </div>
+
+    <div class="media-stage" id="mediaStage">
+      <audio id="audioPlayer" controls style="display: none"></audio>
+      <video id="videoPlayer" controls style="display: none" playsinline></video>
+    </div>
+
+    <div class="mode-bar">
+      <button class="mode-button active" type="button" id="btnDictationMode">
+        听写模式
+      </button>
+      <button class="mode-button" type="button" id="btnVerifyMode">验证模式</button>
+    </div>
+
+    <main>
+      <section class="panel" id="dictationPanel">
+        <div class="section-header">
+          <div class="section-title">我的听写</div>
+        </div>
+        <textarea
+          id="dictationText"
+          class="dictation-textarea"
+          placeholder="在这里写下你听到的内容。"
+        ></textarea>
+      </section>
+
+      <section class="panel" id="verifyPanel" style="display: none">
+        <div class="answer-import" id="answerImport">
+          <div class="section-header">
+            <div class="section-title">标准答案</div>
+            <div class="answer-import-actions">
+              <button class="lrc-toggle" type="button" id="btnToggleLrcMode" aria-pressed="false">
+                LRC
+              </button>
+              <button class="primary-button" type="button" id="btnHideAnswer">
+                隐藏答案并开始验证
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="answerText"
+            placeholder="在这里粘贴标准答案。建议每行一句，验证时用上下箭头切换答案句。"
+          ></textarea>
+        </div>
+        <div class="section-header">
+          <div class="section-title">逐句验证</div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap">
+            <button class="text-button" type="button" id="btnShowAnswerInput">
+              编辑答案
+            </button>
+          </div>
+        </div>
+        <div class="verify-dictation-block">
+          <div class="verify-dictation-header">
+            <div class="verify-dictation-heading">
+              <span>我的听写</span>
+              <div class="verify-answer-footer">
+                <span id="answerLineCounter">0 / 0</span>
+                <div class="verify-nav">
+                  <button type="button" id="btnPrevAnswerLine" title="上一句">↑</button>
+                  <button type="button" id="btnNextAnswerLine" title="下一句">↓</button>
+                </div>
+              </div>
+            </div>
+            <div class="verify-answer-main" id="verifyAnswerMain"></div>
+          </div>
+          <div
+            id="verifyDictationText"
+            class="verify-dictation-text"
+            tabindex="0"
+          ></div>
+          <div class="issue-toolbar">
+            <div class="issue-summary">
+              <span id="issueCountText">已标注 0 个问题</span>
+              <div class="issue-filter-list" aria-label="按错误原因筛选高亮">
+                <button
+                  class="issue-filter"
+                  type="button"
+                  data-reason-filter="S"
+                  title="S: spelling 拼写"
+                >
+                  S
+                </button>
+                <button
+                  class="issue-filter"
+                  type="button"
+                  data-reason-filter="L"
+                  title="L: listening 听错"
+                >
+                  L
+                </button>
+                <button
+                  class="issue-filter"
+                  type="button"
+                  data-reason-filter="V"
+                  title="V: vocabulary 词不熟"
+                >
+                  V
+                </button>
+                <button
+                  class="issue-filter"
+                  type="button"
+                  data-reason-filter="F"
+                  title="F: flow 语流"
+                >
+                  F
+                </button>
+                <button
+                  class="issue-filter"
+                  type="button"
+                  data-reason-filter="G"
+                  title="G: grammar ending 语法词尾"
+                >
+                  G
+                </button>
+              </div>
+            </div>
+            <div class="issue-actions">
+              <button class="text-button" type="button" id="btnClearIssues">
+                清空标注
+              </button>
+              <button class="text-button" type="button" id="btnToggleImportJson">
+                导入 JSON
+              </button>
+              <button class="primary-button" type="button" id="btnGenerateIssuesJson">
+                生成 JSON
+              </button>
+            </div>
+          </div>
+          <div class="json-panel" id="importJsonPanel">
+            <textarea
+              id="issuesJsonInput"
+              class="issue-json-output"
+              placeholder="粘贴之前生成的 JSON，然后点击“恢复 JSON”。"
+            ></textarea>
+            <div class="issue-actions">
+              <button class="text-button" type="button" id="btnCancelImportJson">
+                取消
+              </button>
+              <button class="primary-button" type="button" id="btnImportIssuesJson">
+                恢复 JSON
+              </button>
+            </div>
+          </div>
+          <div class="json-panel" id="exportJsonPanel">
+            <textarea
+              id="issuesJsonOutput"
+              class="issue-json-output"
+              readonly
+              placeholder="完成验证后点击“生成 JSON”，这里会输出本次听力问题记录。"
+            ></textarea>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="issue-popover" id="issuePopover">
+      <div class="issue-popover-title">标注听力问题</div>
+      <div class="issue-options">
+        <label>
+          <input type="checkbox" value="S" data-label="spelling" />
+          S 拼写
+        </label>
+        <label>
+          <input type="checkbox" value="L" data-label="listening" />
+          L 听错
+        </label>
+        <label>
+          <input type="checkbox" value="V" data-label="vocabulary" />
+          V 词不熟
+        </label>
+        <label>
+          <input type="checkbox" value="F" data-label="flow" />
+          F 语流
+        </label>
+        <label>
+          <input type="checkbox" value="G" data-label="grammar ending" />
+          G 词尾
+        </label>
+      </div>
+      <div class="issue-popover-actions">
+        <button class="danger-button" type="button" id="btnDeleteIssue">
+          移除
+        </button>
+        <button class="text-button" type="button" id="btnCancelIssue">取消</button>
+        <button class="primary-button" type="button" id="btnSaveIssue">记录</button>
+      </div>
+    </div>
+
+    <div class="control-area">
+      <div class="status-bar">
+        <span id="statusText">请先加载文件，或直接开始听写。</span>
+        <div class="status-right">
+          <span id="markerCount">标记 0</span>
+        </div>
+      </div>
+      <div class="markers-container" id="markersContainer"></div>
+    </div>
+
+    <button class="fab-settings" type="button" id="btnOpenPanel" title="打开控制面板">
+      设置
+    </button>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2 class="modal-title">控制面板</h2>
+          <button class="btn-close" type="button" id="btnClosePanel">×</button>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-title">操作偏好</div>
+          <div class="number-input-group">
+            <label for="seekStepInput">快进/快退秒数</label>
+            <input type="number" id="seekStepInput" value="4" min="1" max="60" />
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-title">快捷键速查</div>
+          <div class="shortcut-list">
+            <div class="shortcut-item">
+              <span>播放 / 暂停</span>
+              <div><span class="key-badge">Space</span></div>
+            </div>
+            <div class="shortcut-item">
+              <span>快退 / 快进</span>
+              <div>
+                <span class="key-badge">←</span> /
+                <span class="key-badge">→</span>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span>验证模式切换答案句</span>
+              <div>
+                <span class="key-badge">↑</span> /
+                <span class="key-badge">↓</span>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span>验证模式移除遮盖</span>
+              <div><span class="key-badge">S</span></div>
+            </div>
+            <div class="shortcut-item">
+              <span>打点标记</span>
+              <div><span class="key-badge">Enter</span></div>
+            </div>
+            <div class="shortcut-item">
+              <span>上 / 下一个标记</span>
+              <div>
+                <span class="key-badge">[</span> /
+                <span class="key-badge">]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let config = {
+        seekStep: 4,
+      };
+
+      let currentMediaElement = null;
+      let markers = [];
+      let lastMarkerTime = 0;
+      let currentAnswerLineIndex = 0;
+      let isLrcMode = false;
+      let listeningIssues = [];
+      let pendingIssueSelection = null;
+      let activeIssueFilter = null;
+
+      const issueReasonLabels = {
+        S: "spelling",
+        L: "listening",
+        V: "vocabulary",
+        F: "flow",
+        G: "grammar ending",
+      };
+
+      const fileInput = document.getElementById("fileInput");
+      const uploadArea = document.getElementById("uploadArea");
+      const miniFileBar = document.getElementById("miniFileBar");
+      const fileNameDisplay = document.getElementById("fileNameDisplay");
+      const btnChangeFile = document.getElementById("btnChangeFile");
+      const mediaStage = document.getElementById("mediaStage");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const videoPlayer = document.getElementById("videoPlayer");
+
+      const btnDictationMode = document.getElementById("btnDictationMode");
+      const btnVerifyMode = document.getElementById("btnVerifyMode");
+      const dictationPanel = document.getElementById("dictationPanel");
+      const verifyPanel = document.getElementById("verifyPanel");
+      const answerImport = document.getElementById("answerImport");
+      const answerText = document.getElementById("answerText");
+      const dictationText = document.getElementById("dictationText");
+      const btnToggleLrcMode = document.getElementById("btnToggleLrcMode");
+      const btnHideAnswer = document.getElementById("btnHideAnswer");
+      const btnShowAnswerInput = document.getElementById("btnShowAnswerInput");
+      const verifyAnswerMain = document.getElementById("verifyAnswerMain");
+      const answerLineCounter = document.getElementById("answerLineCounter");
+      const btnPrevAnswerLine = document.getElementById("btnPrevAnswerLine");
+      const btnNextAnswerLine = document.getElementById("btnNextAnswerLine");
+      const verifyDictationText = document.getElementById("verifyDictationText");
+      const issueCountText = document.getElementById("issueCountText");
+      const issueFilterButtons = Array.from(
+        document.querySelectorAll("[data-reason-filter]"),
+      );
+      const btnClearIssues = document.getElementById("btnClearIssues");
+      const btnToggleImportJson = document.getElementById("btnToggleImportJson");
+      const btnGenerateIssuesJson = document.getElementById(
+        "btnGenerateIssuesJson",
+      );
+      const importJsonPanel = document.getElementById("importJsonPanel");
+      const exportJsonPanel = document.getElementById("exportJsonPanel");
+      const issuesJsonInput = document.getElementById("issuesJsonInput");
+      const issuesJsonOutput = document.getElementById("issuesJsonOutput");
+      const btnCancelImportJson = document.getElementById("btnCancelImportJson");
+      const btnImportIssuesJson = document.getElementById("btnImportIssuesJson");
+      const issuePopover = document.getElementById("issuePopover");
+      const btnCancelIssue = document.getElementById("btnCancelIssue");
+      const btnSaveIssue = document.getElementById("btnSaveIssue");
+      const btnDeleteIssue = document.getElementById("btnDeleteIssue");
+
+      const statusText = document.getElementById("statusText");
+      const markerCount = document.getElementById("markerCount");
+      const markersContainer = document.getElementById("markersContainer");
+
+      const btnOpenPanel = document.getElementById("btnOpenPanel");
+      const modalOverlay = document.getElementById("modalOverlay");
+      const btnClosePanel = document.getElementById("btnClosePanel");
+      const seekStepInput = document.getElementById("seekStepInput");
+
+      loadConfig();
+      updateLrcToggle();
+
+      fileInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const url = URL.createObjectURL(file);
+        const extension = file.name.split(".").pop().toLowerCase();
+        const isVideo =
+          file.type.startsWith("video") ||
+          ["mp4", "webm", "mov", "mkv"].includes(extension);
+
+        resetPlayerState();
+
+        uploadArea.style.display = "none";
+        miniFileBar.style.display = "flex";
+        mediaStage.style.display = "flex";
+        fileNameDisplay.textContent = `${isVideo ? "视频" : "音频"} ${file.name}`;
+
+        if (isVideo) {
+          videoPlayer.style.display = "block";
+          audioPlayer.style.display = "none";
+          currentMediaElement = videoPlayer;
+          mediaStage.style.background = "#000";
+        } else {
+          audioPlayer.style.display = "block";
+          videoPlayer.style.display = "none";
+          currentMediaElement = audioPlayer;
+          mediaStage.style.background = "transparent";
+        }
+
+        currentMediaElement.src = url;
+        statusText.textContent = "文件已加载，可以开始听写。";
+      });
+
+      btnChangeFile.addEventListener("click", () => fileInput.click());
+
+      function resetPlayerState() {
+        if (currentMediaElement) {
+          currentMediaElement.pause();
+          currentMediaElement.src = "";
+        }
+        markers = [];
+        renderMarkers();
+      }
+
+      btnHideAnswer.addEventListener("click", () => {
+        answerImport.classList.add("hidden");
+        currentAnswerLineIndex = 0;
+        if (isLrcMode) syncMarkersFromLrc();
+        renderVerification();
+        seekToCurrentAnswerTime(getAnswerEntries()[currentAnswerLineIndex]);
+        statusText.textContent = "答案已隐藏，可以逐句验证。";
+      });
+
+      btnShowAnswerInput.addEventListener("click", () => {
+        answerImport.classList.remove("hidden");
+        answerText.focus();
+        statusText.textContent = "可以编辑标准答案。";
+      });
+
+      btnToggleLrcMode.addEventListener("click", () => {
+        isLrcMode = !isLrcMode;
+        updateLrcToggle();
+        currentAnswerLineIndex = 0;
+        if (isLrcMode) syncMarkersFromLrc();
+        renderVerification();
+      });
+      answerText.addEventListener("input", () => {
+        if (isLrcMode) syncMarkersFromLrc();
+        currentAnswerLineIndex = 0;
+        if (verifyPanel.style.display !== "none") renderVerification();
+      });
+
+      btnDictationMode.addEventListener("click", () => setMode("dictation"));
+      btnVerifyMode.addEventListener("click", () => setMode("verify"));
+      btnPrevAnswerLine.addEventListener("click", () => navigateAnswerLine(-1));
+      btnNextAnswerLine.addEventListener("click", () => navigateAnswerLine(1));
+      verifyDictationText.addEventListener("mouseup", (event) => {
+        if (event.target.closest(".issue-highlight")) return;
+        setTimeout(handleDictationSelection, 0);
+      });
+      verifyDictationText.addEventListener("keyup", () => {
+        setTimeout(handleDictationSelection, 0);
+      });
+      btnCancelIssue.addEventListener("click", hideIssuePopover);
+      btnSaveIssue.addEventListener("click", savePendingIssue);
+      btnDeleteIssue.addEventListener("click", deletePendingIssue);
+      btnClearIssues.addEventListener("click", clearListeningIssues);
+      issueFilterButtons.forEach((button) => {
+        button.addEventListener("click", () => toggleIssueFilter(button.dataset.reasonFilter));
+      });
+      btnToggleImportJson.addEventListener("click", showImportJsonPanel);
+      btnCancelImportJson.addEventListener("click", hideImportJsonPanel);
+      btnImportIssuesJson.addEventListener("click", importIssuesJson);
+      btnGenerateIssuesJson.addEventListener("click", generateIssuesJson);
+      verifyDictationText.addEventListener("click", (event) => {
+        const highlight = event.target.closest(".issue-highlight");
+        if (!highlight) return;
+        event.preventDefault();
+        window.getSelection()?.removeAllRanges();
+        openIssueForEdit(highlight.dataset.issueId, highlight.getBoundingClientRect());
+      });
+      document.addEventListener("mousedown", (event) => {
+        if (
+          issuePopover.style.display !== "block" ||
+          issuePopover.contains(event.target) ||
+          verifyDictationText.contains(event.target)
+        ) {
+          return;
+        }
+        hideIssuePopover();
+      });
+
+      function setMode(mode) {
+        const isVerify = mode === "verify";
+        dictationPanel.style.display = isVerify ? "none" : "flex";
+        verifyPanel.style.display = isVerify ? "flex" : "none";
+        btnDictationMode.classList.toggle("active", !isVerify);
+        btnVerifyMode.classList.toggle("active", isVerify);
+
+        if (isVerify) {
+          renderVerification();
+          statusText.textContent = "验证模式：粘贴答案后隐藏，点击遮盖词查看答案。";
+        } else {
+          statusText.textContent = "听写模式。";
+          dictationText.focus();
+        }
+      }
+
+      function getLines(value) {
+        return value
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter(Boolean);
+      }
+
+      function parseLrcTimestamp(timestamp) {
+        const match = timestamp.match(/^(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?$/);
+        if (!match) return null;
+
+        const minutes = Number(match[1]);
+        const seconds = Number(match[2]);
+        const fraction = match[3] ? Number(`0.${match[3]}`) : 0;
+        return minutes * 60 + seconds + fraction;
+      }
+
+      function parseLrcEntries(value) {
+        return value
+          .split(/\r?\n/)
+          .flatMap((rawLine) => {
+            const line = rawLine.trim();
+            if (!line) return [];
+
+            const timestampMatches = [...line.matchAll(/\[(\d{1,2}:\d{2}(?:\.\d{1,3})?)\]/g)];
+            if (timestampMatches.length === 0) return [];
+
+            const text = line.replace(/\[(\d{1,2}:\d{2}(?:\.\d{1,3})?)\]/g, "").trim();
+            if (!text) return [];
+
+            return timestampMatches
+              .map((match) => ({ text, time: parseLrcTimestamp(match[1]) }))
+              .filter((entry) => Number.isFinite(entry.time));
+          })
+          .sort((a, b) => {
+            if (!Number.isFinite(a.time) && !Number.isFinite(b.time)) return 0;
+            if (!Number.isFinite(a.time)) return 1;
+            if (!Number.isFinite(b.time)) return -1;
+            return a.time - b.time;
+          });
+      }
+
+      function getAnswerEntries() {
+        if (isLrcMode) return parseLrcEntries(answerText.value);
+        return getLines(answerText.value).map((line) => ({ text: line, time: null }));
+      }
+
+      function updateLrcToggle() {
+        btnToggleLrcMode.classList.toggle("active", isLrcMode);
+        btnToggleLrcMode.setAttribute("aria-pressed", String(isLrcMode));
+        answerText.placeholder = isLrcMode
+          ? "在这里粘贴 LRC 标准答案，例如：[00:02.18]Thirteen equals one"
+          : "在这里粘贴标准答案。建议每行一句，验证时用上下箭头切换答案句。";
+      }
+
+      function syncMarkersFromLrc() {
+        const lrcMarkers = parseLrcEntries(answerText.value)
+          .filter((entry) => Number.isFinite(entry.time))
+          .map((entry) => ({ time: entry.time }));
+        markers = lrcMarkers;
+        renderMarkers();
+      }
+
+      function renderVerification() {
+        const answerEntries = getAnswerEntries();
+        const total = answerEntries.length;
+
+        verifyAnswerMain.replaceChildren();
+        renderDictationWithHighlights();
+
+        if (total === 0) {
+          verifyAnswerMain.classList.add("empty");
+          verifyAnswerMain.textContent = "暂无标准答案";
+          answerLineCounter.textContent = "0 / 0";
+          btnPrevAnswerLine.disabled = true;
+          btnNextAnswerLine.disabled = true;
+          return;
+        }
+
+        currentAnswerLineIndex = Math.min(
+          Math.max(currentAnswerLineIndex, 0),
+          total - 1,
+        );
+        verifyAnswerMain.classList.remove("empty");
+        renderMaskedAnswerLine(answerEntries[currentAnswerLineIndex].text);
+        answerLineCounter.textContent = `${currentAnswerLineIndex + 1} / ${total}`;
+        btnPrevAnswerLine.disabled = currentAnswerLineIndex === 0;
+        btnNextAnswerLine.disabled = currentAnswerLineIndex === total - 1;
+      }
+
+      function renderMaskedAnswerLine(line) {
+        line.split(/(\s+)/).forEach((token) => {
+          if (!token) return;
+          if (/^\s+$/.test(token)) {
+            verifyAnswerMain.appendChild(document.createTextNode(token));
+            return;
+          }
+
+          const word = document.createElement("span");
+          word.className = "answer-word masked";
+          word.textContent = token;
+          word.addEventListener("click", () => {
+            word.classList.remove("masked");
+            word.classList.add("revealed");
+          });
+          verifyAnswerMain.appendChild(word);
+        });
+      }
+
+      function revealCurrentAnswerLine() {
+        verifyAnswerMain.querySelectorAll(".answer-word.masked").forEach((word) => {
+          word.classList.remove("masked");
+          word.classList.add("revealed");
+        });
+      }
+
+      function navigateAnswerLine(direction) {
+        const answerEntries = getAnswerEntries();
+        if (answerEntries.length === 0) {
+          renderVerification();
+          return;
+        }
+
+        currentAnswerLineIndex = Math.min(
+          answerEntries.length - 1,
+          Math.max(0, currentAnswerLineIndex + direction),
+        );
+        seekToCurrentAnswerTime(answerEntries[currentAnswerLineIndex]);
+        renderVerification();
+      }
+
+      function seekToCurrentAnswerTime(answerEntry) {
+        if (
+          !isLrcMode ||
+          !answerEntry ||
+          !Number.isFinite(answerEntry.time) ||
+          !currentMediaElement ||
+          !currentMediaElement.src
+        ) {
+          return;
+        }
+        currentMediaElement.currentTime = answerEntry.time;
+      }
+
+      function renderDictationWithHighlights() {
+        const text = dictationText.value || "暂无听写内容";
+        verifyDictationText.replaceChildren();
+
+        const sortedIssues = [...listeningIssues]
+          .filter((issue) => Number.isFinite(issue.startOffset))
+          .filter((issue) => issue.endOffset > issue.startOffset)
+          .filter((issue) => issueMatchesActiveFilter(issue))
+          .sort((a, b) => a.startOffset - b.startOffset);
+
+        let cursor = 0;
+        sortedIssues.forEach((issue) => {
+          const start = Math.max(cursor, Math.min(issue.startOffset, text.length));
+          const end = Math.max(start, Math.min(issue.endOffset, text.length));
+          if (start > cursor) {
+            verifyDictationText.appendChild(
+              document.createTextNode(text.slice(cursor, start)),
+            );
+          }
+          if (end > start) {
+            const highlight = document.createElement("span");
+            highlight.className = "issue-highlight";
+            highlight.dataset.issueId = issue.id;
+            highlight.title = issue.reasons
+              .map((reason) => `${reason.code}: ${reason.label}`)
+              .join(", ");
+            highlight.textContent = text.slice(start, end);
+            verifyDictationText.appendChild(highlight);
+          }
+          cursor = end;
+        });
+
+        if (cursor < text.length) {
+          verifyDictationText.appendChild(document.createTextNode(text.slice(cursor)));
+        }
+      }
+
+      function issueMatchesActiveFilter(issue) {
+        if (!activeIssueFilter) return true;
+        return issue.reasons?.some((reason) => reason.code === activeIssueFilter);
+      }
+
+      function toggleIssueFilter(reasonCode) {
+        activeIssueFilter = activeIssueFilter === reasonCode ? null : reasonCode;
+        issueFilterButtons.forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.reasonFilter === activeIssueFilter,
+          );
+        });
+        renderDictationWithHighlights();
+      }
+
+      function handleDictationSelection() {
+        if (verifyPanel.style.display === "none") return;
+
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed) {
+          hideIssuePopover();
+          return;
+        }
+
+        if (!selectionBelongsToDictation(selection)) {
+          hideIssuePopover();
+          return;
+        }
+
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        const trimmedSelection = getTrimmedSelection(selection);
+        if (
+          !trimmedSelection ||
+          trimmedSelection.startOffset === trimmedSelection.endOffset
+        ) {
+          hideIssuePopover();
+          return;
+        }
+
+        pendingIssueSelection = {
+          mode: "create",
+          selectedText: trimmedSelection.selectedText,
+          startOffset: trimmedSelection.startOffset,
+          endOffset: trimmedSelection.endOffset,
+          dictationLineNumber: getLineNumberFromOffset(trimmedSelection.startOffset),
+        };
+
+        resetIssueOptions();
+        btnDeleteIssue.style.display = "none";
+        btnSaveIssue.textContent = "记录";
+        showIssuePopover(rect);
+      }
+
+      function selectionBelongsToDictation(selection) {
+        return (
+          verifyDictationText.contains(selection.anchorNode) &&
+          verifyDictationText.contains(selection.focusNode)
+        );
+      }
+
+      function getSelectionOffsets(selection) {
+        const range = selection.getRangeAt(0).cloneRange();
+        range.selectNodeContents(verifyDictationText);
+        range.setEnd(selection.getRangeAt(0).startContainer, selection.getRangeAt(0).startOffset);
+        const startOffset = range.toString().length;
+        return {
+          startOffset,
+          endOffset: startOffset + selection.toString().length,
+        };
+      }
+
+      function getTrimmedSelection(selection) {
+        const selectedText = selection.toString();
+        const trimmedText = selectedText.trim();
+        if (!trimmedText) return null;
+
+        const offsets = getSelectionOffsets(selection);
+        if (!offsets) return null;
+
+        const leadingWhitespaceLength = selectedText.length - selectedText.trimStart().length;
+        const trailingWhitespaceLength = selectedText.length - selectedText.trimEnd().length;
+
+        return {
+          selectedText: trimmedText,
+          startOffset: offsets.startOffset + leadingWhitespaceLength,
+          endOffset: offsets.endOffset - trailingWhitespaceLength,
+        };
+      }
+
+      function getLineNumberFromOffset(offset) {
+        return dictationText.value.slice(0, offset).split(/\r?\n/).length;
+      }
+
+      function showIssuePopover(rect) {
+        const margin = 12;
+        const width = Math.min(280, window.innerWidth - margin * 2);
+        issuePopover.style.width = `${width}px`;
+        issuePopover.style.visibility = "hidden";
+        issuePopover.style.display = "block";
+
+        const left = Math.min(
+          Math.max(rect.left, margin),
+          window.innerWidth - width - margin,
+        );
+        const top = Math.min(
+          rect.bottom + 8,
+          window.innerHeight - issuePopover.offsetHeight - margin,
+        );
+
+        issuePopover.style.left = `${left}px`;
+        issuePopover.style.top = `${Math.max(top, margin)}px`;
+        issuePopover.style.visibility = "visible";
+      }
+
+      function hideIssuePopover() {
+        issuePopover.style.display = "none";
+        issuePopover.style.visibility = "visible";
+        pendingIssueSelection = null;
+      }
+
+      function resetIssueOptions() {
+        issuePopover.querySelectorAll("input[type='checkbox']").forEach((input) => {
+          input.checked = false;
+        });
+      }
+
+      function setIssueOptions(reasonCodes) {
+        issuePopover.querySelectorAll("input[type='checkbox']").forEach((input) => {
+          input.checked = reasonCodes.includes(input.value);
+        });
+      }
+
+      function openIssueForEdit(issueId, rect) {
+        const issue = listeningIssues.find((item) => item.id === issueId);
+        if (!issue) return;
+
+        pendingIssueSelection = {
+          mode: "edit",
+          issueId,
+        };
+        setIssueOptions(issue.reasons.map((reason) => reason.code));
+        btnDeleteIssue.style.display = "inline-block";
+        btnSaveIssue.textContent = "更新";
+        showIssuePopover(rect);
+      }
+
+      function savePendingIssue() {
+        if (!pendingIssueSelection) return;
+
+        const reasonCodes = Array.from(
+          issuePopover.querySelectorAll("input[type='checkbox']:checked"),
+        ).map((input) => input.value);
+
+        if (reasonCodes.length === 0) {
+          statusText.textContent = "请至少选择一个问题原因。";
+          return;
+        }
+
+        const reasons = reasonCodes.map((code) => ({
+            code,
+            label: issueReasonLabels[code],
+          }));
+
+        if (pendingIssueSelection.mode === "edit") {
+          const issue = listeningIssues.find(
+            (item) => item.id === pendingIssueSelection.issueId,
+          );
+          if (issue) {
+            issue.reasons = reasons;
+            issue.updatedAt = new Date().toISOString();
+          }
+        } else {
+          listeningIssues.push({
+            id: `issue-${Date.now()}-${listeningIssues.length + 1}`,
+            selectedText: pendingIssueSelection.selectedText,
+            lineNumber: pendingIssueSelection.dictationLineNumber,
+            startOffset: pendingIssueSelection.startOffset,
+            endOffset: pendingIssueSelection.endOffset,
+            reasons,
+          createdAt: new Date().toISOString(),
+          });
+        }
+
+        renderDictationWithHighlights();
+        updateIssueCount();
+        hideIssuePopover();
+        window.getSelection()?.removeAllRanges();
+        statusText.textContent = "已保存听力问题标注。";
+      }
+
+      function deletePendingIssue() {
+        if (!pendingIssueSelection || pendingIssueSelection.mode !== "edit") return;
+        listeningIssues = listeningIssues.filter(
+          (issue) => issue.id !== pendingIssueSelection.issueId,
+        );
+        renderDictationWithHighlights();
+        updateIssueCount();
+        hideIssuePopover();
+        statusText.textContent = "已移除问题标注。";
+      }
+
+      function clearListeningIssues() {
+        listeningIssues = [];
+        issuesJsonOutput.value = "";
+        exportJsonPanel.classList.remove("active");
+        updateIssueCount();
+        statusText.textContent = "已清空本次问题标注。";
+      }
+
+      function updateIssueCount() {
+        issueCountText.textContent = `已标注 ${listeningIssues.length} 个问题`;
+      }
+
+      function showImportJsonPanel() {
+        exportJsonPanel.classList.remove("active");
+        importJsonPanel.classList.add("active");
+        issuesJsonInput.focus();
+      }
+
+      function hideImportJsonPanel() {
+        importJsonPanel.classList.remove("active");
+        issuesJsonInput.value = "";
+      }
+
+      function importIssuesJson() {
+        let payload;
+        try {
+          payload = JSON.parse(issuesJsonInput.value);
+        } catch (error) {
+          statusText.textContent = "JSON 格式不正确，无法恢复。";
+          return;
+        }
+
+        if (!payload || typeof payload !== "object") {
+          statusText.textContent = "JSON 内容无效。";
+          return;
+        }
+
+        answerText.value = payload.answer?.fullText || "";
+        isLrcMode = Boolean(payload.answer?.isLrc);
+        updateLrcToggle();
+        dictationText.value = payload.dictation?.fullText || "";
+        listeningIssues = Array.isArray(payload.issues)
+          ? payload.issues.filter(isValidImportedIssue)
+          : [];
+        currentAnswerLineIndex = 0;
+        answerImport.classList.add("hidden");
+        if (isLrcMode) syncMarkersFromLrc();
+        hideImportJsonPanel();
+        renderVerification();
+        updateIssueCount();
+        statusText.textContent = `已恢复 ${listeningIssues.length} 个问题标注。`;
+      }
+
+      function isValidImportedIssue(issue) {
+        return (
+          issue &&
+          typeof issue.id === "string" &&
+          typeof issue.selectedText === "string" &&
+          Number.isFinite(issue.lineNumber) &&
+          Number.isFinite(issue.startOffset) &&
+          Number.isFinite(issue.endOffset) &&
+          Array.isArray(issue.reasons)
+        );
+      }
+
+      function generateIssuesJson() {
+        const answerLines = getAnswerEntries();
+        const dictationLines = getLines(dictationText.value);
+        const payload = {
+          schemaVersion: 1,
+          generatedAt: new Date().toISOString(),
+          answer: {
+            lineCount: answerLines.length,
+            fullText: answerText.value,
+            isLrc: isLrcMode,
+          },
+          dictation: {
+            lineCount: dictationLines.length,
+            fullText: dictationText.value,
+          },
+          issues: listeningIssues,
+        };
+
+        issuesJsonOutput.value = JSON.stringify(payload, null, 2);
+        importJsonPanel.classList.remove("active");
+        exportJsonPanel.classList.add("active");
+        issuesJsonOutput.focus();
+        issuesJsonOutput.select();
+        statusText.textContent = "JSON 已生成。";
+      }
+
+      function addMarker() {
+        if (!currentMediaElement || !currentMediaElement.src) return;
+        const now = Date.now();
+        if (now - lastMarkerTime < 1000) return;
+        lastMarkerTime = now;
+
+        markers.push({ time: currentMediaElement.currentTime });
+        markers.sort((a, b) => a.time - b.time);
+        renderMarkers();
+      }
+
+      function renderMarkers() {
+        markersContainer.replaceChildren();
+        markerCount.textContent = `标记 ${markers.length}`;
+
+        if (markers.length === 0) {
+          markersContainer.style.display = "none";
+          return;
+        }
+
+        markersContainer.style.display = "flex";
+        markers.forEach((marker, index) => {
+          const minutes = String(Math.floor(marker.time / 60)).padStart(2, "0");
+          const seconds = String(Math.floor(marker.time % 60)).padStart(2, "0");
+          const pill = document.createElement("span");
+          pill.className = "marker-pill";
+          pill.textContent = `${minutes}:${seconds}`;
+
+          const deleteButton = document.createElement("span");
+          deleteButton.className = "marker-delete";
+          deleteButton.textContent = "×";
+          pill.appendChild(deleteButton);
+
+          pill.addEventListener("click", (event) => {
+            if (event.target.classList.contains("marker-delete")) {
+              markers.splice(index, 1);
+              renderMarkers();
+              return;
+            }
+            currentMediaElement.currentTime = Math.max(0, marker.time - 2);
+            currentMediaElement.play();
+          });
+
+          markersContainer.appendChild(pill);
+        });
+      }
+
+      function navigateMarker(direction) {
+        if (!currentMediaElement || markers.length === 0) return;
+        const sorted = [...markers].sort((a, b) => a.time - b.time);
+        const now = currentMediaElement.currentTime;
+        let target = null;
+
+        if (direction < 0) {
+          for (let index = sorted.length - 1; index >= 0; index -= 1) {
+            if (sorted[index].time < now - 0.5) {
+              target = sorted[index].time;
+              break;
+            }
+          }
+          if (target === null) target = 0;
+        } else {
+          for (let index = 0; index < sorted.length; index += 1) {
+            if (sorted[index].time > now + 0.5) {
+              target = sorted[index].time;
+              break;
+            }
+          }
+          if (target === null) return;
+        }
+
+        currentMediaElement.currentTime = target;
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.code === "KeyS" && (event.ctrlKey || event.metaKey)) {
+          event.preventDefault();
+          return;
+        }
+
+        const isEditableField =
+          (event.target.tagName === "INPUT" ||
+            event.target.tagName === "TEXTAREA") &&
+          !event.target.readOnly;
+
+        if (event.code === "Escape" && event.target === dictationText) {
+          event.preventDefault();
+          dictationText.blur();
+          return;
+        }
+
+        if (event.code === "Enter") {
+          if (isEditableField) return;
+          event.preventDefault();
+          addMarker();
+          return;
+        }
+
+        if (isEditableField) return;
+
+        if (event.code === "KeyI" && dictationPanel.style.display !== "none") {
+          event.preventDefault();
+          dictationText.focus();
+          return;
+        }
+
+        if (event.code === "KeyS" && verifyPanel.style.display !== "none") {
+          event.preventDefault();
+          revealCurrentAnswerLine();
+          return;
+        }
+
+        if (
+          verifyPanel.style.display !== "none" &&
+          (event.code === "ArrowUp" || event.code === "ArrowDown")
+        ) {
+          event.preventDefault();
+          navigateAnswerLine(event.code === "ArrowUp" ? -1 : 1);
+          return;
+        }
+
+        if (!currentMediaElement || !currentMediaElement.src) return;
+
+        if (event.code === "Space") {
+          event.preventDefault();
+          if (currentMediaElement.paused) currentMediaElement.play();
+          else currentMediaElement.pause();
+        }
+
+        if (event.code === "ArrowLeft") {
+          event.preventDefault();
+          currentMediaElement.currentTime = Math.max(
+            0,
+            currentMediaElement.currentTime - config.seekStep,
+          );
+        }
+
+        if (event.code === "ArrowRight") {
+          event.preventDefault();
+          currentMediaElement.currentTime = Math.min(
+            currentMediaElement.duration || currentMediaElement.currentTime,
+            currentMediaElement.currentTime + config.seekStep,
+          );
+        }
+
+        if (event.key === "[") {
+          event.preventDefault();
+          navigateMarker(-1);
+        }
+
+        if (event.key === "]") {
+          event.preventDefault();
+          navigateMarker(1);
+        }
+      });
+
+      btnOpenPanel.addEventListener("click", openPanel);
+      btnClosePanel.addEventListener("click", closePanel);
+      modalOverlay.addEventListener("click", (event) => {
+        if (event.target === modalOverlay) closePanel();
+      });
+
+      function openPanel() {
+        modalOverlay.style.display = "flex";
+      }
+
+      function closePanel() {
+        modalOverlay.style.display = "none";
+        saveConfig();
+      }
+
+      seekStepInput.addEventListener("change", (event) => {
+        const value = Number.parseFloat(event.target.value);
+        if (value > 0) config.seekStep = value;
+        seekStepInput.value = config.seekStep;
+        saveConfig();
+      });
+
+      function saveConfig() {
+        localStorage.setItem("dictationPlayerConfig", JSON.stringify(config));
+      }
+
+      function loadConfig() {
+        const saved = localStorage.getItem("dictationPlayerConfig");
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            config = { ...config, ...parsed };
+          } catch (error) {
+            console.warn("Failed to parse saved config", error);
+          }
+        }
+        seekStepInput.value = config.seekStep;
+      }
+    </script>
+  </body>
+</html>
