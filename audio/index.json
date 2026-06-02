@@ -1,0 +1,391 @@
+{
+  "generatedAt": "2026-06-02T15:36:20.581Z",
+  "baseDir": "audio",
+  "count": 24,
+  "files": [
+    {
+      "id": "audio/Asking for Time Off/dialog/Asking for Time Off.mp3",
+      "title": "Asking for Time Off",
+      "name": "Asking for Time Off.mp3",
+      "path": "audio/Asking for Time Off/dialog/Asking for Time Off.mp3",
+      "url": "audio/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.mp3",
+      "extension": "mp3",
+      "size": 570662,
+      "modifiedAt": "2026-05-01T03:38:12.511Z",
+      "folders": [
+        "Asking for Time Off",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Asking for Time Off/dialog/Asking for Time Off.txt",
+      "transcriptUrl": "audio/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.txt"
+    },
+    {
+      "id": "audio/Asking for Time Off/podcast/Asking for Time Off.mp3",
+      "title": "Asking for Time Off",
+      "name": "Asking for Time Off.mp3",
+      "path": "audio/Asking for Time Off/podcast/Asking for Time Off.mp3",
+      "url": "audio/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.mp3",
+      "extension": "mp3",
+      "size": 4732908,
+      "modifiedAt": "2026-01-15T05:27:45.986Z",
+      "folders": [
+        "Asking for Time Off",
+        "podcast"
+      ],
+      "transcriptPath": "audio/Asking for Time Off/podcast/Asking for Time Off.txt",
+      "transcriptUrl": "audio/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.txt"
+    },
+    {
+      "id": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
+      "title": "I Can See Clearly Now",
+      "name": "I Can See Clearly Now.mp3",
+      "path": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
+      "url": "audio/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.mp3",
+      "extension": "mp3",
+      "size": 874268,
+      "modifiedAt": "2026-05-01T03:37:27.000Z",
+      "folders": [
+        "I Can See Clearly Now",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.txt",
+      "transcriptUrl": "audio/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.txt"
+    },
+    {
+      "id": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
+      "title": "I Can See Clearly Now",
+      "name": "I Can See Clearly Now.mp3",
+      "path": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
+      "url": "audio/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.mp3",
+      "extension": "mp3",
+      "size": 9956771,
+      "modifiedAt": "2026-01-15T05:27:18.927Z",
+      "folders": [
+        "I Can See Clearly Now",
+        "podcast"
+      ],
+      "transcriptPath": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.txt",
+      "transcriptUrl": "audio/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
+      "title": "I'm Sorry I Love You I",
+      "name": "I'm Sorry I Love You I.mp3",
+      "path": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.mp3",
+      "extension": "mp3",
+      "size": 1124792,
+      "modifiedAt": "2026-05-01T03:37:25.667Z",
+      "folders": [
+        "I'm Sorry I Love You I",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
+      "title": "I'm Sorry I Love You I",
+      "name": "I'm Sorry I Love You I.mp3",
+      "path": "audio/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20I/podcast/I'm%20Sorry%20I%20Love%20You%20I.mp3",
+      "extension": "mp3",
+      "size": 7009866,
+      "modifiedAt": "2026-01-15T05:27:24.977Z",
+      "folders": [
+        "I'm Sorry I Love You I",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
+      "title": "I'm Sorry I Love You II",
+      "name": "I'm Sorry I Love You II.mp3",
+      "path": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.mp3",
+      "extension": "mp3",
+      "size": 795879,
+      "modifiedAt": "2026-05-01T03:37:28.753Z",
+      "folders": [
+        "I'm Sorry I Love You II",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
+      "title": "I'm Sorry I Love You II",
+      "name": "I'm Sorry I Love You II.mp3",
+      "path": "audio/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20II/podcast/I'm%20Sorry%20I%20Love%20You%20II.mp3",
+      "extension": "mp3",
+      "size": 5538880,
+      "modifiedAt": "2026-01-15T05:27:37.491Z",
+      "folders": [
+        "I'm Sorry I Love You II",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
+      "title": "I'm Sorry I Love You IV",
+      "name": "I'm Sorry I Love You IV.mp3",
+      "path": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
+      "extension": "mp3",
+      "size": 1123183,
+      "modifiedAt": "2026-04-30T05:27:23.032Z",
+      "folders": [
+        "I'm Sorry I Love You IV",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
+      "title": "I'm Sorry I Love You IV",
+      "name": "I'm Sorry I Love You IV.mp3",
+      "path": "audio/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IV/podcast/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
+      "extension": "mp3",
+      "size": 7170007,
+      "modifiedAt": "2026-01-15T05:28:17.377Z",
+      "folders": [
+        "I'm Sorry I Love You IV",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
+      "title": "I'm Sorry I Love You IX",
+      "name": "I'm Sorry I Love You IX.mp3",
+      "path": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
+      "extension": "mp3",
+      "size": 1062955,
+      "modifiedAt": "2026-04-30T05:28:02.277Z",
+      "folders": [
+        "I'm Sorry I Love You IX",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
+      "title": "I'm Sorry I Love You IX",
+      "name": "I'm Sorry I Love You IX.mp3",
+      "path": "audio/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IX/podcast/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
+      "extension": "mp3",
+      "size": 6282638,
+      "modifiedAt": "2026-01-15T05:30:43.342Z",
+      "folders": [
+        "I'm Sorry I Love You IX",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
+      "title": "I'm Sorry I Love You V",
+      "name": "I'm Sorry I Love You V.mp3",
+      "path": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.mp3",
+      "extension": "mp3",
+      "size": 1083623,
+      "modifiedAt": "2026-04-30T05:27:20.935Z",
+      "folders": [
+        "I'm Sorry I Love You V",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
+      "title": "I'm Sorry I Love You V",
+      "name": "I'm Sorry I Love You V.mp3",
+      "path": "audio/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20V/podcast/I'm%20Sorry%20I%20Love%20You%20V.mp3",
+      "extension": "mp3",
+      "size": 6790856,
+      "modifiedAt": "2026-01-15T05:28:36.736Z",
+      "folders": [
+        "I'm Sorry I Love You V",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
+      "title": "I'm Sorry I Love You VI",
+      "name": "I'm Sorry I Love You VI.mp3",
+      "path": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
+      "extension": "mp3",
+      "size": 1118732,
+      "modifiedAt": "2026-04-30T05:33:23.139Z",
+      "folders": [
+        "I'm Sorry I Love You VI",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
+      "title": "I'm Sorry I Love You VI",
+      "name": "I'm Sorry I Love You VI.mp3",
+      "path": "audio/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VI/podcast/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
+      "extension": "mp3",
+      "size": 8252041,
+      "modifiedAt": "2026-01-15T05:29:12.614Z",
+      "folders": [
+        "I'm Sorry I Love You VI",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
+      "title": "I'm Sorry I Love You VII",
+      "name": "I'm Sorry I Love You VII.mp3",
+      "path": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
+      "extension": "mp3",
+      "size": 702277,
+      "modifiedAt": "2026-04-30T05:42:20.288Z",
+      "folders": [
+        "I'm Sorry I Love You VII",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
+      "title": "I'm Sorry I Love You VII",
+      "name": "I'm Sorry I Love You VII.mp3",
+      "path": "audio/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VII/podcast/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
+      "extension": "mp3",
+      "size": 6459038,
+      "modifiedAt": "2026-01-15T05:29:23.078Z",
+      "folders": [
+        "I'm Sorry I Love You VII",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
+      "title": "I'm Sorry I Love You VIII",
+      "name": "I'm Sorry I Love You VIII.mp3",
+      "path": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
+      "extension": "mp3",
+      "size": 1103079,
+      "modifiedAt": "2026-04-30T05:27:37.718Z",
+      "folders": [
+        "I'm Sorry I Love You VIII",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
+      "title": "I'm Sorry I Love You VIII",
+      "name": "I'm Sorry I Love You VIII.mp3",
+      "path": "audio/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/podcast/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
+      "extension": "mp3",
+      "size": 7012186,
+      "modifiedAt": "2026-01-15T05:29:50.172Z",
+      "folders": [
+        "I'm Sorry I Love You VIII",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
+      "title": "I'm Sorry I Love You X",
+      "name": "I'm Sorry I Love You X.mp3",
+      "path": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.mp3",
+      "extension": "mp3",
+      "size": 1395630,
+      "modifiedAt": "2026-04-30T05:28:17.374Z",
+      "folders": [
+        "I'm Sorry I Love You X",
+        "dialog"
+      ],
+      "transcriptPath": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.txt",
+      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.txt"
+    },
+    {
+      "id": "audio/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
+      "title": "I'm Sorry I Love You X",
+      "name": "I'm Sorry I Love You X.mp3",
+      "path": "audio/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
+      "url": "audio/I'm%20Sorry%20I%20Love%20You%20X/podcast/I'm%20Sorry%20I%20Love%20You%20X.mp3",
+      "extension": "mp3",
+      "size": 8832586,
+      "modifiedAt": "2026-01-15T05:31:21.199Z",
+      "folders": [
+        "I'm Sorry I Love You X",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Planning For The Worst/dialog/Planning For The Worst.mp3",
+      "title": "Planning For The Worst",
+      "name": "Planning For The Worst.mp3",
+      "path": "audio/Planning For The Worst/dialog/Planning For The Worst.mp3",
+      "url": "audio/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.mp3",
+      "extension": "mp3",
+      "size": 1008453,
+      "modifiedAt": "2026-05-01T03:37:27.453Z",
+      "folders": [
+        "Planning For The Worst",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Planning For The Worst/dialog/Planning For The Worst.txt",
+      "transcriptUrl": "audio/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.txt"
+    },
+    {
+      "id": "audio/Planning For The Worst/podcast/Planning For The Worst.mp3",
+      "title": "Planning For The Worst",
+      "name": "Planning For The Worst.mp3",
+      "path": "audio/Planning For The Worst/podcast/Planning For The Worst.mp3",
+      "url": "audio/Planning%20For%20The%20Worst/podcast/Planning%20For%20The%20Worst.mp3",
+      "extension": "mp3",
+      "size": 5555410,
+      "modifiedAt": "2026-01-15T05:27:43.016Z",
+      "folders": [
+        "Planning For The Worst",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    }
+  ]
+}
