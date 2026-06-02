@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-02T15:36:20.581Z",
+  "generatedAt": "2026-06-02T15:44:43.786Z",
   "baseDir": "audio",
-  "count": 24,
+  "count": 46,
   "files": [
     {
       "id": "audio/Asking for Time Off/dialog/Asking for Time Off.mp3",
@@ -350,6 +350,358 @@
       "modifiedAt": "2026-01-15T05:31:21.199Z",
       "folders": [
         "I'm Sorry I Love You X",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
+      "title": "Interview Skills 1 - The Introduction",
+      "name": "Interview Skills 1 - The Introduction.mp3",
+      "path": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
+      "url": "audio/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.mp3",
+      "extension": "mp3",
+      "size": 534466,
+      "modifiedAt": "2026-04-30T05:29:40.217Z",
+      "folders": [
+        "Interview Skills 1 - The Introduction",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.txt",
+      "transcriptUrl": "audio/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.txt"
+    },
+    {
+      "id": "audio/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
+      "title": "Interview Skills 1 - The Introduction",
+      "name": "Interview Skills 1 - The Introduction.mp3",
+      "path": "audio/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
+      "url": "audio/Interview%20Skills%201%20-%20The%20Introduction/podcast/Interview%20Skills%201%20-%20The%20Introduction.mp3",
+      "extension": "mp3",
+      "size": 7778117,
+      "modifiedAt": "2026-01-15T05:35:40.024Z",
+      "folders": [
+        "Interview Skills 1 - The Introduction",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
+      "title": "Interview Skills 10 - Concluding The Interview",
+      "name": "Interview Skills 10 - Concluding The Interview.mp3",
+      "path": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
+      "url": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
+      "extension": "mp3",
+      "size": 486610,
+      "modifiedAt": "2026-04-30T05:48:44.420Z",
+      "folders": [
+        "Interview Skills 10 - Concluding The Interview",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.txt",
+      "transcriptUrl": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.txt"
+    },
+    {
+      "id": "audio/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
+      "title": "Interview Skills 10 - Concluding The Interview",
+      "name": "Interview Skills 10 - Concluding The Interview.mp3",
+      "path": "audio/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
+      "url": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/podcast/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
+      "extension": "mp3",
+      "size": 5789676,
+      "modifiedAt": "2026-01-15T05:36:44.428Z",
+      "folders": [
+        "Interview Skills 10 - Concluding The Interview",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
+      "title": "Interview Skills 2 - Discussing Your Background",
+      "name": "Interview Skills 2 - Discussing Your Background.mp3",
+      "path": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
+      "url": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
+      "extension": "mp3",
+      "size": 655027,
+      "modifiedAt": "2026-04-30T05:29:40.512Z",
+      "folders": [
+        "Interview Skills 2 - Discussing Your Background",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.txt",
+      "transcriptUrl": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.txt"
+    },
+    {
+      "id": "audio/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
+      "title": "Interview Skills 2 - Discussing Your Background",
+      "name": "Interview Skills 2 - Discussing Your Background.mp3",
+      "path": "audio/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
+      "url": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/podcast/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
+      "extension": "mp3",
+      "size": 6873862,
+      "modifiedAt": "2026-01-15T05:35:47.810Z",
+      "folders": [
+        "Interview Skills 2 - Discussing Your Background",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
+      "title": "Interview Skills 3 - Education Background",
+      "name": "Interview Skills 3 - Education Background.mp3",
+      "path": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
+      "url": "audio/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.mp3",
+      "extension": "mp3",
+      "size": 605728,
+      "modifiedAt": "2026-04-30T05:29:35.040Z",
+      "folders": [
+        "Interview Skills 3 - Education Background",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.txt",
+      "transcriptUrl": "audio/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.txt"
+    },
+    {
+      "id": "audio/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
+      "title": "Interview Skills 3 - Education Background",
+      "name": "Interview Skills 3 - Education Background.mp3",
+      "path": "audio/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
+      "url": "audio/Interview%20Skills%203%20-%20Education%20Background/podcast/Interview%20Skills%203%20-%20Education%20Background.mp3",
+      "extension": "mp3",
+      "size": 6651299,
+      "modifiedAt": "2026-01-15T05:35:34.679Z",
+      "folders": [
+        "Interview Skills 3 - Education Background",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
+      "title": "Interview Skills 4 - Talking About Work Experience",
+      "name": "Interview Skills 4 - Talking About Work Experience.mp3",
+      "path": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
+      "url": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
+      "extension": "mp3",
+      "size": 528197,
+      "modifiedAt": "2026-05-01T03:38:38.129Z",
+      "folders": [
+        "Interview Skills 4 - Talking About Work Experience",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.txt",
+      "transcriptUrl": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.txt"
+    },
+    {
+      "id": "audio/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
+      "title": "Interview Skills 4 - Talking About Work Experience",
+      "name": "Interview Skills 4 - Talking About Work Experience.mp3",
+      "path": "audio/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
+      "url": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/podcast/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
+      "extension": "mp3",
+      "size": 7012207,
+      "modifiedAt": "2026-01-15T05:35:58.507Z",
+      "folders": [
+        "Interview Skills 4 - Talking About Work Experience",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "title": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
+      "name": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "path": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "url": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
+      "extension": "mp3",
+      "size": 493715,
+      "modifiedAt": "2026-04-30T05:29:39.695Z",
+      "folders": [
+        "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.txt",
+      "transcriptUrl": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.txt"
+    },
+    {
+      "id": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "title": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
+      "name": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "path": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "url": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/podcast/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
+      "extension": "mp3",
+      "size": 7513967,
+      "modifiedAt": "2026-01-15T05:36:10.165Z",
+      "folders": [
+        "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "title": "Interview Skills 6 - Describing Ones Strengths",
+      "name": "Interview Skills 6 - Describing Ones Strengths.mp3",
+      "path": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "url": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
+      "extension": "mp3",
+      "size": 486401,
+      "modifiedAt": "2026-04-30T05:29:40.429Z",
+      "folders": [
+        "Interview Skills 6 - Describing Ones Strengths",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.txt",
+      "transcriptUrl": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.txt"
+    },
+    {
+      "id": "audio/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "title": "Interview Skills 6 - Describing Ones Strengths",
+      "name": "Interview Skills 6 - Describing Ones Strengths.mp3",
+      "path": "audio/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "url": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/podcast/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
+      "extension": "mp3",
+      "size": 5136824,
+      "modifiedAt": "2026-01-15T05:35:58.978Z",
+      "folders": [
+        "Interview Skills 6 - Describing Ones Strengths",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "title": "Interview Skills 7 - Describing Ones Weaknesses",
+      "name": "Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "path": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "url": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
+      "extension": "mp3",
+      "size": 567694,
+      "modifiedAt": "2026-04-30T05:29:40.516Z",
+      "folders": [
+        "Interview Skills 7 - Describing Ones Weaknesses",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.txt",
+      "transcriptUrl": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.txt"
+    },
+    {
+      "id": "audio/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "title": "Interview Skills 7 - Describing Ones Weaknesses",
+      "name": "Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "path": "audio/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "url": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/podcast/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
+      "extension": "mp3",
+      "size": 6311707,
+      "modifiedAt": "2026-01-15T05:36:24.828Z",
+      "folders": [
+        "Interview Skills 7 - Describing Ones Weaknesses",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "title": "Interview Skills 8 - Discussing Salary and Benefits",
+      "name": "Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "path": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "url": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
+      "extension": "mp3",
+      "size": 597787,
+      "modifiedAt": "2026-04-30T05:48:46.620Z",
+      "folders": [
+        "Interview Skills 8 - Discussing Salary and Benefits",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.txt",
+      "transcriptUrl": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.txt"
+    },
+    {
+      "id": "audio/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "title": "Interview Skills 8 - Discussing Salary and Benefits",
+      "name": "Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "path": "audio/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "url": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/podcast/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
+      "extension": "mp3",
+      "size": 6423511,
+      "modifiedAt": "2026-01-15T05:36:17.610Z",
+      "folders": [
+        "Interview Skills 8 - Discussing Salary and Benefits",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "title": "Interview Skills 9 - Asking For Information About The Position",
+      "name": "Interview Skills 9 - Asking For Information About The Position.mp3",
+      "path": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "url": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
+      "extension": "mp3",
+      "size": 487028,
+      "modifiedAt": "2026-04-30T05:29:44.263Z",
+      "folders": [
+        "Interview Skills 9 - Asking For Information About The Position",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.txt",
+      "transcriptUrl": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.txt"
+    },
+    {
+      "id": "audio/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "title": "Interview Skills 9 - Asking For Information About The Position",
+      "name": "Interview Skills 9 - Asking For Information About The Position.mp3",
+      "path": "audio/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "url": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/podcast/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
+      "extension": "mp3",
+      "size": 6205755,
+      "modifiedAt": "2026-01-15T05:36:13.743Z",
+      "folders": [
+        "Interview Skills 9 - Asking For Information About The Position",
+        "podcast"
+      ],
+      "transcriptPath": null,
+      "transcriptUrl": null
+    },
+    {
+      "id": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
+      "title": "Investing in Emerging Markets",
+      "name": "Investing in Emerging Markets.mp3",
+      "path": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
+      "url": "audio/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.mp3",
+      "extension": "mp3",
+      "size": 895374,
+      "modifiedAt": "2026-05-01T03:37:28.784Z",
+      "folders": [
+        "Investing in Emerging Markets",
+        "dialog"
+      ],
+      "transcriptPath": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.txt",
+      "transcriptUrl": "audio/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.txt"
+    },
+    {
+      "id": "audio/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
+      "title": "Investing in Emerging Markets",
+      "name": "Investing in Emerging Markets.mp3",
+      "path": "audio/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
+      "url": "audio/Investing%20in%20Emerging%20Markets/podcast/Investing%20in%20Emerging%20Markets.mp3",
+      "extension": "mp3",
+      "size": 5578398,
+      "modifiedAt": "2026-01-15T05:27:48.255Z",
+      "folders": [
+        "Investing in Emerging Markets",
         "podcast"
       ],
       "transcriptPath": null,
