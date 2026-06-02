@@ -64,31 +64,90 @@
     .start-inner {
       height: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      min-height: 0;
+      gap: 12px;
     }
 
-    .file-button {
-      position: relative;
-      display: inline-flex;
+    .browser-header {
+      flex: 0 0 auto;
+      width: 100%;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      min-width: 190px;
-      min-height: 48px;
-      border: 1px solid #9fb19f;
-      border-radius: 6px;
-      background: #e6eee2;
-      color: #1f2a22;
+      gap: 8px;
+    }
+
+    .browser-header > span {
+      display: none;
+    }
+
+    .browser-back {
+      flex: 0 0 auto;
+      width: 76px;
+      padding: 0 8px;
+    }
+
+    .browser-path {
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 40px;
+      line-height: 38px;
+      padding: 0 10px;
       overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border: 1px solid #c6d0c3;
+      border-radius: 6px;
+      background: #ffffff;
     }
 
-    .file-button input {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      opacity: 0;
+    .browser-list {
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      border: 1px solid #d2dacd;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+
+    .browser-item {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 8px 12px;
+      border-width: 0 0 1px 0;
+      border-color: #e1e7dd;
+      border-radius: 0;
+      background: #ffffff;
+      text-align: left;
+    }
+
+    .browser-item:last-child {
+      border-bottom: 0;
+    }
+
+    .browser-icon {
+      flex: 0 0 auto;
+      width: 42px;
+      text-align: center;
+    }
+
+    .browser-name {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .browser-message {
+      padding: 18px 14px;
+      color: #697268;
+      line-height: 1.5;
     }
 
     .player-page {
@@ -508,10 +567,14 @@
 <body>
   <div id="startPage" class="page start-page active">
     <div class="start-inner">
-      <label class="file-button">
+      <div class="browser-header">
         <span>选择音频文件</span>
-        <input id="startFileInput" type="file" accept="audio/*">
-      </label>
+        <button id="browserBackBtn" class="browser-back" type="button" disabled>返回</button>
+        <div id="browserPath" class="browser-path">audio</div>
+      </div>
+      <div id="browserList" class="browser-list">
+        <div class="browser-message">正在读取 audio/index.json...</div>
+      </div>
     </div>
   </div>
 
@@ -646,6 +709,10 @@
       var state = {
         page: "start",
         settings: loadSettings(),
+        audioIndex: null,
+        browserPath: [],
+        browserItems: [],
+        transcriptLoadToken: 0,
         audioReady: false,
         fileUrl: "",
         fileName: "",
@@ -670,13 +737,16 @@
         applyMode();
         renderLine();
         showPage("start");
+        loadAudioIndex();
       }
 
       function cacheElements() {
         els.startPage = $("startPage");
         els.playerPage = $("playerPage");
         els.configPage = $("configPage");
-        els.startFileInput = $("startFileInput");
+        els.browserBackBtn = $("browserBackBtn");
+        els.browserPath = $("browserPath");
+        els.browserList = $("browserList");
         els.modeBtn = $("modeBtn");
         els.configBtn = $("configBtn");
         els.fileProgress = $("fileProgress");
@@ -721,7 +791,8 @@
       }
 
       function bindEvents() {
-        els.startFileInput.onchange = onFileSelected;
+        els.browserBackBtn.onclick = goBrowserParent;
+        els.browserList.onclick = onBrowserListClick;
         els.modeBtn.onclick = toggleMode;
         els.configBtn.onclick = function () { showPage("config"); };
         els.backConfigBtn.onclick = function () { showPage("player"); };
@@ -881,6 +952,227 @@
         } else {
           addClass(els.playerPage, "active");
         }
+      }
+
+      function loadAudioIndex() {
+        setBrowserMessage("正在读取 audio/index.json...");
+        fetch("audio/index.json", { cache: "no-cache" })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("HTTP " + response.status);
+            }
+            return response.json();
+          })
+          .then(function (data) {
+            state.audioIndex = normalizeAudioIndex(data);
+            state.browserPath = [];
+            renderAudioBrowser();
+          })
+          .catch(function () {
+            state.audioIndex = null;
+            setBrowserMessage("无法读取 audio/index.json，请先运行 node scripts/generate-audio-index.js");
+          });
+      }
+
+      function normalizeAudioIndex(data) {
+        var files = data && data.files && data.files.length ? data.files : [];
+        var list = [];
+        var i;
+        var item;
+        for (i = 0; i < files.length; i += 1) {
+          item = files[i];
+          if (String(item.extension || "").toLowerCase() !== "mp3") {
+            continue;
+          }
+          list.push({
+            name: item.name || item.title || item.path || "audio.mp3",
+            title: item.title || item.name || "audio",
+            url: item.url || item.path,
+            folders: item.folders && item.folders.length ? item.folders.slice(0) : getFoldersFromPath(item.path),
+            transcriptUrl: item.transcriptUrl || null
+          });
+        }
+        return list;
+      }
+
+      function getFoldersFromPath(filePath) {
+        var parts = String(filePath || "").split("/");
+        if (parts[0] === "audio") {
+          parts.shift();
+        }
+        parts.pop();
+        return parts;
+      }
+
+      function renderAudioBrowser() {
+        var folders = {};
+        var folderNames = [];
+        var files = [];
+        var html = "";
+        var list = state.audioIndex || [];
+        var path = state.browserPath;
+        var i;
+        var item;
+        var nextFolder;
+
+        state.browserItems = [];
+        els.browserPath.innerHTML = escapeHtml(path.length ? "audio / " + path.join(" / ") : "audio");
+        els.browserBackBtn.disabled = path.length === 0;
+
+        for (i = 0; i < list.length; i += 1) {
+          item = list[i];
+          if (!isInBrowserPath(item, path)) {
+            continue;
+          }
+          if (item.folders.length > path.length) {
+            nextFolder = item.folders[path.length];
+            if (!folders[nextFolder]) {
+              folders[nextFolder] = true;
+              folderNames.push(nextFolder);
+            }
+          } else {
+            files.push(item);
+          }
+        }
+
+        folderNames.sort(function (a, b) { return a.localeCompare(b, "en"); });
+        files.sort(function (a, b) { return a.name.localeCompare(b.name, "en"); });
+
+        for (i = 0; i < folderNames.length; i += 1) {
+          state.browserItems.push({ type: "folder", name: folderNames[i] });
+          html += renderBrowserItem(state.browserItems.length - 1, "folder", folderNames[i]);
+        }
+        for (i = 0; i < files.length; i += 1) {
+          state.browserItems.push({ type: "audio", audio: files[i] });
+          html += renderBrowserItem(state.browserItems.length - 1, "audio", files[i].name);
+        }
+
+        if (!html) {
+          html = '<div class="browser-message">这个目录下没有 mp3 文件</div>';
+        }
+        els.browserList.innerHTML = html;
+      }
+
+      function isInBrowserPath(item, path) {
+        var i;
+        if (!item || item.folders.length < path.length) {
+          return false;
+        }
+        for (i = 0; i < path.length; i += 1) {
+          if (item.folders[i] !== path[i]) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function renderBrowserItem(index, type, name) {
+        var icon = type === "folder" ? "目录" : "音频";
+        return '<button class="browser-item" type="button" data-browser-index="' + index + '">' +
+          '<span class="browser-icon">' + escapeHtml(icon) + '</span>' +
+          '<span class="browser-name">' + escapeHtml(name) + '</span>' +
+          '</button>';
+      }
+
+      function setBrowserMessage(message) {
+        els.browserList.innerHTML = '<div class="browser-message">' + escapeHtml(message) + '</div>';
+      }
+
+      function onBrowserListClick(event) {
+        var target = event.target || event.srcElement;
+        var itemNode = findBrowserItemNode(target);
+        var index;
+        var item;
+        if (!itemNode) {
+          return;
+        }
+        index = parseInt(itemNode.getAttribute("data-browser-index"), 10);
+        item = state.browserItems[index];
+        if (!item) {
+          return;
+        }
+        if (item.type === "folder") {
+          state.browserPath.push(item.name);
+          renderAudioBrowser();
+        } else if (item.type === "audio") {
+          selectAudioEntry(item.audio);
+        }
+      }
+
+      function findBrowserItemNode(node) {
+        while (node && node !== els.browserList) {
+          if (node.getAttribute && node.getAttribute("data-browser-index") !== null) {
+            return node;
+          }
+          node = node.parentNode;
+        }
+        return null;
+      }
+
+      function goBrowserParent() {
+        if (!state.browserPath.length) {
+          return;
+        }
+        state.browserPath.pop();
+        renderAudioBrowser();
+      }
+
+      function selectAudioEntry(entry) {
+        if (!entry || !entry.url) {
+          return;
+        }
+        if (state.fileUrl) {
+          getUrlApi().revokeObjectURL(state.fileUrl);
+        }
+        state.fileUrl = "";
+        state.fileName = entry.name || entry.title || "audio.mp3";
+        state.audioReady = true;
+        state.marks = [];
+        state.lineIndex = 0;
+        renderMarkList();
+        clearMarkJumpAnchor();
+        els.audio.pause();
+        els.audio.src = entry.url;
+        els.audio.currentTime = 0;
+        els.fileName.innerHTML = escapeHtml(state.fileName);
+        updateFileNameScroll();
+        setLyricsText("");
+        loadTranscript(entry);
+        applyMode();
+        updatePlayButton();
+        updateMarkButtons();
+        updateFileProgress();
+        showPage("player");
+      }
+
+      function loadTranscript(entry) {
+        var token = state.transcriptLoadToken + 1;
+        state.transcriptLoadToken = token;
+        if (!entry.transcriptUrl) {
+          return;
+        }
+        fetch(entry.transcriptUrl, { cache: "no-cache" })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("HTTP " + response.status);
+            }
+            return response.text();
+          })
+          .then(function (text) {
+            if (state.transcriptLoadToken === token) {
+              setLyricsText(text);
+            }
+          })
+          .catch(function () {
+            if (state.transcriptLoadToken === token) {
+              setLyricsText("");
+            }
+          });
+      }
+
+      function setLyricsText(text) {
+        els.lyricsInput.value = text;
+        updateLyrics(text);
       }
 
       function onFileSelected() {
