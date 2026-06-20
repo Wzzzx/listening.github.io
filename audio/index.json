@@ -1,98 +1,104 @@
 {
-  "generatedAt": "2026-06-02T15:44:43.786Z",
+  "generatedAt": "2026-06-20T10:29:10.131Z",
   "baseDir": "audio",
-  "count": 46,
+  "count": 47,
   "files": [
     {
-      "id": "audio/Asking for Time Off/dialog/Asking for Time Off.mp3",
+      "id": "audio/EnglishPod/Asking for Time Off/dialog/Asking for Time Off.mp3",
       "title": "Asking for Time Off",
       "name": "Asking for Time Off.mp3",
-      "path": "audio/Asking for Time Off/dialog/Asking for Time Off.mp3",
-      "url": "audio/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.mp3",
+      "path": "audio/EnglishPod/Asking for Time Off/dialog/Asking for Time Off.mp3",
+      "url": "audio/EnglishPod/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.mp3",
       "extension": "mp3",
       "size": 570662,
       "modifiedAt": "2026-05-01T03:38:12.511Z",
       "folders": [
+        "EnglishPod",
         "Asking for Time Off",
         "dialog"
       ],
-      "transcriptPath": "audio/Asking for Time Off/dialog/Asking for Time Off.txt",
-      "transcriptUrl": "audio/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.txt"
+      "transcriptPath": "audio/EnglishPod/Asking for Time Off/dialog/Asking for Time Off.txt",
+      "transcriptUrl": "audio/EnglishPod/Asking%20for%20Time%20Off/dialog/Asking%20for%20Time%20Off.txt"
     },
     {
-      "id": "audio/Asking for Time Off/podcast/Asking for Time Off.mp3",
+      "id": "audio/EnglishPod/Asking for Time Off/podcast/Asking for Time Off.mp3",
       "title": "Asking for Time Off",
       "name": "Asking for Time Off.mp3",
-      "path": "audio/Asking for Time Off/podcast/Asking for Time Off.mp3",
-      "url": "audio/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.mp3",
+      "path": "audio/EnglishPod/Asking for Time Off/podcast/Asking for Time Off.mp3",
+      "url": "audio/EnglishPod/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.mp3",
       "extension": "mp3",
       "size": 4732908,
       "modifiedAt": "2026-01-15T05:27:45.986Z",
       "folders": [
+        "EnglishPod",
         "Asking for Time Off",
         "podcast"
       ],
-      "transcriptPath": "audio/Asking for Time Off/podcast/Asking for Time Off.txt",
-      "transcriptUrl": "audio/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.txt"
+      "transcriptPath": "audio/EnglishPod/Asking for Time Off/podcast/Asking for Time Off.txt",
+      "transcriptUrl": "audio/EnglishPod/Asking%20for%20Time%20Off/podcast/Asking%20for%20Time%20Off.txt"
     },
     {
-      "id": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
+      "id": "audio/EnglishPod/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
       "title": "I Can See Clearly Now",
       "name": "I Can See Clearly Now.mp3",
-      "path": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
-      "url": "audio/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.mp3",
+      "path": "audio/EnglishPod/I Can See Clearly Now/dialog/I Can See Clearly Now.mp3",
+      "url": "audio/EnglishPod/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.mp3",
       "extension": "mp3",
       "size": 874268,
       "modifiedAt": "2026-05-01T03:37:27.000Z",
       "folders": [
+        "EnglishPod",
         "I Can See Clearly Now",
         "dialog"
       ],
-      "transcriptPath": "audio/I Can See Clearly Now/dialog/I Can See Clearly Now.txt",
-      "transcriptUrl": "audio/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.txt"
+      "transcriptPath": "audio/EnglishPod/I Can See Clearly Now/dialog/I Can See Clearly Now.txt",
+      "transcriptUrl": "audio/EnglishPod/I%20Can%20See%20Clearly%20Now/dialog/I%20Can%20See%20Clearly%20Now.txt"
     },
     {
-      "id": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
+      "id": "audio/EnglishPod/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
       "title": "I Can See Clearly Now",
       "name": "I Can See Clearly Now.mp3",
-      "path": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
-      "url": "audio/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.mp3",
+      "path": "audio/EnglishPod/I Can See Clearly Now/podcast/I Can See Clearly Now.mp3",
+      "url": "audio/EnglishPod/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.mp3",
       "extension": "mp3",
       "size": 9956771,
       "modifiedAt": "2026-01-15T05:27:18.927Z",
       "folders": [
+        "EnglishPod",
         "I Can See Clearly Now",
         "podcast"
       ],
-      "transcriptPath": "audio/I Can See Clearly Now/podcast/I Can See Clearly Now.txt",
-      "transcriptUrl": "audio/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.txt"
+      "transcriptPath": "audio/EnglishPod/I Can See Clearly Now/podcast/I Can See Clearly Now.txt",
+      "transcriptUrl": "audio/EnglishPod/I%20Can%20See%20Clearly%20Now/podcast/I%20Can%20See%20Clearly%20Now.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
       "title": "I'm Sorry I Love You I",
       "name": "I'm Sorry I Love You I.mp3",
-      "path": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.mp3",
       "extension": "mp3",
       "size": 1124792,
       "modifiedAt": "2026-05-01T03:37:25.667Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You I",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You I/dialog/I'm Sorry I Love You I.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20I/dialog/I'm%20Sorry%20I%20Love%20You%20I.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
       "title": "I'm Sorry I Love You I",
       "name": "I'm Sorry I Love You I.mp3",
-      "path": "audio/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20I/podcast/I'm%20Sorry%20I%20Love%20You%20I.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You I/podcast/I'm Sorry I Love You I.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20I/podcast/I'm%20Sorry%20I%20Love%20You%20I.mp3",
       "extension": "mp3",
       "size": 7009866,
       "modifiedAt": "2026-01-15T05:27:24.977Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You I",
         "podcast"
       ],
@@ -100,31 +106,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
       "title": "I'm Sorry I Love You II",
       "name": "I'm Sorry I Love You II.mp3",
-      "path": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.mp3",
       "extension": "mp3",
       "size": 795879,
       "modifiedAt": "2026-05-01T03:37:28.753Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You II",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You II/dialog/I'm Sorry I Love You II.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20II/dialog/I'm%20Sorry%20I%20Love%20You%20II.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
       "title": "I'm Sorry I Love You II",
       "name": "I'm Sorry I Love You II.mp3",
-      "path": "audio/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20II/podcast/I'm%20Sorry%20I%20Love%20You%20II.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You II/podcast/I'm Sorry I Love You II.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20II/podcast/I'm%20Sorry%20I%20Love%20You%20II.mp3",
       "extension": "mp3",
       "size": 5538880,
       "modifiedAt": "2026-01-15T05:27:37.491Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You II",
         "podcast"
       ],
@@ -132,31 +140,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
       "title": "I'm Sorry I Love You IV",
       "name": "I'm Sorry I Love You IV.mp3",
-      "path": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
       "extension": "mp3",
       "size": 1123183,
       "modifiedAt": "2026-04-30T05:27:23.032Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You IV",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You IV/dialog/I'm Sorry I Love You IV.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IV/dialog/I'm%20Sorry%20I%20Love%20You%20IV.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
       "title": "I'm Sorry I Love You IV",
       "name": "I'm Sorry I Love You IV.mp3",
-      "path": "audio/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IV/podcast/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You IV/podcast/I'm Sorry I Love You IV.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IV/podcast/I'm%20Sorry%20I%20Love%20You%20IV.mp3",
       "extension": "mp3",
       "size": 7170007,
       "modifiedAt": "2026-01-15T05:28:17.377Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You IV",
         "podcast"
       ],
@@ -164,31 +174,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
       "title": "I'm Sorry I Love You IX",
       "name": "I'm Sorry I Love You IX.mp3",
-      "path": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
       "extension": "mp3",
       "size": 1062955,
       "modifiedAt": "2026-04-30T05:28:02.277Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You IX",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You IX/dialog/I'm Sorry I Love You IX.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IX/dialog/I'm%20Sorry%20I%20Love%20You%20IX.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
       "title": "I'm Sorry I Love You IX",
       "name": "I'm Sorry I Love You IX.mp3",
-      "path": "audio/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20IX/podcast/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You IX/podcast/I'm Sorry I Love You IX.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20IX/podcast/I'm%20Sorry%20I%20Love%20You%20IX.mp3",
       "extension": "mp3",
       "size": 6282638,
       "modifiedAt": "2026-01-15T05:30:43.342Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You IX",
         "podcast"
       ],
@@ -196,31 +208,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
       "title": "I'm Sorry I Love You V",
       "name": "I'm Sorry I Love You V.mp3",
-      "path": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.mp3",
       "extension": "mp3",
       "size": 1083623,
       "modifiedAt": "2026-04-30T05:27:20.935Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You V",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You V/dialog/I'm Sorry I Love You V.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20V/dialog/I'm%20Sorry%20I%20Love%20You%20V.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
       "title": "I'm Sorry I Love You V",
       "name": "I'm Sorry I Love You V.mp3",
-      "path": "audio/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20V/podcast/I'm%20Sorry%20I%20Love%20You%20V.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You V/podcast/I'm Sorry I Love You V.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20V/podcast/I'm%20Sorry%20I%20Love%20You%20V.mp3",
       "extension": "mp3",
       "size": 6790856,
       "modifiedAt": "2026-01-15T05:28:36.736Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You V",
         "podcast"
       ],
@@ -228,31 +242,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
       "title": "I'm Sorry I Love You VI",
       "name": "I'm Sorry I Love You VI.mp3",
-      "path": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
       "extension": "mp3",
       "size": 1118732,
       "modifiedAt": "2026-04-30T05:33:23.139Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VI",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You VI/dialog/I'm Sorry I Love You VI.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VI/dialog/I'm%20Sorry%20I%20Love%20You%20VI.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
       "title": "I'm Sorry I Love You VI",
       "name": "I'm Sorry I Love You VI.mp3",
-      "path": "audio/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VI/podcast/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VI/podcast/I'm Sorry I Love You VI.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VI/podcast/I'm%20Sorry%20I%20Love%20You%20VI.mp3",
       "extension": "mp3",
       "size": 8252041,
       "modifiedAt": "2026-01-15T05:29:12.614Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VI",
         "podcast"
       ],
@@ -260,31 +276,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
       "title": "I'm Sorry I Love You VII",
       "name": "I'm Sorry I Love You VII.mp3",
-      "path": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
       "extension": "mp3",
       "size": 702277,
       "modifiedAt": "2026-04-30T05:42:20.288Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VII",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You VII/dialog/I'm Sorry I Love You VII.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VII/dialog/I'm%20Sorry%20I%20Love%20You%20VII.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
       "title": "I'm Sorry I Love You VII",
       "name": "I'm Sorry I Love You VII.mp3",
-      "path": "audio/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VII/podcast/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VII/podcast/I'm Sorry I Love You VII.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VII/podcast/I'm%20Sorry%20I%20Love%20You%20VII.mp3",
       "extension": "mp3",
       "size": 6459038,
       "modifiedAt": "2026-01-15T05:29:23.078Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VII",
         "podcast"
       ],
@@ -292,31 +310,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
       "title": "I'm Sorry I Love You VIII",
       "name": "I'm Sorry I Love You VIII.mp3",
-      "path": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
       "extension": "mp3",
       "size": 1103079,
       "modifiedAt": "2026-04-30T05:27:37.718Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VIII",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You VIII/dialog/I'm Sorry I Love You VIII.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VIII/dialog/I'm%20Sorry%20I%20Love%20You%20VIII.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
       "title": "I'm Sorry I Love You VIII",
       "name": "I'm Sorry I Love You VIII.mp3",
-      "path": "audio/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20VIII/podcast/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You VIII/podcast/I'm Sorry I Love You VIII.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20VIII/podcast/I'm%20Sorry%20I%20Love%20You%20VIII.mp3",
       "extension": "mp3",
       "size": 7012186,
       "modifiedAt": "2026-01-15T05:29:50.172Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You VIII",
         "podcast"
       ],
@@ -324,31 +344,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
       "title": "I'm Sorry I Love You X",
       "name": "I'm Sorry I Love You X.mp3",
-      "path": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.mp3",
       "extension": "mp3",
       "size": 1395630,
       "modifiedAt": "2026-04-30T05:28:17.374Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You X",
         "dialog"
       ],
-      "transcriptPath": "audio/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.txt",
-      "transcriptUrl": "audio/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.txt"
+      "transcriptPath": "audio/EnglishPod/I'm Sorry I Love You X/dialog/I'm Sorry I Love You X.txt",
+      "transcriptUrl": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20X/dialog/I'm%20Sorry%20I%20Love%20You%20X.txt"
     },
     {
-      "id": "audio/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
+      "id": "audio/EnglishPod/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
       "title": "I'm Sorry I Love You X",
       "name": "I'm Sorry I Love You X.mp3",
-      "path": "audio/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
-      "url": "audio/I'm%20Sorry%20I%20Love%20You%20X/podcast/I'm%20Sorry%20I%20Love%20You%20X.mp3",
+      "path": "audio/EnglishPod/I'm Sorry I Love You X/podcast/I'm Sorry I Love You X.mp3",
+      "url": "audio/EnglishPod/I'm%20Sorry%20I%20Love%20You%20X/podcast/I'm%20Sorry%20I%20Love%20You%20X.mp3",
       "extension": "mp3",
       "size": 8832586,
       "modifiedAt": "2026-01-15T05:31:21.199Z",
       "folders": [
+        "EnglishPod",
         "I'm Sorry I Love You X",
         "podcast"
       ],
@@ -356,31 +378,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
+      "id": "audio/EnglishPod/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
       "title": "Interview Skills 1 - The Introduction",
       "name": "Interview Skills 1 - The Introduction.mp3",
-      "path": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
-      "url": "audio/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.mp3",
+      "path": "audio/EnglishPod/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.mp3",
       "extension": "mp3",
       "size": 534466,
       "modifiedAt": "2026-04-30T05:29:40.217Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 1 - The Introduction",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.txt",
-      "transcriptUrl": "audio/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 1 - The Introduction/dialog/Interview Skills 1 - The Introduction.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%201%20-%20The%20Introduction/dialog/Interview%20Skills%201%20-%20The%20Introduction.txt"
     },
     {
-      "id": "audio/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
+      "id": "audio/EnglishPod/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
       "title": "Interview Skills 1 - The Introduction",
       "name": "Interview Skills 1 - The Introduction.mp3",
-      "path": "audio/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
-      "url": "audio/Interview%20Skills%201%20-%20The%20Introduction/podcast/Interview%20Skills%201%20-%20The%20Introduction.mp3",
+      "path": "audio/EnglishPod/Interview Skills 1 - The Introduction/podcast/Interview Skills 1 - The Introduction.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%201%20-%20The%20Introduction/podcast/Interview%20Skills%201%20-%20The%20Introduction.mp3",
       "extension": "mp3",
       "size": 7778117,
       "modifiedAt": "2026-01-15T05:35:40.024Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 1 - The Introduction",
         "podcast"
       ],
@@ -388,31 +412,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
+      "id": "audio/EnglishPod/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
       "title": "Interview Skills 10 - Concluding The Interview",
       "name": "Interview Skills 10 - Concluding The Interview.mp3",
-      "path": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
-      "url": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
+      "path": "audio/EnglishPod/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
       "extension": "mp3",
       "size": 486610,
       "modifiedAt": "2026-04-30T05:48:44.420Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 10 - Concluding The Interview",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.txt",
-      "transcriptUrl": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 10 - Concluding The Interview/dialog/Interview Skills 10 - Concluding The Interview.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/dialog/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.txt"
     },
     {
-      "id": "audio/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
+      "id": "audio/EnglishPod/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
       "title": "Interview Skills 10 - Concluding The Interview",
       "name": "Interview Skills 10 - Concluding The Interview.mp3",
-      "path": "audio/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
-      "url": "audio/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/podcast/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
+      "path": "audio/EnglishPod/Interview Skills 10 - Concluding The Interview/podcast/Interview Skills 10 - Concluding The Interview.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%2010%20-%20Concluding%20The%20Interview/podcast/Interview%20Skills%2010%20-%20Concluding%20The%20Interview.mp3",
       "extension": "mp3",
       "size": 5789676,
       "modifiedAt": "2026-01-15T05:36:44.428Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 10 - Concluding The Interview",
         "podcast"
       ],
@@ -420,31 +446,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
+      "id": "audio/EnglishPod/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
       "title": "Interview Skills 2 - Discussing Your Background",
       "name": "Interview Skills 2 - Discussing Your Background.mp3",
-      "path": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
-      "url": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
+      "path": "audio/EnglishPod/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
       "extension": "mp3",
       "size": 655027,
       "modifiedAt": "2026-04-30T05:29:40.512Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 2 - Discussing Your Background",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.txt",
-      "transcriptUrl": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 2 - Discussing Your Background/dialog/Interview Skills 2 - Discussing Your Background.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%202%20-%20Discussing%20Your%20Background/dialog/Interview%20Skills%202%20-%20Discussing%20Your%20Background.txt"
     },
     {
-      "id": "audio/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
+      "id": "audio/EnglishPod/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
       "title": "Interview Skills 2 - Discussing Your Background",
       "name": "Interview Skills 2 - Discussing Your Background.mp3",
-      "path": "audio/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
-      "url": "audio/Interview%20Skills%202%20-%20Discussing%20Your%20Background/podcast/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
+      "path": "audio/EnglishPod/Interview Skills 2 - Discussing Your Background/podcast/Interview Skills 2 - Discussing Your Background.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%202%20-%20Discussing%20Your%20Background/podcast/Interview%20Skills%202%20-%20Discussing%20Your%20Background.mp3",
       "extension": "mp3",
       "size": 6873862,
       "modifiedAt": "2026-01-15T05:35:47.810Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 2 - Discussing Your Background",
         "podcast"
       ],
@@ -452,31 +480,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
+      "id": "audio/EnglishPod/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
       "title": "Interview Skills 3 - Education Background",
       "name": "Interview Skills 3 - Education Background.mp3",
-      "path": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
-      "url": "audio/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.mp3",
+      "path": "audio/EnglishPod/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.mp3",
       "extension": "mp3",
       "size": 605728,
       "modifiedAt": "2026-04-30T05:29:35.040Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 3 - Education Background",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.txt",
-      "transcriptUrl": "audio/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 3 - Education Background/dialog/Interview Skills 3 - Education Background.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%203%20-%20Education%20Background/dialog/Interview%20Skills%203%20-%20Education%20Background.txt"
     },
     {
-      "id": "audio/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
+      "id": "audio/EnglishPod/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
       "title": "Interview Skills 3 - Education Background",
       "name": "Interview Skills 3 - Education Background.mp3",
-      "path": "audio/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
-      "url": "audio/Interview%20Skills%203%20-%20Education%20Background/podcast/Interview%20Skills%203%20-%20Education%20Background.mp3",
+      "path": "audio/EnglishPod/Interview Skills 3 - Education Background/podcast/Interview Skills 3 - Education Background.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%203%20-%20Education%20Background/podcast/Interview%20Skills%203%20-%20Education%20Background.mp3",
       "extension": "mp3",
       "size": 6651299,
       "modifiedAt": "2026-01-15T05:35:34.679Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 3 - Education Background",
         "podcast"
       ],
@@ -484,31 +514,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
+      "id": "audio/EnglishPod/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
       "title": "Interview Skills 4 - Talking About Work Experience",
       "name": "Interview Skills 4 - Talking About Work Experience.mp3",
-      "path": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
-      "url": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
+      "path": "audio/EnglishPod/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
       "extension": "mp3",
       "size": 528197,
       "modifiedAt": "2026-05-01T03:38:38.129Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 4 - Talking About Work Experience",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.txt",
-      "transcriptUrl": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 4 - Talking About Work Experience/dialog/Interview Skills 4 - Talking About Work Experience.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/dialog/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.txt"
     },
     {
-      "id": "audio/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
+      "id": "audio/EnglishPod/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
       "title": "Interview Skills 4 - Talking About Work Experience",
       "name": "Interview Skills 4 - Talking About Work Experience.mp3",
-      "path": "audio/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
-      "url": "audio/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/podcast/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
+      "path": "audio/EnglishPod/Interview Skills 4 - Talking About Work Experience/podcast/Interview Skills 4 - Talking About Work Experience.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience/podcast/Interview%20Skills%204%20-%20Talking%20About%20Work%20Experience.mp3",
       "extension": "mp3",
       "size": 7012207,
       "modifiedAt": "2026-01-15T05:35:58.507Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 4 - Talking About Work Experience",
         "podcast"
       ],
@@ -516,31 +548,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "id": "audio/EnglishPod/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
       "title": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
       "name": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
-      "path": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
-      "url": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
+      "path": "audio/EnglishPod/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
       "extension": "mp3",
       "size": 493715,
       "modifiedAt": "2026-04-30T05:29:39.695Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.txt",
-      "transcriptUrl": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/dialog/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/dialog/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.txt"
     },
     {
-      "id": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "id": "audio/EnglishPod/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
       "title": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
       "name": "Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
-      "path": "audio/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
-      "url": "audio/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/podcast/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
+      "path": "audio/EnglishPod/Interview Skills 5 - Discussing Reasons For Leaving Previous Position/podcast/Interview Skills 5 - Discussing Reasons For Leaving Previous Position.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position/podcast/Interview%20Skills%205%20-%20Discussing%20Reasons%20For%20Leaving%20Previous%20Position.mp3",
       "extension": "mp3",
       "size": 7513967,
       "modifiedAt": "2026-01-15T05:36:10.165Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 5 - Discussing Reasons For Leaving Previous Position",
         "podcast"
       ],
@@ -548,31 +582,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "id": "audio/EnglishPod/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
       "title": "Interview Skills 6 - Describing Ones Strengths",
       "name": "Interview Skills 6 - Describing Ones Strengths.mp3",
-      "path": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
-      "url": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
+      "path": "audio/EnglishPod/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
       "extension": "mp3",
       "size": 486401,
       "modifiedAt": "2026-04-30T05:29:40.429Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 6 - Describing Ones Strengths",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.txt",
-      "transcriptUrl": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 6 - Describing Ones Strengths/dialog/Interview Skills 6 - Describing Ones Strengths.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/dialog/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.txt"
     },
     {
-      "id": "audio/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "id": "audio/EnglishPod/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
       "title": "Interview Skills 6 - Describing Ones Strengths",
       "name": "Interview Skills 6 - Describing Ones Strengths.mp3",
-      "path": "audio/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
-      "url": "audio/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/podcast/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
+      "path": "audio/EnglishPod/Interview Skills 6 - Describing Ones Strengths/podcast/Interview Skills 6 - Describing Ones Strengths.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths/podcast/Interview%20Skills%206%20-%20Describing%20Ones%20Strengths.mp3",
       "extension": "mp3",
       "size": 5136824,
       "modifiedAt": "2026-01-15T05:35:58.978Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 6 - Describing Ones Strengths",
         "podcast"
       ],
@@ -580,31 +616,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "id": "audio/EnglishPod/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
       "title": "Interview Skills 7 - Describing Ones Weaknesses",
       "name": "Interview Skills 7 - Describing Ones Weaknesses.mp3",
-      "path": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
-      "url": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
+      "path": "audio/EnglishPod/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
       "extension": "mp3",
       "size": 567694,
       "modifiedAt": "2026-04-30T05:29:40.516Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 7 - Describing Ones Weaknesses",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.txt",
-      "transcriptUrl": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 7 - Describing Ones Weaknesses/dialog/Interview Skills 7 - Describing Ones Weaknesses.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/dialog/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.txt"
     },
     {
-      "id": "audio/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "id": "audio/EnglishPod/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
       "title": "Interview Skills 7 - Describing Ones Weaknesses",
       "name": "Interview Skills 7 - Describing Ones Weaknesses.mp3",
-      "path": "audio/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
-      "url": "audio/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/podcast/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
+      "path": "audio/EnglishPod/Interview Skills 7 - Describing Ones Weaknesses/podcast/Interview Skills 7 - Describing Ones Weaknesses.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses/podcast/Interview%20Skills%207%20-%20Describing%20Ones%20Weaknesses.mp3",
       "extension": "mp3",
       "size": 6311707,
       "modifiedAt": "2026-01-15T05:36:24.828Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 7 - Describing Ones Weaknesses",
         "podcast"
       ],
@@ -612,31 +650,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "id": "audio/EnglishPod/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
       "title": "Interview Skills 8 - Discussing Salary and Benefits",
       "name": "Interview Skills 8 - Discussing Salary and Benefits.mp3",
-      "path": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
-      "url": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
+      "path": "audio/EnglishPod/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
       "extension": "mp3",
       "size": 597787,
       "modifiedAt": "2026-04-30T05:48:46.620Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 8 - Discussing Salary and Benefits",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.txt",
-      "transcriptUrl": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 8 - Discussing Salary and Benefits/dialog/Interview Skills 8 - Discussing Salary and Benefits.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/dialog/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.txt"
     },
     {
-      "id": "audio/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "id": "audio/EnglishPod/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
       "title": "Interview Skills 8 - Discussing Salary and Benefits",
       "name": "Interview Skills 8 - Discussing Salary and Benefits.mp3",
-      "path": "audio/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
-      "url": "audio/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/podcast/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
+      "path": "audio/EnglishPod/Interview Skills 8 - Discussing Salary and Benefits/podcast/Interview Skills 8 - Discussing Salary and Benefits.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits/podcast/Interview%20Skills%208%20-%20Discussing%20Salary%20and%20Benefits.mp3",
       "extension": "mp3",
       "size": 6423511,
       "modifiedAt": "2026-01-15T05:36:17.610Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 8 - Discussing Salary and Benefits",
         "podcast"
       ],
@@ -644,31 +684,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "id": "audio/EnglishPod/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
       "title": "Interview Skills 9 - Asking For Information About The Position",
       "name": "Interview Skills 9 - Asking For Information About The Position.mp3",
-      "path": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
-      "url": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
+      "path": "audio/EnglishPod/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
       "extension": "mp3",
       "size": 487028,
       "modifiedAt": "2026-04-30T05:29:44.263Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 9 - Asking For Information About The Position",
         "dialog"
       ],
-      "transcriptPath": "audio/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.txt",
-      "transcriptUrl": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.txt"
+      "transcriptPath": "audio/EnglishPod/Interview Skills 9 - Asking For Information About The Position/dialog/Interview Skills 9 - Asking For Information About The Position.txt",
+      "transcriptUrl": "audio/EnglishPod/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/dialog/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.txt"
     },
     {
-      "id": "audio/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "id": "audio/EnglishPod/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
       "title": "Interview Skills 9 - Asking For Information About The Position",
       "name": "Interview Skills 9 - Asking For Information About The Position.mp3",
-      "path": "audio/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
-      "url": "audio/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/podcast/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
+      "path": "audio/EnglishPod/Interview Skills 9 - Asking For Information About The Position/podcast/Interview Skills 9 - Asking For Information About The Position.mp3",
+      "url": "audio/EnglishPod/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position/podcast/Interview%20Skills%209%20-%20Asking%20For%20Information%20About%20The%20Position.mp3",
       "extension": "mp3",
       "size": 6205755,
       "modifiedAt": "2026-01-15T05:36:13.743Z",
       "folders": [
+        "EnglishPod",
         "Interview Skills 9 - Asking For Information About The Position",
         "podcast"
       ],
@@ -676,31 +718,33 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
+      "id": "audio/EnglishPod/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
       "title": "Investing in Emerging Markets",
       "name": "Investing in Emerging Markets.mp3",
-      "path": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
-      "url": "audio/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.mp3",
+      "path": "audio/EnglishPod/Investing in Emerging Markets/dialog/Investing in Emerging Markets.mp3",
+      "url": "audio/EnglishPod/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.mp3",
       "extension": "mp3",
       "size": 895374,
       "modifiedAt": "2026-05-01T03:37:28.784Z",
       "folders": [
+        "EnglishPod",
         "Investing in Emerging Markets",
         "dialog"
       ],
-      "transcriptPath": "audio/Investing in Emerging Markets/dialog/Investing in Emerging Markets.txt",
-      "transcriptUrl": "audio/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.txt"
+      "transcriptPath": "audio/EnglishPod/Investing in Emerging Markets/dialog/Investing in Emerging Markets.txt",
+      "transcriptUrl": "audio/EnglishPod/Investing%20in%20Emerging%20Markets/dialog/Investing%20in%20Emerging%20Markets.txt"
     },
     {
-      "id": "audio/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
+      "id": "audio/EnglishPod/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
       "title": "Investing in Emerging Markets",
       "name": "Investing in Emerging Markets.mp3",
-      "path": "audio/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
-      "url": "audio/Investing%20in%20Emerging%20Markets/podcast/Investing%20in%20Emerging%20Markets.mp3",
+      "path": "audio/EnglishPod/Investing in Emerging Markets/podcast/Investing in Emerging Markets.mp3",
+      "url": "audio/EnglishPod/Investing%20in%20Emerging%20Markets/podcast/Investing%20in%20Emerging%20Markets.mp3",
       "extension": "mp3",
       "size": 5578398,
       "modifiedAt": "2026-01-15T05:27:48.255Z",
       "folders": [
+        "EnglishPod",
         "Investing in Emerging Markets",
         "podcast"
       ],
@@ -708,36 +752,54 @@
       "transcriptUrl": null
     },
     {
-      "id": "audio/Planning For The Worst/dialog/Planning For The Worst.mp3",
+      "id": "audio/EnglishPod/Planning For The Worst/dialog/Planning For The Worst.mp3",
       "title": "Planning For The Worst",
       "name": "Planning For The Worst.mp3",
-      "path": "audio/Planning For The Worst/dialog/Planning For The Worst.mp3",
-      "url": "audio/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.mp3",
+      "path": "audio/EnglishPod/Planning For The Worst/dialog/Planning For The Worst.mp3",
+      "url": "audio/EnglishPod/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.mp3",
       "extension": "mp3",
       "size": 1008453,
       "modifiedAt": "2026-05-01T03:37:27.453Z",
       "folders": [
+        "EnglishPod",
         "Planning For The Worst",
         "dialog"
       ],
-      "transcriptPath": "audio/Planning For The Worst/dialog/Planning For The Worst.txt",
-      "transcriptUrl": "audio/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.txt"
+      "transcriptPath": "audio/EnglishPod/Planning For The Worst/dialog/Planning For The Worst.txt",
+      "transcriptUrl": "audio/EnglishPod/Planning%20For%20The%20Worst/dialog/Planning%20For%20The%20Worst.txt"
     },
     {
-      "id": "audio/Planning For The Worst/podcast/Planning For The Worst.mp3",
+      "id": "audio/EnglishPod/Planning For The Worst/podcast/Planning For The Worst.mp3",
       "title": "Planning For The Worst",
       "name": "Planning For The Worst.mp3",
-      "path": "audio/Planning For The Worst/podcast/Planning For The Worst.mp3",
-      "url": "audio/Planning%20For%20The%20Worst/podcast/Planning%20For%20The%20Worst.mp3",
+      "path": "audio/EnglishPod/Planning For The Worst/podcast/Planning For The Worst.mp3",
+      "url": "audio/EnglishPod/Planning%20For%20The%20Worst/podcast/Planning%20For%20The%20Worst.mp3",
       "extension": "mp3",
       "size": 5555410,
       "modifiedAt": "2026-01-15T05:27:43.016Z",
       "folders": [
+        "EnglishPod",
         "Planning For The Worst",
         "podcast"
       ],
       "transcriptPath": null,
       "transcriptUrl": null
+    },
+    {
+      "id": "audio/VS Code Insiders Podcast/Inside The Agent Loop with Pierce Boggan/Inside The Agent Loop with Pierce Boggan.mp3",
+      "title": "Inside The Agent Loop with Pierce Boggan",
+      "name": "Inside The Agent Loop with Pierce Boggan.mp3",
+      "path": "audio/VS Code Insiders Podcast/Inside The Agent Loop with Pierce Boggan/Inside The Agent Loop with Pierce Boggan.mp3",
+      "url": "audio/VS%20Code%20Insiders%20Podcast/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan.mp3",
+      "extension": "mp3",
+      "size": 32553622,
+      "modifiedAt": "2026-06-20T10:20:02.229Z",
+      "folders": [
+        "VS Code Insiders Podcast",
+        "Inside The Agent Loop with Pierce Boggan"
+      ],
+      "transcriptPath": "audio/VS Code Insiders Podcast/Inside The Agent Loop with Pierce Boggan/Inside The Agent Loop with Pierce Boggan.txt",
+      "transcriptUrl": "audio/VS%20Code%20Insiders%20Podcast/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan.txt"
     }
   ]
 }
