@@ -681,6 +681,7 @@
   <script>
     (function () {
       var storageKey = "phoneListenerSettings";
+      var playbackStateKey = "phoneListenerPlaybackState";
       var defaults = {
         forwardStep: 10,
         backStep: 5,
@@ -699,6 +700,7 @@
         transcriptLoadToken: 0,
         audioReady: false,
         fileUrl: "",
+        fileKey: "",
         fileName: "",
         lyrics: [],
         lineIndex: 0,
@@ -707,7 +709,9 @@
         markJumpAt: 0,
         markFeedbackTimer: null,
         progressDragging: false,
-        lineJumpVisible: false
+        lineJumpVisible: false,
+        pendingLineIndex: null,
+        savedPlaybackState: loadPlaybackState()
       };
       var els = {};
 
@@ -887,6 +891,74 @@
       function saveSettings() {
         try {
           window.localStorage.setItem(storageKey, JSON.stringify(state.settings));
+        } catch (e) {}
+      }
+
+      function loadPlaybackState() {
+        var result = { version: 1, files: {} };
+        var raw;
+        var parsed;
+        try {
+          raw = window.localStorage.getItem(playbackStateKey);
+          if (!raw) {
+            return result;
+          }
+          parsed = JSON.parse(raw);
+          if (parsed && parsed.files && typeof parsed.files === "object") {
+            result.files = parsed.files;
+          }
+        } catch (e) {}
+        return result;
+      }
+
+      function getPlaybackStateId(fileKey) {
+        return encodeURIComponent(fileKey || "");
+      }
+
+      function restorePlaybackState() {
+        var saved;
+        var marks = [];
+        var i;
+        if (!state.fileKey) {
+          state.marks = [];
+          state.pendingLineIndex = null;
+          return;
+        }
+        saved = state.savedPlaybackState.files[getPlaybackStateId(state.fileKey)];
+        if (!saved) {
+          state.marks = [];
+          state.pendingLineIndex = null;
+          return;
+        }
+        if (saved.marks && saved.marks.length) {
+          for (i = 0; i < saved.marks.length; i += 1) {
+            if (typeof saved.marks[i] === "number" && isFinite(saved.marks[i]) && saved.marks[i] >= 0) {
+              marks.push(normalizeMarkTime(saved.marks[i]));
+            }
+          }
+        }
+        marks.sort(function (a, b) { return a - b; });
+        state.marks = marks;
+        state.pendingLineIndex = normalizeSavedLineIndex(saved.lineIndex);
+      }
+
+      function normalizeSavedLineIndex(value) {
+        var index = parseInt(value, 10);
+        return isNaN(index) || index < 0 ? 0 : index;
+      }
+
+      function savePlaybackState() {
+        var id;
+        if (!state.fileKey) {
+          return;
+        }
+        id = getPlaybackStateId(state.fileKey);
+        state.savedPlaybackState.files[id] = {
+          marks: state.marks.slice(0),
+          lineIndex: state.lineIndex
+        };
+        try {
+          window.localStorage.setItem(playbackStateKey, JSON.stringify(state.savedPlaybackState));
         } catch (e) {}
       }
 
@@ -1089,10 +1161,11 @@
           getUrlApi().revokeObjectURL(state.fileUrl);
         }
         state.fileUrl = "";
+        state.fileKey = entry.url;
         state.fileName = entry.name || entry.title || "audio.mp3";
         state.audioReady = true;
-        state.marks = [];
         state.lineIndex = 0;
+        restorePlaybackState();
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.pause();
@@ -1149,9 +1222,11 @@
           getUrlApi().revokeObjectURL(state.fileUrl);
         }
         state.fileUrl = getUrlApi().createObjectURL(file);
+        state.fileKey = "local:" + file.name + ":" + file.size + ":" + file.lastModified;
         state.fileName = file.name || "已选择音频";
         state.audioReady = true;
-        state.marks = [];
+        state.lineIndex = 0;
+        restorePlaybackState();
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.src = state.fileUrl;
@@ -1304,6 +1379,7 @@
         }
         state.marks.push(mark);
         state.marks.sort(function (a, b) { return a - b; });
+        savePlaybackState();
         updateMarkButtons();
         renderMarkList();
         if (showFeedback) {
@@ -1336,6 +1412,7 @@
           return;
         }
         state.marks.splice(index, 1);
+        savePlaybackState();
         clearMarkJumpAnchor();
         updateMarkButtons();
         renderMarkList();
@@ -1488,16 +1565,25 @@
         var raw = text.split(/\r?\n/);
         var lines = [];
         var i;
+        var previousIndex = state.lineIndex;
+        var restoredPendingIndex = false;
         for (i = 0; i < raw.length; i += 1) {
           if (trim(raw[i]) !== "") {
             lines.push(raw[i]);
           }
         }
         state.lyrics = lines;
-        if (state.lineIndex >= state.lyrics.length) {
+        if (state.lyrics.length && state.pendingLineIndex !== null) {
+          state.lineIndex = Math.min(state.pendingLineIndex, state.lyrics.length - 1);
+          state.pendingLineIndex = null;
+          restoredPendingIndex = true;
+        } else if (state.lineIndex >= state.lyrics.length) {
           state.lineIndex = Math.max(0, state.lyrics.length - 1);
         }
         renderLine();
+        if (!restoredPendingIndex && state.lineIndex !== previousIndex) {
+          savePlaybackState();
+        }
       }
 
       function renderLine() {
@@ -1564,6 +1650,7 @@
         state.lineIndex = next;
         els.lineArea.scrollTop = 0;
         renderLine();
+        savePlaybackState();
       }
 
       function onLineJumpInput() {
@@ -1587,6 +1674,7 @@
         state.lineIndex = index;
         els.lineArea.scrollTop = 0;
         renderLine();
+        savePlaybackState();
       }
 
       function updateLineJump() {
