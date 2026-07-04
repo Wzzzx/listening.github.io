@@ -345,6 +345,10 @@
       white-space: normal;
     }
 
+    .line-text {
+      width: 100%;
+    }
+
     .line-toolbar {
       position: absolute;
       top: 10px;
@@ -1507,7 +1511,7 @@
           return;
         }
         if (!state.settings.maskText) {
-          els.lineCard.innerHTML = escapeHtml(line);
+          els.lineCard.innerHTML = '<div class="line-text">' + escapeHtml(line) + '</div>';
           updateLineJump();
           return;
         }
@@ -1519,7 +1523,7 @@
             html += '<span class="masked-word">' + escapeHtml(parts[i]) + '</span>';
           }
         }
-        els.lineCard.innerHTML = html;
+        els.lineCard.innerHTML = '<div class="line-text">' + html + '</div>';
         bindMaskedWords();
         updateLineJump();
       }
