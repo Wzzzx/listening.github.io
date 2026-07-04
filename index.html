@@ -280,26 +280,18 @@
       100% { transform: translateX(-60%); }
     }
 
-    .mode-view {
+    .immersive-view {
       flex: 1 1 0;
       width: 100%;
       height: 0;
       min-height: 0;
-      display: none;
-      overflow: hidden;
-    }
-
-    .mode-view.active {
       display: flex;
-    }
-
-    .immersive-view {
       flex-direction: column;
-      height: 100%;
       overflow: hidden;
     }
 
     .touch-zone {
+      position: relative;
       display: flex;
       min-height: 0;
       align-items: center;
@@ -308,22 +300,20 @@
       color: #314038;
       user-select: none;
       -webkit-user-select: none;
-      touch-action: manipulation;
+      touch-action: pan-y;
     }
 
     .touch-zone-top {
-      order: 2;
+      background: #f6f7f0;
+      overflow: hidden;
+    }
+
+    .touch-zone-middle {
       background: #e6efdf;
       border-top: 2px solid #202520;
     }
 
-    .touch-zone-middle {
-      order: 1;
-      background: #f2f0e5;
-    }
-
     .touch-zone-bottom {
-      order: 3;
       background: #edf1e6;
       border-top: 2px solid #202520;
     }
@@ -333,29 +323,52 @@
       font-size: 15px;
     }
 
-    .reading-view {
-      flex-direction: column;
-      min-height: 0;
-    }
-
     .line-area {
-      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
       min-height: 0;
-      overflow: auto;
-      padding: 22px 18px;
-      background: #f6f7f0;
-      touch-action: manipulation;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 58px 18px 24px;
+      touch-action: pan-y;
     }
 
     .line-card {
-      min-height: 100%;
-      display: block;
-      padding-top: 18vh;
-      text-align: left;
+      min-height: calc(100% - 24px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       line-height: 1.8;
       font-size: 22px;
       word-break: break-word;
       white-space: normal;
+    }
+
+    .line-toolbar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .line-toolbar button {
+      min-height: 36px;
+      padding: 0 10px;
+      pointer-events: auto;
+    }
+
+    .line-count {
+      padding: 5px 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #465048;
+      font-size: 15px;
     }
 
     .empty-line {
@@ -380,32 +393,17 @@
       -webkit-user-select: text;
     }
 
-    .controls {
-      flex: 0 0 auto;
-      padding: 10px;
-      border-top: 1px solid #c3cabf;
-      background: #eef2e9;
-    }
-
-    .control-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .control-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .control-row button {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 52px;
-      font-size: 18px;
-    }
-
     .line-jump {
-      margin-top: 10px;
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      z-index: 3;
+      padding: 8px 10px;
+      border: 1px solid #aebbac;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 3px 10px rgba(32, 37, 32, 0.15);
     }
 
     .line-jump.hidden {
@@ -417,14 +415,14 @@
       align-items: center;
       justify-content: center;
       min-height: 24px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       color: #465048;
       font-size: 15px;
     }
 
     .line-jump input {
       width: 100%;
-      height: 32px;
+      height: 28px;
     }
 
     .config-page {
@@ -580,7 +578,6 @@
 
   <div id="playerPage" class="page player-page">
     <div class="topbar">
-      <button id="modeBtn" type="button">阅读</button>
       <div class="file-name-box">
         <div id="fileProgress" class="file-progress"></div>
         <span id="fileName" class="file-name">未选择音频</span>
@@ -595,37 +592,25 @@
       </div>
     </div>
 
-    <div id="immersiveView" class="mode-view immersive-view">
+    <div id="immersiveView" class="immersive-view">
       <div id="topZone" class="touch-zone touch-zone-top">
-        <div class="zone-label">点击播放/暂停，左右滑动调整进度</div>
-      </div>
-      <div id="middleZone" class="touch-zone touch-zone-middle">
-        <div id="middleZoneLabel" class="zone-label">点击打点，左右滑动跳转点位</div>
-      </div>
-      <div id="bottomZone" class="touch-zone touch-zone-bottom">
-        <div class="zone-label">左右滑动调整进度</div>
-      </div>
-    </div>
-
-    <div id="readingView" class="mode-view reading-view">
-      <div id="lineArea" class="line-area">
-        <div id="lineCard" class="line-card"></div>
-      </div>
-      <div class="controls">
-        <div class="control-row">
-          <button id="backBtn" type="button">后退</button>
-          <button id="playBtn" type="button">播放</button>
-          <button id="forwardBtn" type="button">前进</button>
+        <div class="line-toolbar">
+          <button id="maskBtn" type="button">启用遮盖</button>
+          <div id="lineCount" class="line-count">0/0</div>
         </div>
-        <div class="control-row">
-          <button id="prevMarkBtn" type="button">上一点</button>
-          <button id="markBtn" type="button">打点</button>
-          <button id="nextMarkBtn" type="button">下一点</button>
+        <div id="lineArea" class="line-area">
+          <div id="lineCard" class="line-card"></div>
         </div>
         <div id="lineJump" class="line-jump hidden">
-          <div id="lineJumpText" class="line-jump-info">第 0 / 0 句</div>
+          <div id="lineJumpText" class="line-jump-info">0/0</div>
           <input id="lineJumpInput" type="range" min="0" max="0" step="1" value="0" disabled>
         </div>
+      </div>
+      <div id="middleZone" class="touch-zone touch-zone-middle">
+        <div id="playZoneLabel" class="zone-label">点击播放，左右滑动快退/快进</div>
+      </div>
+      <div id="bottomZone" class="touch-zone touch-zone-bottom">
+        <div id="markZoneLabel" class="zone-label">点击打点，左右滑动跳转点位</div>
       </div>
     </div>
   </div>
@@ -668,17 +653,13 @@
       <div class="config-section">
         <h2>界面</h2>
         <div class="field">
-          <label for="topRatioInput">沉浸式上区域占比 <span id="topRatioValue" class="range-value"></span></label>
+          <label for="topRatioInput">上区域占比 <span id="topRatioValue" class="range-value"></span></label>
           <input id="topRatioInput" type="range" min="15" max="60" step="1">
         </div>
         <div class="field">
-          <label for="middleRatioInput">沉浸式中区域占比 <span id="middleRatioValue" class="range-value"></span></label>
+          <label for="middleRatioInput">中区域占比 <span id="middleRatioValue" class="range-value"></span></label>
           <input id="middleRatioInput" type="range" min="15" max="60" step="1">
         </div>
-        <label class="inline-check">
-          <input id="maskToggle" type="checkbox">
-          <span>开启台词遮盖</span>
-        </label>
       </div>
 
       <div class="config-section">
@@ -697,7 +678,6 @@
     (function () {
       var storageKey = "phoneListenerSettings";
       var defaults = {
-        mode: "immersive",
         forwardStep: 10,
         backStep: 5,
         markJumpTimeout: 1,
@@ -722,7 +702,8 @@
         markJumpAnchor: null,
         markJumpAt: 0,
         markFeedbackTimer: null,
-        progressDragging: false
+        progressDragging: false,
+        lineJumpVisible: false
       };
       var els = {};
 
@@ -734,7 +715,7 @@
         cacheElements();
         bindEvents();
         applySettingsToControls();
-        applyMode();
+        applyImmersiveRatio();
         renderLine();
         showPage("start");
         loadAudioIndex();
@@ -747,7 +728,6 @@
         els.browserBackBtn = $("browserBackBtn");
         els.browserPath = $("browserPath");
         els.browserList = $("browserList");
-        els.modeBtn = $("modeBtn");
         els.configBtn = $("configBtn");
         els.fileProgress = $("fileProgress");
         els.fileName = $("fileName");
@@ -758,19 +738,15 @@
         els.progressDragHandle = $("progressDragHandle");
         els.progressDragTime = $("progressDragTime");
         els.immersiveView = $("immersiveView");
-        els.readingView = $("readingView");
         els.topZone = $("topZone");
         els.middleZone = $("middleZone");
-        els.middleZoneLabel = $("middleZoneLabel");
+        els.playZoneLabel = $("playZoneLabel");
         els.bottomZone = $("bottomZone");
+        els.markZoneLabel = $("markZoneLabel");
         els.lineArea = $("lineArea");
         els.lineCard = $("lineCard");
-        els.prevMarkBtn = $("prevMarkBtn");
-        els.markBtn = $("markBtn");
-        els.nextMarkBtn = $("nextMarkBtn");
-        els.backBtn = $("backBtn");
-        els.playBtn = $("playBtn");
-        els.forwardBtn = $("forwardBtn");
+        els.maskBtn = $("maskBtn");
+        els.lineCount = $("lineCount");
         els.lineJump = $("lineJump");
         els.lineJumpText = $("lineJumpText");
         els.lineJumpInput = $("lineJumpInput");
@@ -785,7 +761,6 @@
         els.topRatioValue = $("topRatioValue");
         els.middleRatioInput = $("middleRatioInput");
         els.middleRatioValue = $("middleRatioValue");
-        els.maskToggle = $("maskToggle");
         els.lyricsInput = $("lyricsInput");
         els.audio = $("audio");
       }
@@ -793,16 +768,11 @@
       function bindEvents() {
         els.browserBackBtn.onclick = goBrowserParent;
         els.browserList.onclick = onBrowserListClick;
-        els.modeBtn.onclick = toggleMode;
         els.configBtn.onclick = function () { showPage("config"); };
         els.backConfigBtn.onclick = function () { showPage("player"); };
-        els.playBtn.onclick = togglePlay;
-        els.backBtn.onclick = function () { seekBy(-getNumber(state.settings.backStep, defaults.backStep)); };
-        els.forwardBtn.onclick = function () { seekBy(getNumber(state.settings.forwardStep, defaults.forwardStep)); };
-        els.markBtn.onclick = function () { addMark(false); };
-        els.prevMarkBtn.onclick = jumpPrevMark;
-        els.nextMarkBtn.onclick = jumpNextMark;
+        els.maskBtn.onclick = toggleMask;
         els.lineJumpInput.oninput = onLineJumpInput;
+        els.lineJumpInput.onchange = hideLineJump;
         els.markList.onclick = onMarkListClick;
         bindProgressDrag();
 
@@ -818,21 +788,20 @@
         };
 
         bindSwipe(els.topZone, function (direction) {
+          handleReadingSwipe(direction);
+        }, function () {
+          toggleLineJump();
+        });
+        bindSwipe(els.middleZone, function (direction) {
           handleImmersiveSwipe(direction);
         }, function () {
           togglePlay();
         });
-        bindSwipe(els.middleZone, function (direction) {
+        bindSwipe(els.bottomZone, function (direction) {
           handleMiddleSwipe(direction);
         }, function () {
           addMark(true);
         });
-        bindSwipe(els.bottomZone, function (direction) {
-          handleImmersiveSwipe(direction);
-        }, null);
-        bindSwipe(els.lineArea, function (direction) {
-          handleReadingSwipe(direction);
-        }, null);
 
         bindSettingInputs();
       }
@@ -865,11 +834,6 @@
           state.settings.middleRatio = normalizeNumber(this.value, 15, 60, defaults.middleRatio);
           keepImmersiveRatiosValid("middle");
           applyImmersiveRatio();
-          saveSettings();
-        };
-        els.maskToggle.onchange = function () {
-          state.settings.maskText = !!this.checked;
-          renderLine();
           saveSettings();
         };
         els.lyricsInput.oninput = function () {
@@ -906,9 +870,6 @@
         if (!source) {
           return;
         }
-        if (source.mode === "immersive" || source.mode === "reading") {
-          target.mode = source.mode;
-        }
         target.forwardStep = normalizeNumber(source.forwardStep, 1, 300, defaults.forwardStep);
         target.backStep = normalizeNumber(source.backStep, 1, 300, defaults.backStep);
         target.markJumpTimeout = normalizeNumber(source.markJumpTimeout, 0.1, 10, defaults.markJumpTimeout);
@@ -935,7 +896,6 @@
         els.topRatioValue.innerHTML = state.settings.topRatio + "%";
         els.middleRatioInput.value = state.settings.middleRatio;
         els.middleRatioValue.innerHTML = state.settings.middleRatio + "%";
-        els.maskToggle.checked = !!state.settings.maskText;
         applyImmersiveRatio();
       }
 
@@ -1138,7 +1098,7 @@
         updateFileNameScroll();
         setLyricsText("");
         loadTranscript(entry);
-        applyMode();
+        applyImmersiveRatio();
         updatePlayButton();
         updateMarkButtons();
         updateFileProgress();
@@ -1194,31 +1154,11 @@
         els.fileName.innerHTML = escapeHtml(state.fileName);
         updateFileNameScroll();
         els.audio.pause();
-        applyMode();
+        applyImmersiveRatio();
         updatePlayButton();
         updateMarkButtons();
         updateFileProgress();
         showPage("player");
-      }
-
-      function toggleMode() {
-        state.settings.mode = state.settings.mode === "immersive" ? "reading" : "immersive";
-        saveSettings();
-        applyMode();
-      }
-
-      function applyMode() {
-        removeClass(els.immersiveView, "active");
-        removeClass(els.readingView, "active");
-        if (state.settings.mode === "immersive") {
-          addClass(els.immersiveView, "active");
-          els.modeBtn.innerHTML = "阅读";
-        } else {
-          addClass(els.readingView, "active");
-          els.modeBtn.innerHTML = "沉浸";
-        }
-        applyImmersiveRatio();
-        updateMarkButtons();
       }
 
       function applyImmersiveRatio() {
@@ -1227,8 +1167,8 @@
         keepImmersiveRatiosValid("middle");
         topRatio = normalizeNumber(state.settings.topRatio, 15, 60, defaults.topRatio);
         middleRatio = normalizeNumber(state.settings.middleRatio, 15, 60, defaults.middleRatio);
-        els.middleZone.style.flex = "0 0 " + topRatio + "%";
-        els.topZone.style.flex = "0 0 " + middleRatio + "%";
+        els.topZone.style.flex = "0 0 " + topRatio + "%";
+        els.middleZone.style.flex = "0 0 " + middleRatio + "%";
         els.bottomZone.style.flex = "1 1 0";
         els.topRatioInput.value = topRatio;
         els.topRatioValue.innerHTML = topRatio + "%";
@@ -1252,7 +1192,12 @@
       }
 
       function updatePlayButton() {
-        els.playBtn.innerHTML = els.audio.paused ? "播放" : "暂停";
+        if (!els.playZoneLabel) {
+          return;
+        }
+        els.playZoneLabel.innerHTML = els.audio.paused ?
+          "点击播放，左右滑动快退/快进" :
+          "播放中，点击暂停，左右滑动快退/快进";
       }
 
       function seekBy(seconds) {
@@ -1500,14 +1445,7 @@
       }
 
       function updateMarkButtons() {
-        var ready = state.audioReady;
-        var base = getMarkSearchBase();
-        els.prevMarkBtn.disabled = !ready || findPrevMark(base) === null;
-        els.nextMarkBtn.disabled = !ready || findNextMark(base) === null;
-        els.markBtn.disabled = !ready;
-        els.backBtn.disabled = !ready;
-        els.forwardBtn.disabled = !ready;
-        els.playBtn.disabled = !ready;
+        return;
       }
 
       function updateFileProgress() {
@@ -1586,6 +1524,15 @@
         updateLineJump();
       }
 
+      function toggleMask(event) {
+        state.settings.maskText = !state.settings.maskText;
+        renderLine();
+        saveSettings();
+        if (event && event.stopPropagation) {
+          event.stopPropagation();
+        }
+      }
+
       function bindMaskedWords() {
         var words = els.lineCard.getElementsByTagName("span");
         var i;
@@ -1645,17 +1592,32 @@
           return;
         }
         if (els.lineJump) {
-          if (total) {
+          if (total && state.lineJumpVisible) {
             removeClass(els.lineJump, "hidden");
           } else {
             addClass(els.lineJump, "hidden");
           }
         }
-        els.lineJumpText.innerHTML = "第 " + current + " / " + total + " 句";
+        els.lineCount.innerHTML = current + "/" + total;
+        els.lineJumpText.innerHTML = current + "/" + total;
+        els.maskBtn.innerHTML = state.settings.maskText ? "关闭遮盖" : "启用遮盖";
         els.lineJumpInput.min = total ? "1" : "0";
         els.lineJumpInput.max = total ? String(total) : "0";
         els.lineJumpInput.value = total ? String(current) : "0";
         els.lineJumpInput.disabled = total < 2;
+      }
+
+      function toggleLineJump() {
+        if (!state.lyrics.length) {
+          return;
+        }
+        state.lineJumpVisible = !state.lineJumpVisible;
+        updateLineJump();
+      }
+
+      function hideLineJump() {
+        state.lineJumpVisible = false;
+        updateLineJump();
       }
 
       function handleImmersiveSwipe(direction) {
@@ -1683,15 +1645,15 @@
       }
 
       function showMiddleFeedback(text) {
-        if (!els.middleZoneLabel) {
+        if (!els.markZoneLabel) {
           return;
         }
         if (state.markFeedbackTimer) {
           window.clearTimeout(state.markFeedbackTimer);
         }
-        els.middleZoneLabel.innerHTML = escapeHtml(text);
+        els.markZoneLabel.innerHTML = escapeHtml(text);
         state.markFeedbackTimer = window.setTimeout(function () {
-          els.middleZoneLabel.innerHTML = "点击打点，左右滑动跳转点位";
+          els.markZoneLabel.innerHTML = "点击打点，左右滑动跳转点位";
           state.markFeedbackTimer = null;
         }, 1000);
       }
@@ -1738,14 +1700,25 @@
         var startX = 0;
         var startY = 0;
         var startTime = 0;
+        var ignoreGesture = false;
+        var suppressMouseUntil = 0;
         el.ontouchstart = function (event) {
           var touch = event.changedTouches[0];
+          ignoreGesture = isInteractiveTarget(event.target || event.srcElement, el);
+          if (ignoreGesture) {
+            return;
+          }
           startX = touch.clientX;
           startY = touch.clientY;
           startTime = new Date().getTime();
         };
         el.ontouchend = function (event) {
           var touch = event.changedTouches[0];
+          suppressMouseUntil = new Date().getTime() + 700;
+          if (ignoreGesture) {
+            ignoreGesture = false;
+            return;
+          }
           var dx = touch.clientX - startX;
           var dy = touch.clientY - startY;
           var absX = Math.abs(dx);
@@ -1763,6 +1736,57 @@
             onTap();
           }
         };
+        el.onmousedown = function (event) {
+          if (new Date().getTime() < suppressMouseUntil) {
+            ignoreGesture = true;
+            return;
+          }
+          if (isInteractiveTarget(event.target || event.srcElement, el)) {
+            ignoreGesture = true;
+            return;
+          }
+          ignoreGesture = false;
+          startX = event.clientX;
+          startY = event.clientY;
+          startTime = new Date().getTime();
+        };
+        el.onmouseup = function (event) {
+          var dx;
+          var dy;
+          var absX;
+          var absY;
+          var threshold;
+          var elapsed;
+          if (ignoreGesture) {
+            ignoreGesture = false;
+            return;
+          }
+          dx = event.clientX - startX;
+          dy = event.clientY - startY;
+          absX = Math.abs(dx);
+          absY = Math.abs(dy);
+          threshold = normalizeNumber(state.settings.swipeThreshold, 30, 160, defaults.swipeThreshold);
+          elapsed = new Date().getTime() - startTime;
+          if (absX >= threshold && absX > absY * 1.25) {
+            onSwipe(dx < 0 ? "left" : "right");
+            return;
+          }
+          if (onTap && absX < 10 && absY < 10 && elapsed < 500) {
+            onTap();
+          }
+        };
+      }
+
+      function isInteractiveTarget(node, boundary) {
+        var tag;
+        while (node && node !== boundary) {
+          tag = node.tagName ? node.tagName.toLowerCase() : "";
+          if (tag === "button" || tag === "input" || hasClass(node, "masked-word")) {
+            return true;
+          }
+          node = node.parentNode;
+        }
+        return false;
       }
 
       function normalizeNumber(value, min, max, fallback) {
