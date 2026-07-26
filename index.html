@@ -707,6 +707,7 @@
         marks: [],
         markJumpAnchor: null,
         markJumpAt: 0,
+        pendingOpenMarkSeek: null,
         markFeedbackTimer: null,
         progressDragging: false,
         lineJumpVisible: false,
@@ -791,6 +792,7 @@
           updateFileProgress();
         };
         els.audio.onloadedmetadata = function () {
+          seekToPendingOpenMark();
           updateMarkButtons();
           updateFileProgress();
         };
@@ -1166,11 +1168,13 @@
         state.audioReady = true;
         state.lineIndex = 0;
         restorePlaybackState();
+        prepareOpenMarkSeek();
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.pause();
         els.audio.src = entry.url;
         els.audio.currentTime = 0;
+        seekToPendingOpenMark();
         els.fileName.innerHTML = escapeHtml(state.fileName);
         updateFileNameScroll();
         setLyricsText("");
@@ -1227,9 +1231,12 @@
         state.audioReady = true;
         state.lineIndex = 0;
         restorePlaybackState();
+        prepareOpenMarkSeek();
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.src = state.fileUrl;
+        els.audio.currentTime = 0;
+        seekToPendingOpenMark();
         els.fileName.innerHTML = escapeHtml(state.fileName);
         updateFileNameScroll();
         els.audio.pause();
@@ -1448,6 +1455,29 @@
           }
         }
         return list;
+      }
+
+      function prepareOpenMarkSeek() {
+        var list = getUniqueMarks();
+        state.pendingOpenMarkSeek = list.length ? list[list.length - 1] : null;
+      }
+
+      function seekToPendingOpenMark() {
+        var mark = state.pendingOpenMarkSeek;
+        if (mark === null || !state.audioReady) {
+          return;
+        }
+        if (els.audio.duration && !isNaN(els.audio.duration) && mark > els.audio.duration) {
+          mark = els.audio.duration;
+        }
+        try {
+          els.audio.currentTime = mark;
+          state.pendingOpenMarkSeek = null;
+        } catch (e) {
+          return;
+        }
+        updateMarkButtons();
+        updateFileProgress();
       }
 
       function getMarkSearchBase() {
