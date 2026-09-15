@@ -19,6 +19,7 @@ const storage = {};
 function boot() {
   const document = target();
   const window = target();
+  window.setTimeout = function (fn) { fn(); };
   window.localStorage = {
     getItem(key) { return storage[key] || null; },
     setItem(key, value) { storage[key] = value; }
@@ -27,7 +28,7 @@ function boot() {
   vm.createContext(context);
   vm.runInContext(script.replace('      init();', `
     window.test = { state: state, els: els, bind: bindContinuousGestures,
-      bindSettings: bindSettingInputs, render: renderTranscript };
+      bindSettings: bindSettingInputs, render: renderTranscript, updateProgress: updateFileProgress };
     window.actions = [];
     togglePlay = function () { window.actions.push('play'); };
     addMark = function () { window.actions.push('mark'); };
@@ -37,7 +38,9 @@ function boot() {
   const api = window.test;
   for (const name of ['transcriptScroll', 'continuousModeInput', 'playerPage',
     'forwardStepInput', 'backStepInput', 'markJumpTimeoutInput', 'swipeThresholdInput',
-    'topRatioInput', 'middleRatioInput', 'lyricsInput']) api.els[name] = target();
+    'topRatioInput', 'middleRatioInput', 'lyricsInput', 'statusDisplayInput',
+    'showTotalDurationInput', 'fileName', 'audio', 'fileProgress']) api.els[name] = target();
+  api.els.fileName.parentNode = { clientWidth: 200 };
   api.bind();
   api.bindSettings();
   return { api, window, document };
@@ -114,4 +117,34 @@ desktop.document.listeners.mousemove({ clientX: 150, clientY: 100 });
 desktop.document.listeners.mouseup({ clientX: 150, clientY: 100 });
 assert.equal(desktopScroller.scrollTop, 450);
 assert.equal(desktop.window.actions.length, 0);
-console.log('Continuous mode: settings, transcript, gestures and cancellation passed.');
+// Status text updates with playback and both display preferences survive reload.
+const status = boot().api;
+assert.equal(status.state.settings.statusDisplay, 'progress');
+assert.equal(status.state.settings.showTotalDuration, false);
+status.state.audioReady = true;
+status.state.fileName = 'Example <audio>.mp3';
+status.els.audio.currentTime = 83;
+status.els.audio.duration = 765;
+status.updateProgress();
+assert.equal(status.els.fileName.textContent, '1:23');
+assert.equal(status.els.fileProgress.style.width, (83 / 765 * 100) + '%');
+status.els.showTotalDurationInput.checked = true;
+status.els.showTotalDurationInput.onchange();
+assert.equal(status.els.fileName.textContent, '1:23 / 12:45');
+assert.equal(boot().api.state.settings.showTotalDuration, true);
+status.els.audio.currentTime = 84;
+status.updateProgress();
+assert.equal(status.els.fileName.textContent, '1:24 / 12:45');
+status.els.audio.duration = NaN;
+status.updateProgress();
+assert.equal(status.els.fileName.textContent, '1:24 / --:--');
+status.els.statusDisplayInput.value = 'title';
+status.els.statusDisplayInput.onchange();
+assert.equal(status.els.fileName.textContent, 'Example <audio>.mp3');
+assert.equal(status.els.showTotalDurationInput.disabled, true);
+assert.equal(boot().api.state.settings.statusDisplay, 'title');
+status.els.statusDisplayInput.value = 'progress';
+status.els.statusDisplayInput.onchange();
+assert.equal(status.els.showTotalDurationInput.disabled, false);
+assert.equal(status.els.fileName.textContent, '1:24 / --:--');
+console.log('Continuous mode and status display checks passed.');

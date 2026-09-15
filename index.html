@@ -698,6 +698,17 @@
       <div class="config-section">
         <h2>界面</h2>
         <div class="field">
+          <label for="statusDisplayInput">顶部状态栏显示</label>
+          <select id="statusDisplayInput">
+            <option value="progress">播放进度</option>
+            <option value="title">音频标题</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="showTotalDurationInput">播放进度显示总时长</label>
+          <input id="showTotalDurationInput" type="checkbox">
+        </div>
+        <div class="field">
           <label for="continuousModeInput">全文滚动页面</label>
           <input id="continuousModeInput" type="checkbox">
         </div>
@@ -733,6 +744,8 @@
         markJumpTimeout: 1,
         maskText: false,
         continuousMode: false,
+        statusDisplay: "progress",
+        showTotalDuration: false,
         swipeThreshold: 50,
         topRatio: 25,
         middleRatio: 25
@@ -795,6 +808,8 @@
         els.immersiveView = $("immersiveView");
         els.transcriptScroll = $("transcriptScroll");
         els.continuousModeInput = $("continuousModeInput");
+        els.statusDisplayInput = $("statusDisplayInput");
+        els.showTotalDurationInput = $("showTotalDurationInput");
         els.topZone = $("topZone");
         els.middleZone = $("middleZone");
         els.playZoneLabel = $("playZoneLabel");
@@ -866,6 +881,17 @@
       }
 
       function bindSettingInputs() {
+        els.statusDisplayInput.onchange = function () {
+          state.settings.statusDisplay = this.value === "title" ? "title" : "progress";
+          els.showTotalDurationInput.disabled = state.settings.statusDisplay === "title";
+          updateStatusText();
+          saveSettings();
+        };
+        els.showTotalDurationInput.onchange = function () {
+          state.settings.showTotalDuration = this.checked;
+          updateStatusText();
+          saveSettings();
+        };
         els.continuousModeInput.onchange = function () {
           state.settings.continuousMode = this.checked;
           applyPlayerMode();
@@ -939,6 +965,8 @@
         target.markJumpTimeout = normalizeNumber(source.markJumpTimeout, 0.1, 10, defaults.markJumpTimeout);
         target.maskText = !!source.maskText;
         target.continuousMode = source.continuousMode === true;
+        target.statusDisplay = source.statusDisplay === "title" ? "title" : "progress";
+        target.showTotalDuration = source.showTotalDuration === true;
         target.swipeThreshold = normalizeNumber(source.swipeThreshold, 30, 160, defaults.swipeThreshold);
         target.topRatio = normalizeNumber(source.topRatio, 15, 60, defaults.topRatio);
         target.middleRatio = normalizeNumber(source.middleRatio, 15, 60, defaults.middleRatio);
@@ -1020,6 +1048,10 @@
       }
 
       function applySettingsToControls() {
+        els.statusDisplayInput.value = state.settings.statusDisplay;
+        els.showTotalDurationInput.checked = state.settings.showTotalDuration;
+        els.showTotalDurationInput.disabled = state.settings.statusDisplay === "title";
+        updateStatusText();
         els.continuousModeInput.checked = state.settings.continuousMode;
         applyPlayerMode();
         els.forwardStepInput.value = state.settings.forwardStep;
@@ -1617,6 +1649,7 @@
       }
 
       function updateFileProgress() {
+        updateStatusText();
         var percent = 0;
         if (state.audioReady && els.audio.duration && !isNaN(els.audio.duration)) {
           percent = (els.audio.currentTime / els.audio.duration) * 100;
@@ -1639,10 +1672,25 @@
         els.progressDragTime.innerHTML = formatTime(els.audio.currentTime) + " / " + formatTime(els.audio.duration);
       }
 
+      function updateStatusText() {
+        var text = state.fileName || "未选择音频";
+        if (state.settings.statusDisplay === "progress" && state.audioReady) {
+          text = formatTime(isFinite(els.audio.currentTime) ? els.audio.currentTime : 0);
+          if (state.settings.showTotalDuration) {
+            text += " / " + (isFinite(els.audio.duration) && els.audio.duration > 0 ? formatTime(els.audio.duration) : "--:--");
+          }
+        }
+        if (els.fileName.textContent !== text) {
+          els.fileName.textContent = text;
+          updateFileNameScroll();
+        }
+      }
+
       function updateFileNameScroll() {
         removeClass(els.fileName, "scrolling");
+        if (state.settings.statusDisplay !== "title") { return; }
         window.setTimeout(function () {
-          if (els.fileName.scrollWidth > els.fileName.parentNode.clientWidth + 2) {
+          if (state.settings.statusDisplay === "title" && els.fileName.scrollWidth > els.fileName.parentNode.clientWidth + 2) {
             addClass(els.fileName, "scrolling");
           }
         }, 0);
