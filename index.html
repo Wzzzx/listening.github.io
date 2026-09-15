@@ -204,9 +204,25 @@
       z-index: 0;
     }
 
+    .file-marks {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .file-mark {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(92, 119, 88, 0.65);
+      transform: translateX(-50%);
+    }
+
     .file-name {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       display: inline-block;
       min-width: 100%;
       padding-left: 10px;
@@ -622,6 +638,7 @@
     <div class="topbar">
       <div class="file-name-box">
         <div id="fileProgress" class="file-progress"></div>
+        <div id="fileMarks" class="file-marks" aria-hidden="true"></div>
         <span id="fileName" class="file-name">未选择音频</span>
       </div>
       <button id="configBtn" type="button">配置</button>
@@ -798,6 +815,7 @@
         els.browserList = $("browserList");
         els.configBtn = $("configBtn");
         els.fileProgress = $("fileProgress");
+        els.fileMarks = $("fileMarks");
         els.fileName = $("fileName");
         els.fileNameBox = els.fileName ? els.fileName.parentNode : null;
         els.progressDragPanel = $("progressDragPanel");
@@ -857,6 +875,10 @@
         };
         els.audio.onloadedmetadata = function () {
           seekToPendingOpenMark();
+          updateMarkButtons();
+          updateFileProgress();
+        };
+        els.audio.ondurationchange = function () {
           updateMarkButtons();
           updateFileProgress();
         };
@@ -1645,7 +1667,22 @@
       }
 
       function updateMarkButtons() {
-        return;
+        var duration = els.audio.duration;
+        var html = "";
+        var i;
+        var percent;
+        if (state.audioReady && isFinite(duration) && duration > 0) {
+          for (i = 0; i < state.marks.length; i += 1) {
+            if (!isFinite(state.marks[i]) || state.marks[i] < 0 || state.marks[i] > duration) {
+              continue;
+            }
+            percent = state.marks[i] / duration * 100;
+            html += '<span class="file-mark" style="left:' + percent + '%"></span>';
+          }
+        }
+        if (els.fileMarks.innerHTML !== html) {
+          els.fileMarks.innerHTML = html;
+        }
       }
 
       function updateFileProgress() {
