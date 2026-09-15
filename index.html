@@ -290,6 +290,44 @@
       overflow: hidden;
     }
 
+    .continuous-view {
+      position: relative;
+      flex: 1 1 0;
+      min-height: 0;
+      display: none;
+      background: linear-gradient(to bottom, #e6efdf 0%, #e6efdf 50%, #e3edf5 50%, #e3edf5 100%);
+    }
+
+    .continuous-mode .immersive-view {
+      display: none;
+    }
+
+    .continuous-mode .continuous-view {
+      display: block;
+    }
+
+    .transcript-scroll {
+      position: absolute;
+      inset: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      touch-action: pan-y;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      user-select: none;
+      -webkit-user-select: none;
+      padding: 24px 22px;
+      font-size: 22px;
+      line-height: 1.8;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .transcript-line {
+      margin: 0 0 24px;
+      white-space: pre-wrap;
+    }
+
     .touch-zone {
       position: relative;
       display: flex;
@@ -617,6 +655,9 @@
         <div id="markZoneLabel" class="zone-label">点击打点，左右滑动跳转点位</div>
       </div>
     </div>
+    <div id="continuousView" class="continuous-view">
+      <div id="transcriptScroll" class="transcript-scroll" tabindex="0" aria-label="全文字幕"></div>
+    </div>
   </div>
 
   <div id="configPage" class="page config-page">
@@ -657,6 +698,10 @@
       <div class="config-section">
         <h2>界面</h2>
         <div class="field">
+          <label for="continuousModeInput">全文滚动页面</label>
+          <input id="continuousModeInput" type="checkbox">
+        </div>
+        <div class="field">
           <label for="topRatioInput">上区域占比 <span id="topRatioValue" class="range-value"></span></label>
           <input id="topRatioInput" type="range" min="15" max="60" step="1">
         </div>
@@ -687,6 +732,7 @@
         backStep: 5,
         markJumpTimeout: 1,
         maskText: false,
+        continuousMode: false,
         swipeThreshold: 50,
         topRatio: 25,
         middleRatio: 25
@@ -747,6 +793,8 @@
         els.progressDragHandle = $("progressDragHandle");
         els.progressDragTime = $("progressDragTime");
         els.immersiveView = $("immersiveView");
+        els.transcriptScroll = $("transcriptScroll");
+        els.continuousModeInput = $("continuousModeInput");
         els.topZone = $("topZone");
         els.middleZone = $("middleZone");
         els.playZoneLabel = $("playZoneLabel");
@@ -784,6 +832,7 @@
         els.lineJumpInput.onchange = hideLineJump;
         els.markList.onclick = onMarkListClick;
         bindProgressDrag();
+        bindContinuousGestures();
 
         els.audio.onplay = updatePlayButton;
         els.audio.onpause = updatePlayButton;
@@ -817,6 +866,11 @@
       }
 
       function bindSettingInputs() {
+        els.continuousModeInput.onchange = function () {
+          state.settings.continuousMode = this.checked;
+          applyPlayerMode();
+          saveSettings();
+        };
         els.forwardStepInput.oninput = function () {
           state.settings.forwardStep = normalizeNumber(this.value, 1, 300, defaults.forwardStep);
           saveSettings();
@@ -884,6 +938,7 @@
         target.backStep = normalizeNumber(source.backStep, 1, 300, defaults.backStep);
         target.markJumpTimeout = normalizeNumber(source.markJumpTimeout, 0.1, 10, defaults.markJumpTimeout);
         target.maskText = !!source.maskText;
+        target.continuousMode = source.continuousMode === true;
         target.swipeThreshold = normalizeNumber(source.swipeThreshold, 30, 160, defaults.swipeThreshold);
         target.topRatio = normalizeNumber(source.topRatio, 15, 60, defaults.topRatio);
         target.middleRatio = normalizeNumber(source.middleRatio, 15, 60, defaults.middleRatio);
@@ -965,6 +1020,8 @@
       }
 
       function applySettingsToControls() {
+        els.continuousModeInput.checked = state.settings.continuousMode;
+        applyPlayerMode();
         els.forwardStepInput.value = state.settings.forwardStep;
         els.backStepInput.value = state.settings.backStep;
         els.markJumpTimeoutInput.value = state.settings.markJumpTimeout;
@@ -1611,9 +1668,105 @@
           state.lineIndex = Math.max(0, state.lyrics.length - 1);
         }
         renderLine();
+        renderTranscript();
         if (!restoredPendingIndex && state.lineIndex !== previousIndex) {
           savePlaybackState();
         }
+      }
+
+      function applyPlayerMode() {
+        if (state.settings.continuousMode) {
+          addClass(els.playerPage, "continuous-mode");
+        } else {
+          removeClass(els.playerPage, "continuous-mode");
+        }
+        els.topRatioInput.disabled = state.settings.continuousMode;
+        els.middleRatioInput.disabled = state.settings.continuousMode;
+      }
+
+      function renderTranscript() {
+        var html = "";
+        var i;
+        for (i = 0; i < state.lyrics.length; i += 1) {
+          html += '<p class="transcript-line">' + escapeHtml(state.lyrics[i]) + '</p>';
+        }
+        els.transcriptScroll.innerHTML = html;
+        els.transcriptScroll.scrollTop = 0;
+      }
+
+      function bindContinuousGestures() {
+        var el = els.transcriptScroll;
+        var gesture = null;
+        var suppressMouseUntil = 0;
+
+        function start(x, y, mouse) {
+          var rect = el.getBoundingClientRect();
+          gesture = {
+            x: x, y: y, time: new Date().getTime(), axis: "",
+            upper: y < rect.top + rect.height / 2,
+            scrollTop: el.scrollTop, mouse: mouse, moved: false
+          };
+        }
+
+        function move(x, y, event) {
+          if (!gesture) { return; }
+          var dx = Math.abs(x - gesture.x);
+          var dy = Math.abs(y - gesture.y);
+          if (dx >= 10 || dy >= 10) { gesture.moved = true; }
+          if (!gesture.axis && gesture.moved) {
+            if (dx > dy * 1.25) { gesture.axis = "x"; }
+            else if (dy > dx * 1.25) { gesture.axis = "y"; }
+          }
+          if (gesture.axis === "x" && event.cancelable) {
+            event.preventDefault();
+          }
+          if (gesture.mouse && gesture.axis === "y") {
+            el.scrollTop = gesture.scrollTop + gesture.y - y;
+          }
+        }
+
+        function end(x, y, event) {
+          if (!gesture) { return; }
+          move(x, y, event);
+          var completed = gesture;
+          gesture = null;
+          var dx = x - completed.x;
+          var threshold = normalizeNumber(state.settings.swipeThreshold, 30, 160, defaults.swipeThreshold);
+          if (completed.axis === "x" && Math.abs(dx) >= threshold) {
+            if (completed.upper) { handleImmersiveSwipe(dx < 0 ? "left" : "right"); }
+            else { handleMiddleSwipe(dx < 0 ? "left" : "right"); }
+          } else if (!completed.moved && new Date().getTime() - completed.time < 500) {
+            if (completed.upper) { togglePlay(); }
+            else { addMark(true); }
+          }
+        }
+
+        el.addEventListener("touchstart", function (event) {
+          suppressMouseUntil = new Date().getTime() + 700;
+          if (event.touches.length !== 1) { gesture = null; return; }
+          start(event.touches[0].clientX, event.touches[0].clientY, false);
+        }, { passive: true });
+        el.addEventListener("touchmove", function (event) {
+          if (event.touches.length !== 1) { gesture = null; return; }
+          move(event.touches[0].clientX, event.touches[0].clientY, event);
+        }, { passive: false });
+        el.addEventListener("touchend", function (event) {
+          suppressMouseUntil = new Date().getTime() + 700;
+          if (event.touches.length) { gesture = null; return; }
+          end(event.changedTouches[0].clientX, event.changedTouches[0].clientY, event);
+        }, { passive: false });
+        el.addEventListener("touchcancel", function () { gesture = null; });
+        el.addEventListener("mousedown", function (event) {
+          if (event.button !== 0 || new Date().getTime() < suppressMouseUntil) { return; }
+          start(event.clientX, event.clientY, true);
+        });
+        document.addEventListener("mousemove", function (event) {
+          if (gesture && gesture.mouse) { move(event.clientX, event.clientY, event); }
+        });
+        document.addEventListener("mouseup", function (event) {
+          if (gesture && gesture.mouse) { end(event.clientX, event.clientY, event); }
+        });
+        window.addEventListener("blur", function () { gesture = null; });
       }
 
       function renderLine() {
