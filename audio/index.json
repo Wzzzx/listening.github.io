@@ -1,8 +1,24 @@
 {
-  "generatedAt": "2026-07-27T12:50:40.577Z",
+  "generatedAt": "2026-10-14T14:33:11.135Z",
   "baseDir": "audio",
-  "count": 6,
+  "count": 3,
   "files": [
+    {
+      "id": "audio/All Ears English/260718_AEE_Is Everything Peachy in Your Neck of the Woods_/260718_AEE_Is Everything Peachy in Your Neck of the Woods_.mp3",
+      "title": "260718_AEE_Is Everything Peachy in Your Neck of the Woods_",
+      "name": "260718_AEE_Is Everything Peachy in Your Neck of the Woods_.mp3",
+      "path": "audio/All Ears English/260718_AEE_Is Everything Peachy in Your Neck of the Woods_/260718_AEE_Is Everything Peachy in Your Neck of the Woods_.mp3",
+      "url": "audio/All%20Ears%20English/260718_AEE_Is%20Everything%20Peachy%20in%20Your%20Neck%20of%20the%20Woods_/260718_AEE_Is%20Everything%20Peachy%20in%20Your%20Neck%20of%20the%20Woods_.mp3",
+      "extension": "mp3",
+      "size": 8252820,
+      "modifiedAt": "2026-10-14T14:31:43.241Z",
+      "folders": [
+        "All Ears English",
+        "260718_AEE_Is Everything Peachy in Your Neck of the Woods_"
+      ],
+      "transcriptPath": "audio/All Ears English/260718_AEE_Is Everything Peachy in Your Neck of the Woods_/260718_AEE_Is Everything Peachy in Your Neck of the Woods_.txt",
+      "transcriptUrl": "audio/All%20Ears%20English/260718_AEE_Is%20Everything%20Peachy%20in%20Your%20Neck%20of%20the%20Woods_/260718_AEE_Is%20Everything%20Peachy%20in%20Your%20Neck%20of%20the%20Woods_.txt"
+    },
     {
       "id": "audio/All Ears English/260720_AEE 2654_Do You Love it or Hate it_/260720_AEE 2654_Do You Love it or Hate it_.mp3",
       "title": "260720_AEE 2654_Do You Love it or Hate it_",
@@ -11,77 +27,13 @@
       "url": "audio/All%20Ears%20English/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_.mp3",
       "extension": "mp3",
       "size": 11039450,
-      "modifiedAt": "2026-07-27T12:38:27.816Z",
+      "modifiedAt": "2026-10-14T14:31:53.129Z",
       "folders": [
         "All Ears English",
         "260720_AEE 2654_Do You Love it or Hate it_"
       ],
       "transcriptPath": "audio/All Ears English/260720_AEE 2654_Do You Love it or Hate it_/260720_AEE 2654_Do You Love it or Hate it_.txt",
       "transcriptUrl": "audio/All%20Ears%20English/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_.txt"
-    },
-    {
-      "id": "audio/All Ears English/260721_AEE 2655_Are You Slammed with Work_How to Talk About It/260721_AEE 2655_Are You Slammed with Work_How to Talk About It.mp3",
-      "title": "260721_AEE 2655_Are You Slammed with Work_How to Talk About It",
-      "name": "260721_AEE 2655_Are You Slammed with Work_How to Talk About It.mp3",
-      "path": "audio/All Ears English/260721_AEE 2655_Are You Slammed with Work_How to Talk About It/260721_AEE 2655_Are You Slammed with Work_How to Talk About It.mp3",
-      "url": "audio/All%20Ears%20English/260721_AEE%202655_Are%20You%20Slammed%20with%20Work_How%20to%20Talk%20About%20It/260721_AEE%202655_Are%20You%20Slammed%20with%20Work_How%20to%20Talk%20About%20It.mp3",
-      "extension": "mp3",
-      "size": 9574941,
-      "modifiedAt": "2026-07-27T12:38:36.851Z",
-      "folders": [
-        "All Ears English",
-        "260721_AEE 2655_Are You Slammed with Work_How to Talk About It"
-      ],
-      "transcriptPath": "audio/All Ears English/260721_AEE 2655_Are You Slammed with Work_How to Talk About It/260721_AEE 2655_Are You Slammed with Work_How to Talk About It.txt",
-      "transcriptUrl": "audio/All%20Ears%20English/260721_AEE%202655_Are%20You%20Slammed%20with%20Work_How%20to%20Talk%20About%20It/260721_AEE%202655_Are%20You%20Slammed%20with%20Work_How%20to%20Talk%20About%20It.txt"
-    },
-    {
-      "id": "audio/All Ears English/260722_AEE 2656_Why Not Be More Spontaneous in English_/260722_AEE 2656_Why Not Be More Spontaneous in English_.mp3",
-      "title": "260722_AEE 2656_Why Not Be More Spontaneous in English_",
-      "name": "260722_AEE 2656_Why Not Be More Spontaneous in English_.mp3",
-      "path": "audio/All Ears English/260722_AEE 2656_Why Not Be More Spontaneous in English_/260722_AEE 2656_Why Not Be More Spontaneous in English_.mp3",
-      "url": "audio/All%20Ears%20English/260722_AEE%202656_Why%20Not%20Be%20More%20Spontaneous%20in%20English_/260722_AEE%202656_Why%20Not%20Be%20More%20Spontaneous%20in%20English_.mp3",
-      "extension": "mp3",
-      "size": 9288200,
-      "modifiedAt": "2026-07-27T12:38:45.691Z",
-      "folders": [
-        "All Ears English",
-        "260722_AEE 2656_Why Not Be More Spontaneous in English_"
-      ],
-      "transcriptPath": "audio/All Ears English/260722_AEE 2656_Why Not Be More Spontaneous in English_/260722_AEE 2656_Why Not Be More Spontaneous in English_.txt",
-      "transcriptUrl": "audio/All%20Ears%20English/260722_AEE%202656_Why%20Not%20Be%20More%20Spontaneous%20in%20English_/260722_AEE%202656_Why%20Not%20Be%20More%20Spontaneous%20in%20English_.txt"
-    },
-    {
-      "id": "audio/All Ears English/260723_AEE 2657_What Happened When You Were About to Leave_/260723_AEE 2657_What Happened When You Were About to Leave_.mp3",
-      "title": "260723_AEE 2657_What Happened When You Were About to Leave_",
-      "name": "260723_AEE 2657_What Happened When You Were About to Leave_.mp3",
-      "path": "audio/All Ears English/260723_AEE 2657_What Happened When You Were About to Leave_/260723_AEE 2657_What Happened When You Were About to Leave_.mp3",
-      "url": "audio/All%20Ears%20English/260723_AEE%202657_What%20Happened%20When%20You%20Were%20About%20to%20Leave_/260723_AEE%202657_What%20Happened%20When%20You%20Were%20About%20to%20Leave_.mp3",
-      "extension": "mp3",
-      "size": 9395433,
-      "modifiedAt": "2026-07-27T12:38:54.745Z",
-      "folders": [
-        "All Ears English",
-        "260723_AEE 2657_What Happened When You Were About to Leave_"
-      ],
-      "transcriptPath": "audio/All Ears English/260723_AEE 2657_What Happened When You Were About to Leave_/260723_AEE 2657_What Happened When You Were About to Leave_.txt",
-      "transcriptUrl": "audio/All%20Ears%20English/260723_AEE%202657_What%20Happened%20When%20You%20Were%20About%20to%20Leave_/260723_AEE%202657_What%20Happened%20When%20You%20Were%20About%20to%20Leave_.txt"
-    },
-    {
-      "id": "audio/All Ears English/260725_AEE_Did You See It or Watch It_/260725_AEE_Did You See It or Watch It_.mp3",
-      "title": "260725_AEE_Did You See It or Watch It_",
-      "name": "260725_AEE_Did You See It or Watch It_.mp3",
-      "path": "audio/All Ears English/260725_AEE_Did You See It or Watch It_/260725_AEE_Did You See It or Watch It_.mp3",
-      "url": "audio/All%20Ears%20English/260725_AEE_Did%20You%20See%20It%20or%20Watch%20It_/260725_AEE_Did%20You%20See%20It%20or%20Watch%20It_.mp3",
-      "extension": "mp3",
-      "size": 10739971,
-      "modifiedAt": "2026-07-27T12:39:05.109Z",
-      "folders": [
-        "All Ears English",
-        "260725_AEE_Did You See It or Watch It_"
-      ],
-      "transcriptPath": "audio/All Ears English/260725_AEE_Did You See It or Watch It_/260725_AEE_Did You See It or Watch It_.txt",
-      "transcriptUrl": "audio/All%20Ears%20English/260725_AEE_Did%20You%20See%20It%20or%20Watch%20It_/260725_AEE_Did%20You%20See%20It%20or%20Watch%20It_.txt"
     },
     {
       "id": "audio/VS Code Insiders Podcast/Inside The Agent Loop with Pierce Boggan/Inside The Agent Loop with Pierce Boggan.mp3",
@@ -91,7 +43,7 @@
       "url": "audio/VS%20Code%20Insiders%20Podcast/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan/Inside%20The%20Agent%20Loop%20with%20Pierce%20Boggan.mp3",
       "extension": "mp3",
       "size": 15946201,
-      "modifiedAt": "2026-07-27T12:39:41.557Z",
+      "modifiedAt": "2026-10-14T14:32:02.725Z",
       "folders": [
         "VS Code Insiders Podcast",
         "Inside The Agent Loop with Pierce Boggan"
