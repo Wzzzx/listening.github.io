@@ -1757,9 +1757,12 @@
           var match = /^(\d+):([0-5]\d)\.(\d{2})$/.exec(trim(lines[i]));
           if (!match) { return fallback; }
           var start = Number(match[1]) * 60 + Number(match[2]) + Number(match[3]) / 100;
-          if (!isFinite(start) || (cues.length && start < cues[cues.length - 1].start)) { return fallback; }
-          cues.push({ start: start, speaker: trim(lines[i + 1]), text: lines[i + 2] });
+          if (!isFinite(start)) { return fallback; }
+          cues.push({ start: start, speaker: trim(lines[i + 1]), text: lines[i + 2], sourceIndex: i / 3 });
         }
+        // Speaker turns can overlap and be exported slightly out of time order.
+        // Keep both the displayed paragraphs and binary-search timeline aligned.
+        cues.sort(function (a, b) { return a.start - b.start || a.sourceIndex - b.sourceIndex; });
         return { type: "timed-speaker", cues: cues, lines: cues.map(function (cue) { return cue.text; }) };
       }
 

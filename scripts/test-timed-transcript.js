@@ -25,7 +25,17 @@ vm.runInContext(script.replace('      init();', `
     stop: stopTranscriptFollow, render: renderTranscript, bind: bindContinuousGestures };
 `), context);
 const api = window.api;
-const sample = fs.readFileSync(path.join(root, 'demo.txt'), 'utf8');
+const sample = [
+  ['00:00.38', 'James', 'Welcome back everyone.'],
+  ['00:15.54', 'Justin', 'Good, how is it going?'],
+  ['00:21.43', 'James', 'We were planning to record.'],
+  ['00:37.21', 'James', 'You are a Pokemon fan.'],
+  ['00:37.27', 'Justin', 'wow'],
+  ['00:40.76', 'Justin', 'Just a little.'],
+  ['00:47.74', 'James', 'The two of them together.'],
+  ['01:18.30', 'James', 'Working with tools.'],
+  ['01:34.84', 'Justin', 'The general chat experience.']
+].map(lines => lines.join('\n')).join('\n\n');
 const parsed = api.parse(sample);
 assert.equal(parsed.type, 'timed-speaker');
 assert.equal(parsed.cues.length, 9);
@@ -36,9 +46,15 @@ for (const newline of ['\n', '\r\n', '\r']) {
   assert.equal(api.parse('\uFEFF' + sample.replace(/\r\n|\n|\r/g, newline)).type, 'timed-speaker');
 }
 for (const input of ['', 'plain\ntext', '00:01.00\nJames',
-  '00:60.00\nJames\ntext', '00:02.00\nJames\na\n00:01.00\nJustin\nb']) {
+  '00:60.00\nJames\ntext']) {
   assert.equal(api.parse(input).type, 'plain');
 }
+const unordered = api.parse('00:02.00\nJames\na\n00:01.00\nJustin\nb\n00:02.00\nJames\nc');
+assert.equal(unordered.type, 'timed-speaker');
+assert.deepEqual(Array.from(unordered.lines), ['b', 'a', 'c'], 'sort by time, preserving ties');
+api.state.transcriptCues = unordered.cues;
+assert.equal(api.indexAt(1), 0);
+assert.equal(api.indexAt(2), 2);
 api.state.transcriptCues = parsed.cues;
 for (const [time, index] of [[0, 0], [0.38, 0], [15.53, 0], [15.54, 1],
   [37.21, 3], [37.26, 3], [37.27, 4], [999, 8]]) {
@@ -142,4 +158,39 @@ api.refresh();
 assert.equal(frames.size, 0);
 assert.equal(timers.size, 0);
 assert.equal(scroller.style.paddingTop, '');
+
+// Exercise the actual catalog transcript: 00:23.70 precedes 00:23.65 in the export.
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'audio', 'index.json'), 'utf8'));
+const entry = catalog.files.find(file => file.transcriptPath && file.transcriptPath.includes('Inside The Agent Loop'));
+assert.ok(entry, 'real podcast fixture is in the audio catalog');
+const actualText = fs.readFileSync(path.join(root, entry.transcriptPath), 'utf8');
+const actual = api.parse(actualText);
+assert.equal(actual.type, 'timed-speaker');
+assert.equal(actual.cues.length, 224);
+api.state.transcriptType = actual.type;
+api.state.transcriptCues = actual.cues;
+api.state.lyrics = actual.lines;
+api.render();
+assert.equal((scroller.innerHTML.match(/class="transcript-line"/g) || []).length, 224);
+assert.doesNotMatch(scroller.innerHTML, />James<|>Pierce<|>\d+:\d{2}\.\d{2}</);
+assert.match(scroller.innerHTML, /I love it\. I love it\./);
+scroller.scrollHeight = 46000;
+scroller.children = actual.cues.map((_, i) => ({
+  getBoundingClientRect() { return { top: 250 + i * 200 - scroller.scrollTop, height: 100 }; }
+}));
+api.state.settings.continuousMode = true;
+api.els.audio.currentTime = 23.65;
+api.refresh(true);
+frame(1800);
+frame(2100);
+assert.equal(api.state.transcriptIndex, 3);
+assert.match(actual.cues[3].text, /^I love it/);
+assert.equal(scroller.scrollTop, 650);
+api.els.audio.currentTime = 23.70;
+api.sync(false);
+frame(2200);
+frame(2500);
+assert.equal(actual.cues[api.state.transcriptIndex].text, 'Right into my eyes.');
+assert.equal(scroller.scrollTop, 850, 'real transcript advances and centers the next paragraph');
+api.stop();
 console.log('Timed transcript parsing, synchronization and scrolling checks passed.');
