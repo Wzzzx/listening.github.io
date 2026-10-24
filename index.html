@@ -779,6 +779,14 @@
         fileKey: "",
         fileName: "",
         lyrics: [],
+        transcriptType: "plain",
+        transcriptCues: [],
+        transcriptIndex: -1,
+        transcriptFrame: null,
+        transcriptAnimation: null,
+        transcriptResumeTimer: null,
+        transcriptManual: false,
+        transcriptPointerDown: false,
         lineIndex: 0,
         marks: [],
         markJumpAnchor: null,
@@ -867,11 +875,14 @@
         bindProgressDrag();
         bindContinuousGestures();
 
-        els.audio.onplay = updatePlayButton;
-        els.audio.onpause = updatePlayButton;
+        els.audio.onplay = function () { updatePlayButton(); refreshTranscriptFollow(); };
+        els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
+        els.audio.onseeked = function () { refreshTranscriptFollow(true); };
+        window.addEventListener("resize", function () { refreshTranscriptFollow(); });
         els.audio.ontimeupdate = function () {
           updateMarkButtons();
           updateFileProgress();
+          syncTranscript(false);
         };
         els.audio.onloadedmetadata = function () {
           seekToPendingOpenMark();
@@ -1101,6 +1112,7 @@
         } else {
           addClass(els.playerPage, "active");
         }
+        refreshTranscriptFollow();
       }
 
       function loadAudioIndex() {
@@ -1333,6 +1345,8 @@
         if (!file) {
           return;
         }
+        stopTranscriptFollow();
+        state.transcriptIndex = -1;
         if (state.fileUrl) {
           getUrlApi().revokeObjectURL(state.fileUrl);
         }
@@ -1733,18 +1747,132 @@
         }, 0);
       }
 
+      function parseTranscript(text) {
+        var raw = text.replace(/^\uFEFF/, "").split(/\r\n|\n|\r/);
+        var lines = raw.filter(function (line) { return trim(line) !== ""; });
+        var fallback = { type: "plain", lines: lines, cues: [] };
+        var cues = [];
+        if (!lines.length || lines.length % 3 !== 0) { return fallback; }
+        for (var i = 0; i < lines.length; i += 3) {
+          var match = /^(\d+):([0-5]\d)\.(\d{2})$/.exec(trim(lines[i]));
+          if (!match) { return fallback; }
+          var start = Number(match[1]) * 60 + Number(match[2]) + Number(match[3]) / 100;
+          if (!isFinite(start) || (cues.length && start < cues[cues.length - 1].start)) { return fallback; }
+          cues.push({ start: start, speaker: trim(lines[i + 1]), text: lines[i + 2] });
+        }
+        return { type: "timed-speaker", cues: cues, lines: cues.map(function (cue) { return cue.text; }) };
+      }
+
+      function transcriptIndexAt(time) {
+        var cues = state.transcriptCues;
+        if (!cues.length) { return -1; }
+        var low = 0;
+        var high = cues.length;
+        while (low < high) {
+          var mid = Math.floor((low + high) / 2);
+          if (cues[mid].start <= time) { low = mid + 1; }
+          else { high = mid; }
+        }
+        return Math.max(0, low - 1);
+      }
+
+      function canFollowTranscript() {
+        return state.page === "player" && state.settings.continuousMode &&
+          state.transcriptType === "timed-speaker" && state.transcriptCues.length > 0;
+      }
+
+      function cancelTranscriptAnimation() {
+        if (state.transcriptAnimation !== null) {
+          window.cancelAnimationFrame(state.transcriptAnimation);
+          state.transcriptAnimation = null;
+        }
+      }
+
+      function stopTranscriptFollow() {
+        cancelTranscriptAnimation();
+        if (state.transcriptFrame !== null) { window.cancelAnimationFrame(state.transcriptFrame); }
+        if (state.transcriptResumeTimer !== null) { window.clearTimeout(state.transcriptResumeTimer); }
+        state.transcriptFrame = null;
+        state.transcriptResumeTimer = null;
+        state.transcriptManual = false;
+        state.transcriptPointerDown = false;
+      }
+
+      function centerTranscript(index) {
+        var el = els.transcriptScroll;
+        var line = el.children[index];
+        if (!line || !el.clientHeight) { return; }
+        cancelTranscriptAnimation();
+        var from = el.scrollTop;
+        var destination = from + line.getBoundingClientRect().top - el.getBoundingClientRect().top +
+          line.getBoundingClientRect().height / 2 - el.clientHeight / 2;
+        destination = Math.max(0, Math.min(destination, el.scrollHeight - el.clientHeight));
+        var started = null;
+        function animate(now) {
+          if (started === null) { started = now; }
+          var progress = Math.min(1, (now - started) / 300);
+          var eased = progress * progress * (3 - 2 * progress);
+          el.scrollTop = from + (destination - from) * eased;
+          state.transcriptAnimation = progress < 1 ? window.requestAnimationFrame(animate) : null;
+        }
+        state.transcriptAnimation = window.requestAnimationFrame(animate);
+      }
+
+      function syncTranscript(force) {
+        if (!canFollowTranscript() || state.transcriptManual) { return; }
+        var index = transcriptIndexAt(els.audio.currentTime || 0);
+        if (force || index !== state.transcriptIndex) {
+          state.transcriptIndex = index;
+          centerTranscript(index);
+        }
+      }
+
+      function refreshTranscriptFollow(resetManual) {
+        if (!canFollowTranscript()) {
+          stopTranscriptFollow();
+          if (els.transcriptScroll) {
+            els.transcriptScroll.style.paddingTop = "";
+            els.transcriptScroll.style.paddingBottom = "";
+          }
+          return;
+        }
+        if (resetManual) { stopTranscriptFollow(); }
+        var el = els.transcriptScroll;
+        el.style.paddingTop = el.clientHeight / 2 + "px";
+        el.style.paddingBottom = el.clientHeight / 2 + "px";
+        syncTranscript(true);
+        if (state.transcriptFrame !== null) { window.cancelAnimationFrame(state.transcriptFrame); }
+        state.transcriptFrame = null;
+        function tick() {
+          state.transcriptFrame = null;
+          if (!canFollowTranscript() || els.audio.paused || els.audio.ended) { return; }
+          syncTranscript(false);
+          state.transcriptFrame = window.requestAnimationFrame(tick);
+        }
+        if (!els.audio.paused && !els.audio.ended) { state.transcriptFrame = window.requestAnimationFrame(tick); }
+      }
+
+      function pauseTranscriptFollow() {
+        if (!canFollowTranscript()) { return; }
+        cancelTranscriptAnimation();
+        state.transcriptManual = true;
+        if (state.transcriptResumeTimer !== null) { window.clearTimeout(state.transcriptResumeTimer); }
+        state.transcriptResumeTimer = window.setTimeout(function () {
+          state.transcriptResumeTimer = null;
+          if (state.transcriptPointerDown) { pauseTranscriptFollow(); return; }
+          state.transcriptManual = false;
+          syncTranscript(true);
+        }, 3000);
+      }
+
       function updateLyrics(text) {
-        var raw = text.split(/\r?\n/);
-        var lines = [];
-        var i;
+        var parsed = parseTranscript(text);
         var previousIndex = state.lineIndex;
         var restoredPendingIndex = false;
-        for (i = 0; i < raw.length; i += 1) {
-          if (trim(raw[i]) !== "") {
-            lines.push(raw[i]);
-          }
-        }
-        state.lyrics = lines;
+        stopTranscriptFollow();
+        state.transcriptType = parsed.type;
+        state.transcriptCues = parsed.cues;
+        state.lyrics = parsed.lines;
         if (state.lyrics.length && state.pendingLineIndex !== null) {
           state.lineIndex = Math.min(state.pendingLineIndex, state.lyrics.length - 1);
           state.pendingLineIndex = null;
@@ -1767,6 +1895,7 @@
         }
         els.topRatioInput.disabled = state.settings.continuousMode;
         els.middleRatioInput.disabled = state.settings.continuousMode;
+        refreshTranscriptFollow();
       }
 
       function renderTranscript() {
@@ -1777,14 +1906,26 @@
         }
         els.transcriptScroll.innerHTML = html;
         els.transcriptScroll.scrollTop = 0;
+        state.transcriptIndex = -1;
+        refreshTranscriptFollow();
       }
 
       function bindContinuousGestures() {
         var el = els.transcriptScroll;
         var gesture = null;
         var suppressMouseUntil = 0;
+        el.addEventListener("wheel", pauseTranscriptFollow, { passive: true });
+        el.addEventListener("scroll", function () {
+          if (state.transcriptManual) { pauseTranscriptFollow(); }
+        }, { passive: true });
+        el.addEventListener("keydown", function (event) {
+          if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].indexOf(event.key) !== -1) {
+            pauseTranscriptFollow();
+          }
+        });
 
         function start(x, y, mouse) {
+          state.transcriptPointerDown = true;
           var rect = el.getBoundingClientRect();
           gesture = {
             x: x, y: y, time: new Date().getTime(), axis: "",
@@ -1805,12 +1946,15 @@
           if (gesture.axis === "x" && event.cancelable) {
             event.preventDefault();
           }
+          if (gesture.axis === "y") { pauseTranscriptFollow(); }
           if (gesture.mouse && gesture.axis === "y") {
             el.scrollTop = gesture.scrollTop + gesture.y - y;
           }
         }
 
         function end(x, y, event) {
+          state.transcriptPointerDown = false;
+          if (state.transcriptManual) { pauseTranscriptFollow(); }
           if (!gesture) { return; }
           move(x, y, event);
           var completed = gesture;
@@ -1828,19 +1972,19 @@
 
         el.addEventListener("touchstart", function (event) {
           suppressMouseUntil = new Date().getTime() + 700;
-          if (event.touches.length !== 1) { gesture = null; return; }
+          if (event.touches.length !== 1) { gesture = null; state.transcriptPointerDown = false; return; }
           start(event.touches[0].clientX, event.touches[0].clientY, false);
         }, { passive: true });
         el.addEventListener("touchmove", function (event) {
-          if (event.touches.length !== 1) { gesture = null; return; }
+          if (event.touches.length !== 1) { gesture = null; state.transcriptPointerDown = false; return; }
           move(event.touches[0].clientX, event.touches[0].clientY, event);
         }, { passive: false });
         el.addEventListener("touchend", function (event) {
           suppressMouseUntil = new Date().getTime() + 700;
-          if (event.touches.length) { gesture = null; return; }
+          if (event.touches.length) { gesture = null; state.transcriptPointerDown = false; return; }
           end(event.changedTouches[0].clientX, event.changedTouches[0].clientY, event);
         }, { passive: false });
-        el.addEventListener("touchcancel", function () { gesture = null; });
+        el.addEventListener("touchcancel", function () { gesture = null; state.transcriptPointerDown = false; });
         el.addEventListener("mousedown", function (event) {
           if (event.button !== 0 || new Date().getTime() < suppressMouseUntil) { return; }
           start(event.clientX, event.clientY, true);
@@ -1851,7 +1995,7 @@
         document.addEventListener("mouseup", function (event) {
           if (gesture && gesture.mouse) { end(event.clientX, event.clientY, event); }
         });
-        window.addEventListener("blur", function () { gesture = null; });
+        window.addEventListener("blur", function () { gesture = null; state.transcriptPointerDown = false; });
       }
 
       function renderLine() {
