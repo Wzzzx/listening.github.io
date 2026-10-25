@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const AUDIO_EXTENSIONS = new Set([
   ".aac",
@@ -27,6 +28,7 @@ function main() {
   }
 
   const files = walk(audioDir);
+  if (!args.skipCompress) compressNewAudio(files);
   const textFilesByBase = buildTextFileMap(files);
   const audioFiles = files
     .filter((filePath) => AUDIO_EXTENSIONS.has(path.extname(filePath).toLowerCase()))
@@ -59,6 +61,8 @@ function parseArgs(argv) {
     } else if (arg === "--out" && next) {
       result.out = next;
       index += 1;
+    } else if (arg === "--skip-compress") {
+      result.skipCompress = true;
     } else if (arg === "--help" || arg === "-h") {
       printHelp();
       process.exit(0);
@@ -76,8 +80,48 @@ function printHelp() {
 Options:
   --audio-dir <dir>  Directory to scan. Defaults to audio
   --out <file>       JSON file to write. Defaults to audio/index.json
+  --skip-compress    Skip compression of new MP3 files
   -h, --help         Show this help
+
+New MP3 paths absent from the existing output index are compressed using
+compress.cmd (Windows + ffmpeg, 64k by default). With no index, all MP3s
+are considered new. Existing paths and other audio formats are not compressed.
 `);
+}
+
+function compressNewAudio(files) {
+  let knownPaths = new Set();
+  if (fs.existsSync(outFile)) {
+    try {
+      const previous = JSON.parse(fs.readFileSync(outFile, "utf8"));
+      if (!Array.isArray(previous.files) || previous.files.some((file) => !file || typeof file.path !== "string")) {
+        throw new Error("Expected files with string paths");
+      }
+      knownPaths = new Set(previous.files.map((file) => file.path));
+    } catch (error) {
+      fail(`Cannot read existing index ${outFile}: ${error.message}`);
+    }
+  }
+  const newFiles = files.filter((file) =>
+    path.extname(file).toLowerCase() === ".mp3" && !knownPaths.has(toRelativeUrl(file))
+  );
+  if (!newFiles.length) return;
+  if (process.platform !== "win32") {
+    fail("MP3 compression requires Windows and ffmpeg. Use --skip-compress to only generate the index.");
+  }
+  for (const file of newFiles) {
+    console.log(`Compressing new audio: ${toRelativeUrl(file)}`);
+    // Pass paths via the environment so cmd does not interpret filename characters.
+    const result = spawnSync(process.env.ComSpec || "cmd.exe", ["/d", "/v:off", "/c", "compress.cmd --from-env"], {
+      cwd: path.resolve(__dirname, ".."),
+      env: { ...process.env, AUDIO_COMPRESS_INPUT: file },
+      stdio: "inherit",
+      windowsHide: true,
+    });
+    if (result.error || result.status !== 0) {
+      fail(`Compression failed for ${toRelativeUrl(file)}${result.error ? `: ${result.error.message}` : ""}. Index was not updated.`);
+    }
+  }
 }
 
 function walk(dir) {
