@@ -1,0 +1,559 @@
+00:00.38
+James
+Welcome back everyone to the VS Code Insiders podcast, your one-stop shop for all things VS Code. If you're a VS Code user, well, you are in the right place because we go behind the scenes with the team that makes your favorite code editor in the entire world. And with me once again is Bridget Murtaugh. How's it going, Bridget?
+
+00:18.70
+Brigit Murtaugh
+It's going great. How are you, James?
+
+00:20.45
+James
+I'm doing absolutely amazing. I'm in the garage.
+
+00:23.22
+Brigit Murtaugh
+What a great place to be.
+
+00:24.94
+James
+It's fantastic. It was really cold this morning, like freezing. I was on my team call and I was shivering and then now I'm hot. And I know I have a sweater on. so but like, I'm like, I know it's going to get cold again, but I'm like, the sun was beating down.
+
+00:36.22
+James
+I'm like, I don't know what to do because it's a garage, but I'm here temporarily. um And eventually I will be released from the garage again. That's
+
+00:43.67
+Brigit Murtaugh
+is there specific time you'll be released or TBD?
+
+00:47.64
+James
+TBD on construction. So you never know. It could be like next week or it could be next year. Who knows? So.
+
+00:53.34
+Brigit Murtaugh
+You have your jacket, you're ready.
+
+00:55.23
+James
+I am ready no matter what. And a spare jacket over here. um Well, I'm super excited to have you back because the last time you were on the pod, i mean, you're on the streams all the time and all the things like that, um but you and Josh joined ah last September. So this is like 25 years ago, basically. agentic development terms, but eight months ago or so, talking about the future of coding agents in VS Code. and That was sort of the introduction of you know cloud and background have been there, but the sessions view and organization, thinking about sessions, thinking about how we evolve with agents and work on more than one project at a time and how do we manage that um, in our projects, in our workspaces. And it was a really great conversation. If you want to go back, vscodepodcast.com slash six. Uh, so really early on in the conversation, but I figured it'd be really great to have you back on to talk about, well, what's the future look like now or in the future, right? I guess right after the pod came out, they were already in the future, but you know, the future has been coming. It's been evolving, you know, not only is VS Code and the sessions view evolved a lot, but there's a brand new um agents window that got released as well that are people are diving into. How did that come about? So i want to kind of dive through that process and maybe we can take a step back and say, hey, at the end of last year, here's where we're at and here's what's kind of happened since then. How does that sound?
+
+02:16.79
+Brigit Murtaugh
+Yeah, that sounds great.
+
+02:18.30
+James
+Okay. So let's step it back. what wow wow wow wow wow wow wow wows I'm to sound effect.
+
+02:23.61
+Brigit Murtaugh
+Perfect sound effects.
+
+02:24.47
+James
+Okay. So the future of coding agents comes out. This is like 104 release, right? The team's still releasing every month. That's crazy talk, you know, and nowadays. So where has and how have agents evolved like kind of since then?
+
+02:39.35
+James
+Like, you know, we're thinking like through the end of the holidays and in the beginning of 2026.
+
+02:44.63
+Brigit Murtaugh
+Yeah, so over the past year plus, so since we've last been on the podcast, our team continued doing a lot of different investments in and iterations on these different kinds of agents and agentic tasks and harnesses. And so when Josh and I were on, we talked about the background agent or the co-pilot CLI, and we also talked about the co-pilot cloud agent, I think the Claude agent may have come out sometime after that as well. i think that was earlier this year. So that also has since come out.
+
+03:16.44
+Brigit Murtaugh
+But even with these different kinds of agentic harnesses is I think what we could call them. And so local agent mode in VS Code would be the VS Code harness, but then powered by other options, whether it is the co-pilot CLI, that'd be the co-pilot CLI harness.
+
+03:28.30
+James
+Thank you.
+
+03:29.29
+Brigit Murtaugh
+Cloud harness, cloud agent harness, all sorts of things like that. So our team continued investing in those experiences that you could use in the chat panel in the VS Code editor that you're already familiar with.
+
+03:39.68
+Brigit Murtaugh
+And we also continued iterating on how to manage different sessions and what that kind of delegation flow looks like. And we were really working within just the existing VS Code editor window.
+
+03:50.87
+Brigit Murtaugh
+And so no matter how many different agents and agent sessions you were kicking off and managing and that kind of stuff, you're really going to be working on pretty much one workspace at a time. One kind of workaround could be maybe you were in an empty VS Code editor window and you didn't have a workspace open, so you could kind of maybe have some more general questions or pick ah a repo from there. But really things were were scoped to like one project, one repo at a time. And with that, i think it was really cool seeing how our team and our users were becoming more multi-agent and multitasking and really thinking about things in terms of being agent first or task first or task oriented, where rather than really being focused as much of like, I'm going to write and or review every single line of code and be code and editing first, I'm going to maybe elevate up a level and think more about, hey, what are some like mid or higher level tasks that I want to go ahead and kick off to an agent? or to a series of agents. And oftentimes as well, we're not just working on one specific project. There could be projects that have different dependencies and relationships with each other, or i may just kind of be wanting to work on different things throughout my day that may not really be related at all, and they span different repos and different projects completely. And so with that, with the ah great multi-agent work the team had been doing and all the investments in the chat panel and that kind of stuff, it was possible to be multi-agent in VS Code. And a lot of us have been, I think all of us on the team have been, and I think a lot of our users were were learning more about this and adopting this kind of stuff as well. um But I think that with this as well, we were seeing both in user feedback and in our own usage that it was going to be helpful to think even like outside just kind of the traditional editor window boundaries or outside the traditional chat panel that we've had now for some time. And so thinking about that how I might manage multiple agents is maybe I would open some of the agent conversations to the side or as new editor windows. I'd kind of have a split view and in my main editor with maybe a few different conversations. I could also open up another one and focus on that in the chat panel. I could try comparing outputs, kind of jumping between them. But even with that, it kind of felt like, okay, that's still going to be focused on really just one project at a time. And if I want to go and work on other projects, I totally could do that. I could open up another instance of VS Code. But now kind of switching between different windows and balancing different tabs, different editor panes, that kind of stuff. And it felt like maybe there's a way that I could really just concentrate on agents and their outputs. Like if that's really where I'm spending a lot of my time or increasingly most of my time, what might it look like to make that flow even more kind of like the focus of what I'm doing and what I'm looking at?
+
+06:28.67
+Brigit Murtaugh
+And so then that was the inspiration that brought us to what we've been speaking about in the last several release notes, which is the VS Code agents window. which if you've been using VS Code, which I would expect probably a lot of folks listening to this are, you may be used to more of like the editor window, which is just VS Code. But then the agents window is now kind of a ah focused streamlined environment that really makes agent first and task first development the forefront. And so it's going to make it even easier to be that centralized spot for multiple agents spanning across multiple projects. And then also focusing on things that really make agents and you working with them successful, whether that is your customization. So custom agents and MCP servers, bringing those even more to the forefront, making them visible and editable right where you're working. Bringing the ability to generate and add run tasks and look at the integrated browser and really just focus on like changes and things like that in a way that is even more agent first rather than code first.
+
+07:28.95
+James
+I think it's a great way. I love this.
+
+07:29.89
+Brigit Murtaugh
+I wouldn't know that.
+
+07:30.55
+James
+I've been reading the documentation and it's like very much like code first, agent first. And sort of we lived in this in-between world, it sounds like for a long time where, and and I see it like, I think there's no wrong way to use these tools.
+
+07:43.66
+James
+Like, and there's different people
+
+07:44.41
+Brigit Murtaugh
+Yeah.
+
+07:46.65
+James
+for different tools and people can use different tools all the same time. Like right now I have VS code open, the CLI open, the GitHub app open. I have the browser open, like, and I have all the different tools based on like the problem I'm solving. I often am inside to just VS code mostly, but I often sometimes find the scenario. I'm like, Oh, you know what? I'm just going to fire this off or I need to work on these eight projects right now at once. or you know what? I'm just, I don't even want anything running on my machine right now, just like to go over there, right? So I think we've lived in that, that and I'm interested first in the evolution of how you saw the the team code and listening to developers is, I think for me, when I first started using agent mode, I guess it'd be February last year, so February 2025, right? I dove deep into it and I was really prompting, reviewing, typing, and it was it was sort of like I was using it like as
+
+08:41.37
+James
+not just IntelliSense and full line completion and you know ghost text, but it was it writing a lot of code, but then I was spending a lot of time just like iterating with it, just like if I was iterating myself on a problem. And it sounds like even since September, september that's been evolving a lot of just how we are engaging with the code in different ways. can you talk about how you're seeing the team and like the workflows, maybe the software development life cycle of just like that aspect inside of VS Code?
+
+09:09.17
+James
+change before we talk about like sort of the multi-agent session stuff.
+
+09:13.85
+Brigit Murtaugh
+Yeah, I think that's that's a great point that you bring up. And I think for a few of the points that you brought up, yeah, allowing our team, allowing our users to work in the way that feels most comfortable, most productive for them, I think is the forefront of what we've always want to do it with VSCO, but also continues to motivate our work here with the agents window and being more agent first is that We want it where, hey, if you have all of your day, some of your day, part of your day is agent first, like you can go move into that agent's window environment as freely as you'd like. And then you're open to to move back to the VS Code editor window also as much as you'd like. You're not restricted to just one. You don't have to just pick one path. You can move between them if that if that works well for you.
+
+09:53.56
+Brigit Murtaugh
+I think that thinking about within our team, i think something that's interesting is I'll think about some examples, for instance, is i know different ones of us, whether it's the VS Code repo or other projects that we work on. A lot of times we'd have different multiple clones of them on our machines. We'd have VS Code 1, VS Code 2, VS Code 10 to kind of like kick off different tasks on them, do different variations of work, like manage them in different editor instances, depending on if I want to work on feature A here and feature B there and feature C there and kind of manage them all at the same time. and not have conflicting changes.
+
+10:25.44
+Brigit Murtaugh
+um That would kind of be like a workflow that I think we've observed in our team or in users as well. But now with doing things with like work trees, for instance, which basically create a separate isolated folder for your work that isn't going to conflict with like the main branch or folder that you're working in.
+
+10:42.11
+Brigit Murtaugh
+It's really nice kind of building on these primitives that then make it where, oh, I maybe you don't have to have two or five or 10 clones of the same project on my machine. I can instead kind of like adjust my setup with some of the built in features of of vas code the agents window, the co-pilot CLI to make things a little bit more like efficient and streamlined for me, if that makes sense.
+
+11:03.58
+James
+No, it does make a lot of sense. And for the the the fact that i just did a internal Git work tree session. And to your point was in my previous workflow, I would have an instance of VS Code Open working on a code base. That'd be jamming with the agent.
+
+11:20.92
+James
+But... If I wanted to work on multiple features, multiple bugs like you're talking about, i would then ah hopefully not copy and paste, but you know, we've all done it, but I would then create a work tree.
+
+11:31.76
+James
+Now, I always liked work trees, even though they're a little bit more complicated, but I think we're really trying to do teams really trying to do a really good job of simplifying that, that, that flow. But work trees still is kind of a different cognitive workload, you know, of of understanding versus just a branch.
+
+11:45.79
+Brigit Murtaugh
+Mm-hmm.
+
+11:46.58
+James
+But what I found fascinating was that if I wanted to go look at that branch or sorry, that work tree, I got to open a whole other, another whole instance. Right. So I started working this way and I'm sure you saw it too, is like, well, I could kick it off to like ah a background and I could like review it and go back. But if I actually want to like dive into the code, then i got to like open yet another, yet another, yet another. And it kind of felt like it was a little sporadic all over the place. Right. You know, if I'm working even on a bug fix or a hot fix or a feature, I might have like a bunch of windows open.
+
+12:18.35
+James
+and um And at the same time, have a bunch of other projects open too. right So even if you were trying to like not ignore the code, but just like fire and forget and like review it later, there's still that like um like separation. right There's this, you have to move to yet another space to to to jump into that code instead of it being like a cohesive experience.
+
+12:42.68
+Brigit Murtaugh
+Yeah, exactly. And so having it be cohesive, having it have kind of defaults that ideally take away some of the like manual thinking of, okay, what's kind of the combination of things I want to do this time? And what's the best way to isolate my work across different things? Like having work trees be the default for get backed repos for the copilot CLI and the agents window. Having choices like that where we're surfacing it to users so it's not like a a hidden detail, like we're still saying, hey, this is what's happening. but also trying to make that the default and not require too much like knowledge or expertise or picking that out ahead of time. I think finding that balance is helpful to make this as just a little bit easier, a little bit more streamlined.
+
+13:21.31
+James
+Now the sessions management you know and the in the chat, right?
+
+13:25.02
+Brigit Murtaugh
+you
+
+13:26.13
+James
+We have the sessions, I can see the history, i can like fly out, make it bigger. I remember yeah know when that happened, like that evolved quite quickly over months.
+
+13:36.30
+James
+Like what was the learning from the team and how they evolved? Just like the built-in agent sessions view in VS code because it continues to evolve.
+
+13:45.59
+Brigit Murtaugh
+Yeah, and so I think we went through several different iterations there, especially as we were providing more options beyond the local agent harnesses. We were providing the CLI and cloud and and the cloud agent as well.
+
+13:58.73
+Brigit Murtaugh
+um We were thinking about ways where, okay, like where are users expecting to see these sessions listed and what makes it feel like you're getting the right level of detail, but also it's like close to where you're actually working and it's not too crowded or too confusing. And so we had different iterations where there was like an entirely separate view within VS Code on the and the sidebar on the left or in the primary sidebar where you could click in and view different agent sessions and that kind of stuff. But then through discussions with how our team was operating across different agents and different user discussions and feedback, it seemed, hey, I think that users are expecting to kind of find their session list kind of by where their chat panel is and where they're actually typing out messages and delegating work to different
+
+14:42.42
+Brigit Murtaugh
+agents locally or in the background or in the cloud. And so then that brought us into bringing the session list actually into the chat panels. And it's more at the the top of the chat panel. And you can still figure filter it and configure it for what works best for you of showing only certain harnesses or sorting them in different ways or filtering them by different in-progress or completion statuses.
+
+15:02.08
+Brigit Murtaugh
+But I think a a learning of bringing that closer to where users are actually working and reviewing chats and kicking off new chats felt like that was a helpful one of, hey, this is where people are expecting to get this information. And I think that's kind of a learning that then we extend into something like the dedicated agents window of, hey, bringing all the high level information that a user kind of cares about as they're working and switching between sessions or tasks. That feels like something that our team was looking for and our users were looking for.
+
+15:29.37
+James
+Yeah, let's dive into that because why I think it's important that we talk about the evolution of this the sessions view and the sessions management is because the first time I opened up the the agent's window, it actually felt pretty familiar to me.
+
+15:44.92
+James
+Like there was some familiarity with what I was already had in VS Code. One, it looks like VS Code. And I assume that's intentional.
+
+15:53.61
+Brigit Murtaugh
+Yep.
+
+15:57.05
+Brigit Murtaugh
+Yeah, and because I think it's really great where as an existing VS Code user, it doesn't feel like, wow, this is completely net new and that I need to relearn and reconfigure so many different things here. And that's going to take away time for me jumping into being productive. And so allowing it to be similar with VS Code in different ways, but then differ where we want to make it even more streamlined and easy for users to focus on agentic tasks. I think that's a really nice balance that we've been working to to achieve and that we've been shaping based on team and user feedback as well.
+
+16:30.23
+James
+Yeah, and then not only does it look like VS Code, but it also looks like the sessions view. Maybe you can describe to people that are, um I'll put a video here, the kind of the video that you did on the VS Code YouTube, I'll embed it so people can get a vibe for like what, you know, the agent's window is.
+
+16:43.92
+Brigit Murtaugh
+Yes.
+
+16:44.15
+James
+But can you just describe your, nvia what's the workflow? i open up VS Code. Then what? And then what does it look like? What's the experience, right? And why am I clicking and doing what?
+
+16:55.12
+James
+And and what's how do I get there, right? And what do I see? And then what am I doing? Let's walk through a flow. It's going fun.
+
+17:00.73
+Brigit Murtaugh
+Yeah, great question. Yeah, this is super fun. um So when you start in VS Code, it could either be right when you first open up the editor or as you've been doing some work or as you open up a specific project, there's going to be some different entry points that will get you into the agents window. And so one of them is going to be at the top right in the title bar of the editor. There's going to be a new icon that pops up there as of the the last few releases and as of the last stable release as well now. that if you hover over it, it says open in agents. And so that'll allow you then if you click on that to open up the dedicated agents window. Just view other entry points as well. There's a command and some an entry point on the welcome page too, for instance. The different spots that you might be thinking of, hey, I think I want to move over to dedicated agents view, can open in agents there.
+
+17:45.66
+Brigit Murtaugh
+And then when you open up the agents window, like you said, James, it's going to feel familiar to an existing VS Code user because for instance, different Different settings, different UI elements, your theme will come with you. If you've already authenticated to GitHub Copilot, that'll transfer over as well as you don't have to re-authenticate. ah Your key bindings will come with you. The overall kind of like building blocks with customizations and chat, like those will also feel quite familiar. And so I think that is a really nice transition point. If it's not, wow, I've never seen this before. I have to reset up a bunch of stuff. It's, oh, okay, cool. Like my theme came with me. My key bindings came with me. um Even some of my extensions came with me and I can go ahead and enable other ones as well. We have a path towards that. And so having that kind of build ups of, oh, this is like the nice customization I've already spent time building up in VS Code, that comes with me to the agents window.
+
+18:38.36
+Brigit Murtaugh
+And then with that, taking a look at the UI, there's a few main components. On the left, it's going to be a list of your sessions. And by default, they're going to be organized by different workspaces or different projects that you're working on. And you can also easily go ahead and add new projects too. So, or you can mark session done, which basically removes them from the list. You can also always go re-retrieve your done sessions in the the filtering list as well. But so you can basically have a list on the left of ongoing work, completed work, new work that you're going to be kicking off.
+
+19:08.53
+Brigit Murtaugh
+You can filter it in different ways. And then in the middle is going to be the main area where you're kicking off agent sessions or you're reviewing their outputs. And so you'll see a few different pickers. And again, they're going to feel familiar to pickers that you may have already been using in VS code if you've been using agents there. And so you'll see a picker where it's going to default to using the co-pilot CLI as your agent harness. But you could also choose to use the cloud agent or even the cloud if you're working on a remote GitHub repo.
+
+19:34.84
+Brigit Murtaugh
+And then you'll also see some other options like for permissions, model, that kind of stuff. And then you'll also see that you're defaulted to a work tree for a co-pilot CLI session to help with that isolation. You could choose to change it to folder if you'd like the changes to just land on your local folder, but it'll default to WorkTree.
+
+19:51.00
+Brigit Murtaugh
+And then after you've picked a project from the dropdown as well, then it'll ah automatically you'll be able to send off a message and kick that off to an agent. And once you do that, you'll see the output come back like you're used to seeing streamed back in the chat panel on VS Code. And from there, you have options of, okay you could continue to watch that agent work. But since this is a multi-agent, multi-repo, multi-harness experience, you don't have to just watch it work. You could go ahead and kick off agent sessions on the same project, on other projects, across different kinds of harnesses, and even across different kinds of machines. They don't even have to be just all on your local machine. You could also use SSH or DevTunnels
+
+20:29.91
+Brigit Murtaugh
+to go ahead and kick off or look at sessions that are on other devices, like maybe if you need some sort of specialized compute or access to code that's only stored somewhere other than your local machine. And then when the agent finishes its work, or as it makes progress, you'll be able to kind of track in the session list on the left. You'll be able to see if it's in progress or if it needs input from you. If it's just a permission request that you need to grant, you'll be able to provide that allow ah right from the sidebar on the left. You actually don't have to fully open up and refocus on the session, again, allowing you to kind of stay at a higher level for some of these task-oriented flows. And then if the agent finishes its work and generates code changes, you'll be able to preview those in different ways. So either you could you could add a run task and then you could maybe run your app, run your website, run your project, get a preview of it. You can preview it directly in the integrated browser right in the agents window so you don't even have to leave the window to go ahead and preview what your project did.
+
+21:25.55
+Brigit Murtaugh
+And you could also take a look at the actual the code changes that were produced. So you'll see both changes and you'll see files. So if you want to see just like changes that were added or made, um you can click on individual files. You can provide feedback back to the agent directly in line. that way it can act on that feedback and iterate based on what you're observing in this preview. And if you'd also like, there is a whole files tab. So you can see the entire file list of the project. So it doesn't just have to be at a high level. You can also look and create files directly in there.
+
+21:54.99
+James
+Oh, that's cool. I was going to ask, so like when you open it, yeah, it does feel as though, you know, VS Code itself with the, you know, it evolved, it existed first and then the the agent chat came as agentic development evolved.
+
+22:11.26
+James
+Now with the agent window, it feels like, hey, the team thought we have an opportunity to design something
+
+22:18.34
+Brigit Murtaugh
+that you could use the design.
+
+22:20.82
+James
+that isn't restricted in the way of 10 years of VS Code history. right you know Every change to VS Code right is a change potentially to how developers work. This is something new to say, hey you're in the agent workflow. We can think about how do we think. It's a a a little bit more opinionated in a way of working with agents. and But I like that it is familiar. The first time I opened it, i was like, oh, here's all my my my workspaces. and yeah Here they all are working. And then I, oh, here's the diff. Like that looks familiar. Oh, I can actually run it, right? Like you're saying, it gives you all those nice bits and pieces, but it's a little bit, like there's a little bit more, but then also a little bit less, it feels like.
+
+22:59.96
+James
+But in Tentor, it's not just VS code, like moving things to the left and right, right?
+
+23:04.63
+Brigit Murtaugh
+Exactly. I think that's a really good way to put it. If it's both a little bit more and a little bit less, because for instance, if folks have worked with customizations for for agents in different ways in VS Code, you may have seen that there's actually a really nice UI experience for like adding and configuring those customizations. We've elevated that to be in the the lower left of the agents window by default. So you're automatically going to see that. and to be able to enter in even more easily into the customizations because really, hey, this is an agent first workflow. We're feeling that elevating those makes sense and is going to be something that a lot of users are drawn to do. Similar with some of the actions in like the top right with the run task and that kind of stuff. It's things that, hey, these feel like these are tasks and interactions that really make sense in agent first workflows. So we should have the specific set of them elevated there.
+
+23:52.57
+James
+It makes sense. And like you said, you're working with agents first. So my, my few questions I have for you is like, what if I do want to edit the code? Like, am I just jumping back to VS code? Can I do it in agents? Like what's the, what's the flow from the agent finished?
+
+24:07.99
+James
+And then talk to me about each flow, code flow and agent flow. Like what's that look like for developers now to think about that?
+
+24:16.98
+Brigit Murtaugh
+Yeah, that's a great question. and I think it kind of depends on like the level of code changes that you're looking to make. And so if it's just, hey, I previewed my app and I feel like there's maybe like some changes on a broad level I'd like to make, or if it's, hey, I specifically looked at the files and the changes panel and I realized that we need to make these specific changes. I think if you can provide that kind of feedback to the agent, staying in the agent's window makes a lot of sense. And we even have it where if you click on a specific line in the one of the changed files, You can add a comment, send that to the agent, and it's going to use a built-in act on feedback skill. So that way it can say, hey, okay, here's feedback I got from the user. I should iterate on that.
+
+24:57.31
+Brigit Murtaugh
+Or you don't have to do that full. You could also just continue to type out feedback and say, hey, I think we should do X, Y, Z additionally or instead. And so i think when it's still thinking in terms of I may be still going to be at a little bit higher level. I think staying in the agents window makes sense. But I think that then at any point, if it's really, hey, I want to make more extensive code changes and really dive into that more familiar VS Code code editing flow, I think that can be a great opportunity to actually go switch back to the VS Code editor window. And so just like how in VS Code we have in the top right of the title bar, we have open an agents to open up the agents window. In the agents window, we have at the top right open in VS Code, which will open a VS Code editor window. And you have a specific session and a specific work tree that you've been working on. It's actually going to open up that work tree within VS Code. That way you're brought exactly to where the agent was working and you're not missing any context or any changes.
+
+25:50.40
+James
+Oh, that's very cool. So what you're saying is no matter where I'm starting these sessions, no matter what I'm doing, they're going to live cohesively together because it is just VS code. It's a window, right? It's like, it's, it's a part of vs code.
+
+26:02.46
+Brigit Murtaugh
+Yeah, exactly. And so then having it be a window of VS Code allows sharing that kind of configuration UI more easily allows sharing and jumping in between different sessions and different work trees and workspaces more easily too.
+
+26:15.06
+James
+That makes a lot of sense. I really enjoy it. Like what I, here's my workflow. Here's my setup. And maybe you can talk about your setup. So I have an ultra wide, so I'm a little bit, you know, privileged. I guess it's Costco ultra wide right now. One of those crazy Samsung five bajillion K, but it's, you know my, my Costco, my, it's very nice, but it's almost too big for me. However, I found it really nice for working with the agent's window because previously, so a month ago, two months ago,
+
+26:40.73
+James
+My flow as a developer is I would, if I'm working on a project, a workspace, I'd have a workspace, big, just full screen, this ultra-wide in VS Code, and then I would make the session stuff big, right? So I could see all the different sessions, toggle between them, have the active chat, right? That's like one model. The second model was I got multiple projects.
+
+27:01.24
+James
+I would just do one on the right, one on the left, and then I'd just have like just the agents right on on the right-hand side. So that's how I'd work on like project A, project B. But then I find myself in this space, which is project C.
+
+27:12.79
+James
+And I don't have a super, super ultra-wide that's wrapping around me, so I can't do three. And Power Toys is amazing. i can only use You only have so much space, right? So what I've been doing is I will have the agents window on the left side
+
+27:20.72
+Brigit Murtaugh
+Yeah.
+
+27:27.29
+James
+because like the sessions are on the left. And then on the right hand side, I will have just whatever project I'm focusing on. Like, here's my priority, right? That I'm actually diving through having like, ah like i'mm i'm like debugging it, right? Like I'm working on my cycling app or whatever. Like, boom, it's over here. i'm working on this website. The thing that has my current attention and Then on the left-hand side, I see all my sessions. so I see my sessions that are going on, but I see all my other workspaces. So I can monitor those sessions, do things. I can even monitor the things that are happening in the main one, but I can focus. And then if I need to switch, boom, I'm going to switch and then bring that over. So I never like lose that context of here's all of my sessions on all my projects. right I have 538 repos on GitHub. right Not all of them are active, but I have a lot of projects. and And they're all going through. So I have like a thousand ideas. And when you're working with the agent, I'm already thinking about the next feature I want to do. And previously what I would do is I would like queue up, like I would start writing the message. And now I'm trying to change my mind to say, is that actually a change for this specific like feature, this branch that I have, this work tree that I have?
+
+28:35.32
+James
+Or is it actually a new work tree? And then I fire up. So i'm trying to change my mind from adding on to a big session to say, oh, it's actually okay, this is a separate thing. Let me spin up a whole nother thing so I can more easily code review and break down different features, different bugs into different work trees and apply them back in general. So I've been trying to do that, you know, setup basically, which I think is nice still have VS code and I still this over here. it's not one or the other. I run them cohesively. it know, what's your setup?
+
+29:00.34
+Brigit Murtaugh
+Yeah, and i definitely have usually a setup where I have both VS Code editor window and an agents window up. And yeah, I think it just depends on like the specific project and the specific tasks I'm working on because I found a lot of times if I want to kind of kick off two separate explorations that maybe could ultimately be related, but I don't necessarily want to guarantee that. I feel similar to you where it's really nice to be able to just kick them off in separate work trees. And so I find myself doing that a lot in the agent's window. And then i would say that there's times...
+
+29:34.25
+Brigit Murtaugh
+I think maybe recently when was really iterating on some documentation or release notes content, like I felt like it was very helpful to really have kind of code first, because even though that was a high level task that I could just kick off and really be agent first, I felt like for the exact kind of like wording and tone I wanted to use, I ended up doing like a lot of editing kind of beforehand, then maybe kind of iterating with the agent.
+
+29:56.88
+Brigit Murtaugh
+It felt like more like the agent. was kind of just my companion on the side or like a secondary thought rather than the first way I was approaching the problem. And so usually I kind of have different tasks that I'm thinking about in different ways like that, that I'm working on throughout the day.
+
+30:09.40
+Brigit Murtaugh
+And so naturally I find, oh, okay, this one, like I'm really like writing and editing some code or some text during this. I'm gonna open this up in the traditional editor window in VS code. And then just want to kick off like multiple explorations or multiple like feature attempts and that kind of stuff.
+
+30:25.16
+Brigit Murtaugh
+That feels really well suited to I can just kick those off in the agents window. I don't really need to like monitor them as closely either sometimes like I feel like a lot of times for if I'm really like in the moment of I'm trying to like write out some sort of documentation thing I'm trying to like work on one specific feature or code change like.
+
+30:41.27
+Brigit Murtaugh
+Sometimes I really want to be focused on that right now. And so it's like, hey, I can now go let these other things work across other projects and across other work trees.
+
+30:44.23
+James
+Hmm.
+
+30:48.15
+Brigit Murtaugh
+They don't have to interrupt this focused work that I'm doing that may be agent first, maybe code first, maybe both.
+
+30:53.97
+James
+That makes a lot of sense. Yeah. I think it is. It's like every day is a new adventure for like what my development setup is going to look like on my machine. i think if if my wife walked behind me, I guess in the garage, she'd be pulling the car out.
+
+31:01.69
+Brigit Murtaugh
+ran
+
+31:05.46
+James
+But like, you know, it'd be like, I think every day would be like little bit different. It's like what my setup looks like, which used to not be the case. It used to be like in here I'm booting up, but I'm booting up this thing. And like, here's my thing.
+
+31:15.98
+James
+And like my, my environment looked very similar. um Let me ask you a question here too, which is as a developer, I'm inside of the new agents window. We talked a little bit about the customizations.
+
+31:28.34
+James
+We talked about sessions, management, seeing code changes, doing stuff. When it comes to like the software development lifecycle, right? Where I'm thinking about monitor or even just committing changes or doing ah code reviews or leaving feedback or seeing issues and doing pull requests. Like, what does that look like? Am I jumping back into VS Code? Am I doing some of that in this agents? Are the agents doing it themselves? Like how far is the agents window gone in this instance of being agents first?
+
+31:57.98
+Brigit Murtaugh
+Yeah. And so when there's code changes generated by an agent in the changes panel, you'll be guided by the window and through some different actions that you could take.
+
+32:08.30
+Brigit Murtaugh
+so you could first of all, review them kind of in different ways. Like you could review just the last turns changes well or all turns changes, depending on how long running of a session is and what you find most helpful. But you can also create a PR, draft a PR, you can sync changes.
+
+32:21.58
+Brigit Murtaugh
+You can do all of that directly from the changes panel within the agents window. And so if you are really more comfortable doing that in VS Code or on GitHub.com, you totally still can, that's fine.
+
+32:32.33
+Brigit Murtaugh
+But you don't have to, you're able to still stay within the agent's window to do that kind of stuff. And we continue iterating and making different improvements in this space, like allowing actually syncing back the changes in case there were some upstream changes since you last opened up this product in the agent's window, doing that directly from the panel on the right there.
+
+32:49.20
+Brigit Murtaugh
+That was something that I felt like was a big quality of life improvement for me, because especially in a repo like VS Code, where there's hundreds of changes a day, it can vary quickly.
+
+32:57.02
+James
+yeah
+
+32:57.53
+Brigit Murtaugh
+Like, oh, I didn't pull for a couple hours. Now there's a bunch more changes. Let me make sure I'm bringing those in And you'll see as well, like if you look at the customizations, we do have different built-in skills, for instance, for doing things like creating PRs and drafting PRs.
+
+33:12.33
+Brigit Murtaugh
+um But also, if you use the the actions on the right, we have it right now where it's going to be deterministic. So it will just like create a PR. It doesn't have to be agentic. But if you do want to have more agentic flow, you can try out the built in skills that we have or you could cry creating try creating your own.
+
+33:28.70
+James
+Very cool. Yeah, I've been, i have been, and this is a new evolution for me probably in the last month and a half, which is Um, thinking about how I commit and review and iterate on code. And I used to maybe a few weeks ago be like, okay, let me, or months ago or so, like, let me do some code reviews or some code changes with the agent. and then here it is. And then I would maybe select a different model and then I'd be like, oh, code review that.
+
+33:59.13
+James
+right and then i just That's all I would say is like, code review it, right whatever that means.
+
+33:59.73
+Brigit Murtaugh
+I think that is a lot of help.
+
+34:03.13
+James
+um and Then it would like give some feedback how implement and Then I would go back to the other model, like look at this. and It was very synchronous. It was very like i manual process.
+
+34:13.88
+James
+But I've been trying to think of new ways of iterating of not just how do I do it even before I commit the code or after I commit the code or somewhere else where I commit the code. or I've been going through this flow of of thinking how agents can kind of rubber duck off each other even after it's you know you know the code has been pushed, whether I started a code review on GitHub, whether I started in VS code, have it iterate, review it, just don't blindly trust it, review it, do these things and pull it down. So I'm glad that some of those things are built in because I think a lot of the code review aspects I've had is non-agentic and are very manual with agentic-ish, I would say. So it's kind of cool to to see some of these flows
+
+34:53.56
+James
+pull in. and I assume that these are like flows that the team are using as well.
+
+34:57.21
+Brigit Murtaugh
+Yeah, and you'll be able to see like what powers them because again, you can edit customizations right there. So you could also change if it's like, oh, I want to make it do this or not do that or add my own kind of flow. And I think as well as you were talking about that, something else that's interesting to touch on is what we have called subsessions right now. And so at the top of the window, you can use plus and it'll create basically another session on the same work tree that you were already working on for a session. And so that's a great opportunity if you want to say, hey, what else do need to explore here? Hey, could you do a code or review of this or just some other related work or change or review that you want to be on the same work tree? You could go ahead and create a subsession or a series of subsessions for those.
+
+35:39.93
+James
+Oh, very cool. gonna to try that out. That must be newer. i don't and I see the plus button. It's sitting there. I'm gonna give it a try. That's awesome. um All right, I have one last question for you, because I think a lot of people will be asking about this, which is,
+
+35:52.84
+James
+VS Code has been this open source, open code editor for over a decade. Open ecosystem, right? Thousands of tens of thousands of extensions and different customizations, right?
+
+36:05.45
+James
+Everyone's VS Code looks at different, right? Different themes, my icon packs, my cappuccino ones.
+
+36:07.41
+Brigit Murtaugh
+Mm-hmm.
+
+36:10.77
+James
+They're like the best. I love them. um Different LSPs, different, you know, just even even agent flows and all these other things. What is that extension, customization, ecosystem?
+
+36:24.25
+James
+How does that extend or does it even extend into the agents window? Like how should extenders and developers using the customizations of VS Code look at that when they they pop over to agents?
+
+36:38.30
+Brigit Murtaugh
+Yeah, let me grab the exact setting name because there's also a setting that I think will be great to call out. Yes. So to give a little bit of context here, that is a great question because extensions are something like you said that makes VS Code so powerful and so extensible. And so thinking about what does that look like in this window where also, like you said, there's more and there's also less like what makes sense and what does the future look like there? And this is definitely something we're looking to shape with extension authors and also users and users of different extensions. And so our team went through and tested the top 100 extensions on the marketplace to see which ones would make sense or work well within the agents window. And we've gone ahead and enabled those that that made sense, making sense in the way, let me grab the exact way that we described it. So extensions that contribute only static content such as themes, grammars, languages, and key bindings, those are going to activate in the agents window automatically. And then on top of that, we also tested the top 100 marketplace extensions. And some of those are also going to activate when they're also installed in your default VS Code profile. So as long as you have them installed in VS Code already, they're going to to activate automatically.
+
+37:47.00
+Brigit Murtaugh
+And then in addition to that, we're kind of shaping what does it look like for there to be other extensions and extensibility within the agents window. So we have a setting extensions dot support agents window where you can put an extension ID in there and then that'll allow you to activate that within the agents window.
+
+38:05.00
+Brigit Murtaugh
+And so as long as that extension again is installed in your default VS Code profile in the editor, then if you've defined it there, then it'll also activate in the agents window.
+
+38:12.47
+James
+Thank you.
+
+38:14.41
+Brigit Murtaugh
+And so we're looking for extension authors of, hey, thinking about what might it mean for there to be kind of some other extensions extensibility within the agents window.
+
+38:24.64
+Brigit Murtaugh
+getting feedback like in GitHub issues or in any kinds of ways that you engage with our team, GitHub issues is is a really great way. It's awesome because then we can hear, hey, like I have this idea for what it might mean for to enhance multi-agent development even more or to make my XYZ extension even more powerful or work better in a multi-agent environment.
+
+38:43.24
+Brigit Murtaugh
+And as well as you users, if there's extensions or just kind of general things, you know of, hey, it would be great if in general XYZ was possible in the agents window, getting that feedback is really helpful. so this is something we're really looking to to get that feedback from the community and iterate on the future here.
+
+38:58.39
+James
+Very cool. If people want to give feedback on the agent's window, where, where did they do it? Bridget.
+
+39:03.73
+Brigit Murtaugh
+Yeah, so just in the VS Code repo on GitHub, so github.com slash Microsoft slash VS Code, that's going to be our go-to spot for agents window, continued VS Code, feature requests, issues, bugs, anything like that.
+
+39:16.05
+Brigit Murtaugh
+That is the best way to reach our team.
+
+39:18.43
+James
+Cause it's in, it's in it. It's part of it. It's one thing.
+
+39:20.95
+Brigit Murtaugh
+it is, yep.
+
+39:21.88
+James
+i I think that's a, that's one of my favorite bits and pieces is even as I see the release notes and things like this is just a
+
+39:21.90
+Brigit Murtaugh
+conscience
+
+39:29.11
+James
+ah a feature, but a very large feature of VS code, right? A new way of working and it's part of it, right? It's not like a whole, mean, it's different and separate, but also integrated.
+
+39:40.25
+Brigit Murtaugh
+Yeah, exactly.
+
+39:41.85
+James
+Well, Bridget, thank you so much for coming back on, talking about the evolution of just from September and like the all last year and then going into this year, what it looks like. And I know things will continue to evolve. So give the team feedback. Bridget, thanks so much for coming on and talking about all those changes and the brand new Agents window as well.
+
+39:56.50
+Brigit Murtaugh
+Thank you so much, James. This was great. I'm so excited to continue getting folks' feedback. So thank you, everyone, for listening, too.
+
+40:02.42
+James
+Yeah, give it a try. Go over there. Hit that little agents button. Boom. Give it a try. Give feedback to the team. That's going to do it for this VS Code Insiders podcast. Of course, like, subscribe, do all the things, whether you're watching on the VS Code YouTube or listening on your favorite podcast app. and Of course, the best way to support the pod is just share it with all your colleagues and friends. Be like, hey, did you know VS Code has a podcast? Boom, check it out. Also, VS Code has a LinkedIn page where the team is putting out bi-weekly, every other week, bi-monthly, bi-weekly, whatever it is, newsletters. if you want to stay up to date,
+
+40:32.89
+James
+on LinkedIn, check out the VS Code LinkedIn page as well. That's going to for this VS Code Insiders podcast. Until next time, do you want to do a Bridget?
+
+40:43.83
+Brigit Murtaugh
+Happy coding.
+
+40:44.95
+James
+Happy coding.

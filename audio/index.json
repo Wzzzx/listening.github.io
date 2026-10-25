@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-14T14:33:11.135Z",
+  "generatedAt": "2026-10-25T07:51:35.775Z",
   "baseDir": "audio",
-  "count": 3,
+  "count": 4,
   "files": [
     {
       "id": "audio/All Ears English/260718_AEE_Is Everything Peachy in Your Neck of the Woods_/260718_AEE_Is Everything Peachy in Your Neck of the Woods_.mp3",
@@ -34,6 +34,22 @@
       ],
       "transcriptPath": "audio/All Ears English/260720_AEE 2654_Do You Love it or Hate it_/260720_AEE 2654_Do You Love it or Hate it_.txt",
       "transcriptUrl": "audio/All%20Ears%20English/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_/260720_AEE%202654_Do%20You%20Love%20it%20or%20Hate%20it_.txt"
+    },
+    {
+      "id": "audio/VS Code Insiders Podcast/Agent-First Development Workflows in VS Code with Brigit Murtaugh/Agent-First Development Workflows in VS Code with Brigit Murtaugh.mp3",
+      "title": "Agent-First Development Workflows in VS Code with Brigit Murtaugh",
+      "name": "Agent-First Development Workflows in VS Code with Brigit Murtaugh.mp3",
+      "path": "audio/VS Code Insiders Podcast/Agent-First Development Workflows in VS Code with Brigit Murtaugh/Agent-First Development Workflows in VS Code with Brigit Murtaugh.mp3",
+      "url": "audio/VS%20Code%20Insiders%20Podcast/Agent-First%20Development%20Workflows%20in%20VS%20Code%20with%20Brigit%20Murtaugh/Agent-First%20Development%20Workflows%20in%20VS%20Code%20with%20Brigit%20Murtaugh.mp3",
+      "extension": "mp3",
+      "size": 39805889,
+      "modifiedAt": "2026-10-25T07:50:25.986Z",
+      "folders": [
+        "VS Code Insiders Podcast",
+        "Agent-First Development Workflows in VS Code with Brigit Murtaugh"
+      ],
+      "transcriptPath": "audio/VS Code Insiders Podcast/Agent-First Development Workflows in VS Code with Brigit Murtaugh/Agent-First Development Workflows in VS Code with Brigit Murtaugh.txt",
+      "transcriptUrl": "audio/VS%20Code%20Insiders%20Podcast/Agent-First%20Development%20Workflows%20in%20VS%20Code%20with%20Brigit%20Murtaugh/Agent-First%20Development%20Workflows%20in%20VS%20Code%20with%20Brigit%20Murtaugh.txt"
     },
     {
       "id": "audio/VS Code Insiders Podcast/Inside The Agent Loop with Pierce Boggan/Inside The Agent Loop with Pierce Boggan.mp3",
