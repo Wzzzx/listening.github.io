@@ -1244,6 +1244,8 @@
         var itemNode = findBrowserItemNode(target);
         var index;
         var item;
+        var folderPath;
+        var singleAudio;
         if (!itemNode) {
           return;
         }
@@ -1253,11 +1255,35 @@
           return;
         }
         if (item.type === "folder") {
-          state.browserPath.push(item.name);
-          renderAudioBrowser();
+          folderPath = state.browserPath.concat([item.name]);
+          singleAudio = getSingleFolderAudio(folderPath);
+          if (singleAudio) {
+            selectAudioEntry(singleAudio);
+          } else {
+            state.browserPath = folderPath;
+            renderAudioBrowser();
+          }
         } else if (item.type === "audio") {
           selectAudioEntry(item.audio);
         }
+      }
+
+      function getSingleFolderAudio(folderPath) {
+        var list = state.audioIndex || [];
+        var singleAudio = null;
+        var item;
+        var i;
+        for (i = 0; i < list.length; i += 1) {
+          item = list[i];
+          if (!isInBrowserPath(item, folderPath)) {
+            continue;
+          }
+          if (singleAudio || item.folders.length !== folderPath.length || !item.transcriptUrl) {
+            return null;
+          }
+          singleAudio = item;
+        }
+        return singleAudio;
       }
 
       function findBrowserItemNode(node) {
