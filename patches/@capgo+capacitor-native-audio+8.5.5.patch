@@ -1,0 +1,86 @@
+diff --git a/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/NativeAudio.java b/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/NativeAudio.java
+index 2186a81..9827ba0 100644
+--- a/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/NativeAudio.java
++++ b/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/NativeAudio.java
+@@ -1722,11 +1722,19 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
+ 
+                 @Override
+                 public void onSkipToNext() {
++                    if (!hasQueueTransport()) {
++                        onFastForward();
++                        return;
++                    }
+                     queueNavigate(1, "remoteNext");
+                 }
+ 
+                 @Override
+                 public void onSkipToPrevious() {
++                    if (!hasQueueTransport()) {
++                        onRewind();
++                        return;
++                    }
+                     queueNavigate(-1, "remotePrevious");
+                 }
+             }
+@@ -1821,13 +1829,21 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
+                 mediaAction(context, android.R.drawable.ic_media_previous, "Previous", PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
+             );
+         }
++        int compactBackIcon = includeQueueTransport ? rewindIcon : android.R.drawable.ic_media_previous;
++        int compactForwardIcon = includeQueueTransport ? forwardIcon : android.R.drawable.ic_media_next;
++        long compactBackCommand = includeQueueTransport
++            ? PlaybackStateCompat.ACTION_REWIND
++            : PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
++        long compactForwardCommand = includeQueueTransport
++            ? PlaybackStateCompat.ACTION_FAST_FORWARD
++            : PlaybackStateCompat.ACTION_SKIP_TO_NEXT;
+         notificationBuilder
+             .addAction(
+                 mediaAction(
+                     context,
+-                    rewindIcon,
+-                    MediaControlOptions.seekActionTitle("Rewind", seekBackwardSeconds),
+-                    PlaybackStateCompat.ACTION_REWIND
++                    compactBackIcon,
++                    MediaControlOptions.seekActionTitle("Back", seekBackwardSeconds),
++                    compactBackCommand
+                 )
+             )
+             .addAction(
+@@ -1841,9 +1857,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
+             .addAction(
+                 mediaAction(
+                     context,
+-                    forwardIcon,
+-                    MediaControlOptions.seekActionTitle("Fast forward", seekForwardSeconds),
+-                    PlaybackStateCompat.ACTION_FAST_FORWARD
++                    compactForwardIcon,
++                    MediaControlOptions.seekActionTitle("Forward", seekForwardSeconds),
++                    compactForwardCommand
+                 )
+             );
+         if (includeQueueTransport) {
+@@ -1972,7 +1988,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
+             PlaybackStateCompat.ACTION_FAST_FORWARD |
+             PlaybackStateCompat.ACTION_SEEK_TO;
+         synchronized (playbackQueueLock) {
+-            if (showNotification && playbackQueueItems.size() > 1) {
++            if (showNotification) {
++                // Single-track playback maps the skip actions to seek so Android
++                // shows back / forward buttons on the lock screen and notification.
+                 actions |= PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
+             }
+         }
+diff --git a/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/RemoteAudioAsset.java b/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/RemoteAudioAsset.java
+index eb2eee8..0955649 100644
+--- a/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/RemoteAudioAsset.java
++++ b/node_modules/@capgo/capacitor-native-audio/android/src/main/java/ee/forgr/audio/RemoteAudioAsset.java
+@@ -33,7 +33,7 @@ public class RemoteAudioAsset extends AudioAsset {
+     private float volume;
+     private boolean isPrepared = false;
+     private static SimpleCache cache;
+-    private static final long MAX_CACHE_SIZE = 100 * 1024 * 1024; // 100MB cache
++    private static final long MAX_CACHE_SIZE = 512 * 1024 * 1024; // 512MB cache
+     protected AudioCompletionListener completionListener;
+     private static final float FADE_STEP = 0.05f;
+     private static final int FADE_DELAY_MS = 80; // 80ms between steps

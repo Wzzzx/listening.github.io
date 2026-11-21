@@ -1,3 +1,4 @@
+import { App } from "@capacitor/app";
 import { NativeAudio } from "@capgo/capacitor-native-audio";
 
 var assetCounter = 0;
@@ -381,6 +382,25 @@ function create(options) {
   return new NativeAudioElement(NativeAudio, options || {});
 }
 
+function clearCache() {
+  return Promise.resolve()
+    .then(function () { return NativeAudio.clearCache(); })
+    .catch(noop);
+}
+
+function exitApp() {
+  return Promise.resolve()
+    .then(function () { return App.exitApp(); })
+    .catch(noop);
+}
+
 if (typeof window !== "undefined") {
-  window.NativeAudioBridge = { create: create };
+  window.NativeAudioBridge = { create: create, clearCache: clearCache, exitApp: exitApp };
+  if (window.Capacitor) {
+    try {
+      App.addListener("backButton", function () {
+        window.dispatchEvent(new Event("native-back"));
+      }).catch(noop);
+    } catch (e) {}
+  }
 }

@@ -4,6 +4,7 @@
   "private": true,
   "description": "Android shell for the listening.github.io audio player",
   "scripts": {
+    "postinstall": "patch-package",
     "test": "node scripts/test-timed-transcript.js && node scripts/test-continuous-mode.js && node scripts/test-native-audio.mjs",
     "build:web": "node scripts/build-app.js",
     "sync:android": "cap sync android",
@@ -11,12 +12,14 @@
   },
   "dependencies": {
     "@capacitor/android": "8.6.2",
+    "@capacitor/app": "^8.1.2",
     "@capacitor/core": "8.6.2",
     "@capgo/capacitor-native-audio": "8.5.5"
   },
   "devDependencies": {
     "@capacitor/cli": "8.6.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "patch-package": "^8.0.1",
     "rollup": "^4.68.8"
   }
 }

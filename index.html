@@ -746,6 +746,15 @@
           <textarea id="lyricsInput" placeholder="在这里输入台词，每行一句"></textarea>
         </div>
       </div>
+
+      <div class="config-section">
+        <h2>缓存</h2>
+        <div class="field">
+          <div class="mark-empty">播放过的音频会自动缓存到本机（最多 512 MB），缓存完成的集数可以离线播放。</div>
+        </div>
+        <button id="clearCacheBtn" type="button">清除音频缓存</button>
+        <div id="cacheStatus" class="mark-empty"></div>
+      </div>
     </div>
   </div>
 
@@ -860,6 +869,8 @@
         els.middleRatioInput = $("middleRatioInput");
         els.middleRatioValue = $("middleRatioValue");
         els.lyricsInput = $("lyricsInput");
+        els.clearCacheBtn = $("clearCacheBtn");
+        els.cacheStatus = $("cacheStatus");
         els.audio = $("audio");
         if (window.NativeAudioBridge) {
           try {
@@ -884,6 +895,9 @@
         els.lineJumpInput.oninput = onLineJumpInput;
         els.lineJumpInput.onchange = hideLineJump;
         els.markList.onclick = onMarkListClick;
+        els.clearCacheBtn.onclick = clearAudioCache;
+        window.addEventListener("native-back", onNativeBack);
+        applyCacheUi();
         bindProgressDrag();
         bindContinuousGestures();
 
@@ -1127,6 +1141,50 @@
         refreshTranscriptFollow();
       }
 
+      function onNativeBack() {
+        if (state.page === "config") {
+          showPage("player");
+          return;
+        }
+        if (state.page === "player") {
+          showPage("start");
+          return;
+        }
+        if (window.NativeAudioBridge && window.NativeAudioBridge.exitApp) {
+          window.NativeAudioBridge.exitApp();
+        }
+      }
+
+      function applyCacheUi() {
+        if (!els.clearCacheBtn) {
+          return;
+        }
+        var supported = !!(window.NativeAudioBridge && window.NativeAudioBridge.clearCache);
+        els.clearCacheBtn.disabled = !supported;
+        if (!supported) {
+          els.cacheStatus.textContent = "仅 App 内可用";
+        }
+      }
+
+      function clearAudioCache() {
+        if (!window.NativeAudioBridge || !window.NativeAudioBridge.clearCache) {
+          return;
+        }
+        els.audio.pause();
+        els.clearCacheBtn.disabled = true;
+        els.cacheStatus.textContent = "正在清除...";
+        Promise.resolve(window.NativeAudioBridge.clearCache())
+          .then(function () {
+            els.cacheStatus.textContent = "缓存已清除";
+          })
+          .catch(function () {
+            els.cacheStatus.textContent = "清除失败，请重试";
+          })
+          .then(function () {
+            els.clearCacheBtn.disabled = false;
+          });
+      }
+
       function loadAudioIndex() {
         setBrowserMessage("正在读取 audio/index.json...");
         fetch(appUrl("audio/index.json"), { cache: "no-cache" })
@@ -1161,6 +1219,7 @@
             name: item.name || item.title || item.path || "audio.mp3",
             title: item.title || item.name || "audio",
             url: item.url || item.path,
+            version: item.modifiedAt ? String(item.modifiedAt) : (item.size ? String(item.size) : ""),
             folders: item.folders && item.folders.length ? item.folders.slice(0) : getFoldersFromPath(item.path),
             transcriptUrl: item.transcriptUrl || null
           });
@@ -1333,7 +1392,7 @@
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.pause();
-        els.audio.src = appUrl(entry.url);
+        els.audio.src = buildAudioUrl(entry);
         els.audio.currentTime = 0;
         seekToPendingOpenMark();
         els.fileName.innerHTML = escapeHtml(state.fileName);
@@ -2451,6 +2510,14 @@
           return path;
         }
         return base.replace(/\/+$/, "") + "/" + String(path).replace(/^\/+/, "");
+      }
+
+      function buildAudioUrl(entry) {
+        var url = appUrl(entry.url);
+        if (entry.version) {
+          url += (url.indexOf("?") >= 0 ? "&" : "?") + "v=" + encodeURIComponent(entry.version);
+        }
+        return url;
       }
 
       function getUrlApi() {
