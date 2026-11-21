@@ -9,6 +9,7 @@ on:
       - "scripts/**"
       - "package.json"
       - "package-lock.json"
+      - "patches/**"
       - "capacitor.config.json"
       - "android/**"
       - ".github/workflows/android.yml"

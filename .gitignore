@@ -10,3 +10,5 @@ android/local.properties
 android/.idea/
 *.keystore
 *.jks
+# Stable debug key so sideloaded builds update in place.
+!android/app/debug.keystore
