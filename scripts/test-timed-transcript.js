@@ -62,6 +62,65 @@ for (const [time, index] of [[0, 0], [0.38, 0], [15.53, 0], [15.54, 1],
 }
 api.state.transcriptCues = api.parse('00:01.00\na\none\n00:01.00\nb\ntwo').cues;
 assert.equal(api.indexAt(1), 1);
+
+// "[MM:SS - MM:SS] text" exports: one ASR fragment per line, joined into sentences.
+const rangedSample = [
+  '[00:00 - 00:03] This is an all-year English podcast.',
+  '[00:03 - 00:06] Is everything peachy in your neck of the woods?',
+  '[00:08 - 00:11] Welcome to the all-year English podcast',
+  '[00:11 - 00:14] downloaded more than 200 million times.',
+  '[00:14 - 00:17] Are you feeling stuck with your English?',
+  '[00:17 - 00:21] We\'ll show you how to become fearless and fluent',
+  '[00:21 - 00:24] by focusing on connection, not perfection.',
+  '[00:24 - 00:27] With your American host, Michelle Kaplan,'
+].join('\n');
+const ranged = api.parse(rangedSample);
+assert.equal(ranged.type, 'timed-range');
+assert.equal(ranged.cues.length, 6);
+assert.deepEqual(Array.from(ranged.lines), [
+  'This is an all-year English podcast.',
+  'Is everything peachy in your neck of the woods?',
+  'Welcome to the all-year English podcast downloaded more than 200 million times.',
+  'Are you feeling stuck with your English?',
+  'We\'ll show you how to become fearless and fluent by focusing on connection, not perfection.',
+  'With your American host, Michelle Kaplan,'
+]);
+assert.equal(ranged.cues[2].start, 8);
+assert.equal(ranged.cues[2].end, 14);
+assert.equal(ranged.cues[4].start, 17);
+assert.equal(ranged.cues[4].end, 24);
+for (const newline of ['\n', '\r\n', '\r']) {
+  assert.equal(api.parse('\uFEFF' + rangedSample.replace(/\r\n|\n|\r/g, newline)).type, 'timed-range');
+}
+// A long silent gap ends a sentence even without terminal punctuation.
+const gapped = api.parse('[00:00 - 00:02] First thought\n[00:10 - 00:12] Second thought');
+assert.equal(gapped.type, 'timed-range');
+assert.equal(gapped.lines.length, 2);
+assert.equal(gapped.cues[1].start, 10);
+// Zero-length fragments sharing a start time must not be skipped by indexAt.
+const tied = api.parse([
+  '[03:31 - 03:31] And I was like, why?',
+  '[03:31 - 03:34] And he said, because I asked',
+  '[03:34 - 03:40] the teacher to call me.'
+].join('\n'));
+assert.equal(tied.type, 'timed-range');
+assert.equal(tied.lines.length, 1);
+assert.match(tied.lines[0], /^And I was like, why\? And he said/);
+assert.equal(tied.cues[0].start, 211);
+assert.equal(tied.cues[0].end, 220);
+// Optional hours and fractions are tolerated.
+const clocked = api.parse('[1:02:03.50 - 1:02:07] Longer show');
+assert.equal(clocked.type, 'timed-range');
+assert.equal(clocked.cues[0].start, 3723.5);
+for (const input of ['[00:60 - 01:00] bad seconds', '[00:00 - 00:03]',
+  '[00:00 - 00:03] ok\nplain line']) {
+  assert.equal(api.parse(input).type, 'plain');
+}
+api.state.transcriptCues = ranged.cues;
+for (const [time, index] of [[0, 0], [7.9, 1], [8, 2], [13.9, 2], [14, 3],
+  [17, 4], [24, 5]]) {
+  assert.equal(api.indexAt(time), index);
+}
 api.state.transcriptCues = parsed.cues;
 api.state.transcriptType = parsed.type;
 api.state.lyrics = parsed.lines;
@@ -193,4 +252,30 @@ frame(2500);
 assert.equal(actual.cues[api.state.transcriptIndex].text, 'Right into my eyes.');
 assert.equal(scroller.scrollTop, 850, 'real transcript advances and centers the next paragraph');
 api.stop();
-console.log('Timed transcript parsing, synchronization and scrolling checks passed.');
+
+// Exercise the real "All Ears English" export: "[MM:SS - MM:SS] text".
+const aeeEntry = catalog.files.find(file => file.transcriptPath && file.transcriptPath.includes('Is Everything Peachy'));
+assert.ok(aeeEntry, 'range-format podcast fixture is in the audio catalog');
+const aee = api.parse(fs.readFileSync(path.join(root, aeeEntry.transcriptPath), 'utf8'));
+assert.equal(aee.type, 'timed-range');
+assert.equal(aee.cues.length, 336);
+assert.equal(aee.cues[0].start, 0);
+assert.match(aee.lines[2], /^Welcome to the all-year English podcast downloaded/);
+assert.ok(aee.lines.some(line => line.includes('And I was like, why? And he said')),
+  'zero-length fragment is folded into its sentence');
+api.state.transcriptType = aee.type;
+api.state.transcriptCues = aee.cues;
+api.state.lyrics = aee.lines;
+api.state.settings.continuousMode = true;
+api.els.audio.currentTime = 0;
+api.els.audio.paused = true;
+scroller.clientHeight = 600;
+scroller.scrollHeight = 30000;
+api.render();
+assert.equal((scroller.innerHTML.match(/class="transcript-line"/g) || []).length, 336);
+assert.doesNotMatch(scroller.innerHTML, /\[\d{2}:\d{2} - \d{2}:\d{2}\]/);
+assert.match(scroller.innerHTML, /Is everything peachy in your neck of the woods\?/);
+api.refresh();
+assert.equal(scroller.style.paddingTop, '300px');
+api.stop();
+console.log('Timed transcript parsing, range merging, synchronization and scrolling checks passed.');
