@@ -1,0 +1,11 @@
+{
+  "appId": "io.github.wzzzx.listening",
+  "appName": "音频播放器",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#f4f6f1"
+  }
+}

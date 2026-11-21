@@ -861,6 +861,18 @@
         els.middleRatioValue = $("middleRatioValue");
         els.lyricsInput = $("lyricsInput");
         els.audio = $("audio");
+        if (window.NativeAudioBridge) {
+          try {
+            var nativeAudio = window.NativeAudioBridge.create({
+              getTitle: function () { return state.fileName; },
+              getBackStep: function () { return state.settings.backStep; },
+              getForwardStep: function () { return state.settings.forwardStep; }
+            });
+            if (nativeAudio) {
+              els.audio = nativeAudio;
+            }
+          } catch (e) {}
+        }
       }
 
       function bindEvents() {
@@ -1117,7 +1129,7 @@
 
       function loadAudioIndex() {
         setBrowserMessage("正在读取 audio/index.json...");
-        fetch("audio/index.json", { cache: "no-cache" })
+        fetch(appUrl("audio/index.json"), { cache: "no-cache" })
           .then(function (response) {
             if (!response.ok) {
               throw new Error("HTTP " + response.status);
@@ -1321,7 +1333,7 @@
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.pause();
-        els.audio.src = entry.url;
+        els.audio.src = appUrl(entry.url);
         els.audio.currentTime = 0;
         seekToPendingOpenMark();
         els.fileName.innerHTML = escapeHtml(state.fileName);
@@ -1341,7 +1353,7 @@
         if (!entry.transcriptUrl) {
           return;
         }
-        fetch(entry.transcriptUrl, { cache: "no-cache" })
+        fetch(appUrl(entry.transcriptUrl), { cache: "no-cache" })
           .then(function (response) {
             if (!response.ok) {
               throw new Error("HTTP " + response.status);
@@ -2431,6 +2443,14 @@
       function getNumber(value, fallback) {
         var num = parseFloat(value);
         return isNaN(num) ? fallback : num;
+      }
+
+      function appUrl(path) {
+        var base = typeof window !== "undefined" && window.__APP_BASE__ ? String(window.__APP_BASE__) : "";
+        if (!base) {
+          return path;
+        }
+        return base.replace(/\/+$/, "") + "/" + String(path).replace(/^\/+/, "");
       }
 
       function getUrlApi() {
