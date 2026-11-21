@@ -618,12 +618,6 @@
       color: #7b837b;
       line-height: 1.5;
     }
-
-    .media-status {
-      color: #59645a;
-      font-size: 14px;
-      line-height: 1.6;
-    }
   </style>
 </head>
 <body>
@@ -742,10 +736,6 @@
         <div class="field">
           <label for="middleRatioInput">中区域占比 <span id="middleRatioValue" class="range-value"></span></label>
           <input id="middleRatioInput" type="range" min="15" max="60" step="1">
-        </div>
-        <div class="field">
-          <label>系统媒体控制</label>
-          <div id="mediaSessionStatus" class="media-status"></div>
         </div>
       </div>
 
@@ -869,7 +859,6 @@
         els.topRatioValue = $("topRatioValue");
         els.middleRatioInput = $("middleRatioInput");
         els.middleRatioValue = $("middleRatioValue");
-        els.mediaSessionStatus = $("mediaSessionStatus");
         els.lyricsInput = $("lyricsInput");
         els.audio = $("audio");
       }
@@ -885,13 +874,10 @@
         els.markList.onclick = onMarkListClick;
         bindProgressDrag();
         bindContinuousGestures();
-        bindMediaSession();
-        renderMediaSessionStatus();
 
-        els.audio.onplay = function () { updatePlayButton(); refreshTranscriptFollow(); updateMediaSessionPlaybackState(); };
-        els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); updateMediaSessionPlaybackState(); };
+        els.audio.onplay = function () { updatePlayButton(); refreshTranscriptFollow(); };
+        els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
         els.audio.onseeked = function () { refreshTranscriptFollow(true); };
-        els.audio.onended = function () { updateMediaSessionPlaybackState(); };
         window.addEventListener("resize", function () { refreshTranscriptFollow(); });
         els.audio.ontimeupdate = function () {
           updateMarkButtons();
@@ -1340,7 +1326,6 @@
         seekToPendingOpenMark();
         els.fileName.innerHTML = escapeHtml(state.fileName);
         updateFileNameScroll();
-        updateMediaSessionMetadata();
         setLyricsText("");
         loadTranscript(entry);
         applyImmersiveRatio();
@@ -1452,11 +1437,11 @@
           "播放中，点击暂停，左右滑动快退/快进";
       }
 
-      function seekTo(seconds) {
+      function seekBy(seconds) {
         if (!state.audioReady || isNaN(els.audio.duration)) {
           return;
         }
-        var next = seconds;
+        var next = els.audio.currentTime + seconds;
         if (next < 0) {
           next = 0;
         }
@@ -1467,130 +1452,6 @@
         els.audio.currentTime = next;
         updateMarkButtons();
         updateFileProgress();
-      }
-
-      function seekBy(seconds) {
-        seekTo(els.audio.currentTime + seconds);
-      }
-
-      // Media Session surfaces the current title and transport controls on the
-      // Android notification shade / lock screen when the WebView host supports it.
-      function getMediaSession() {
-        if (typeof navigator === "undefined" || !navigator.mediaSession) {
-          return null;
-        }
-        return navigator.mediaSession;
-      }
-
-      function getMediaSessionTitle() {
-        var name = String(state.fileName || "");
-        return name.replace(/\.[a-z0-9]+$/i, "") || "音频播放器";
-      }
-
-      function updateMediaSessionMetadata() {
-        var session = getMediaSession();
-        if (!session) {
-          return;
-        }
-        if (!state.audioReady || !state.fileName || typeof MediaMetadata === "undefined") {
-          session.metadata = null;
-          return;
-        }
-        try {
-          session.metadata = new MediaMetadata({
-            title: getMediaSessionTitle(),
-            artist: "音频播放器",
-            album: ""
-          });
-        } catch (e) {}
-      }
-
-      function updateMediaSessionPlaybackState() {
-        var session = getMediaSession();
-        if (!session) {
-          return;
-        }
-        try {
-          session.playbackState = els.audio && !els.audio.paused ? "playing" : "paused";
-        } catch (e) {}
-      }
-
-      function updateMediaSessionPosition() {
-        var session = getMediaSession();
-        var duration = els.audio ? els.audio.duration : NaN;
-        var position;
-        if (!session || !session.setPositionState) {
-          return;
-        }
-        if (!state.audioReady || !isFinite(duration) || duration <= 0) {
-          return;
-        }
-        position = els.audio.currentTime || 0;
-        if (position < 0) {
-          position = 0;
-        }
-        if (position > duration) {
-          position = duration;
-        }
-        try {
-          session.setPositionState({
-            duration: duration,
-            playbackRate: els.audio.playbackRate || 1,
-            position: position
-          });
-        } catch (e) {}
-      }
-
-      function setMediaSessionAction(session, action, handler) {
-        if (!session.setActionHandler) {
-          return;
-        }
-        try {
-          session.setActionHandler(action, handler);
-        } catch (e) {}
-      }
-
-      function bindMediaSession() {
-        var session = getMediaSession();
-        if (!session) {
-          return;
-        }
-        setMediaSessionAction(session, "play", function () {
-          if (state.audioReady && els.audio.paused) {
-            togglePlay();
-          }
-        });
-        setMediaSessionAction(session, "pause", function () {
-          if (state.audioReady && !els.audio.paused) {
-            togglePlay();
-          }
-        });
-        setMediaSessionAction(session, "seekbackward", function () {
-          seekBy(-getNumber(state.settings.backStep, defaults.backStep));
-        });
-        setMediaSessionAction(session, "seekforward", function () {
-          seekBy(getNumber(state.settings.forwardStep, defaults.forwardStep));
-        });
-        setMediaSessionAction(session, "seekto", function (details) {
-          if (details && typeof details.seekTime === "number") {
-            seekTo(details.seekTime);
-          }
-        });
-        updateMediaSessionMetadata();
-        updateMediaSessionPlaybackState();
-      }
-
-      function renderMediaSessionStatus() {
-        if (!els.mediaSessionStatus) {
-          return;
-        }
-        if (!getMediaSession()) {
-          els.mediaSessionStatus.textContent = "不支持（当前浏览器/WebView 未提供 Media Session）";
-        } else if (typeof MediaMetadata === "undefined") {
-          els.mediaSessionStatus.textContent = "部分支持（缺少 MediaMetadata，无法显示标题）";
-        } else {
-          els.mediaSessionStatus.textContent = "API 可用，播放后由系统通知栏/锁屏接管";
-        }
       }
 
       function bindProgressDrag() {
@@ -1880,7 +1741,6 @@
         if (state.progressDragging) {
           updateProgressDragPanel(percent);
         }
-        updateMediaSessionPosition();
       }
 
       function updateProgressDragPanel(percent) {
