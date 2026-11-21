@@ -53,14 +53,20 @@ jobs:
       - run: npm run build:web
       - run: npx cap sync android
 
-      - name: Assemble debug APK
+      - name: Assemble debug and release APKs
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleDebug assembleRelease --no-daemon --stacktrace
 
       - uses: actions/upload-artifact@v4
         with:
           name: listening-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: listening-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error

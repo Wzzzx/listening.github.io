@@ -750,7 +750,7 @@
       <div class="config-section">
         <h2>缓存</h2>
         <div class="field">
-          <div class="mark-empty">播放过的音频会自动缓存到本机（最多 512 MB），缓存完成的集数可以离线播放。</div>
+          <div class="mark-empty">选中音频后会在后台缓存完整文件（最多 512 MB），缓存完成的集数可以离线播放；从播放列表移除的音频会自动清理。</div>
         </div>
         <button id="clearCacheBtn" type="button">清除音频缓存</button>
         <div id="cacheStatus" class="mark-empty"></div>
@@ -1186,6 +1186,18 @@
           });
       }
 
+      function pruneAudioCache() {
+        if (!window.NativeAudioBridge || !window.NativeAudioBridge.pruneCache || !state.audioIndex) {
+          return;
+        }
+        var urls = [];
+        var i;
+        for (i = 0; i < state.audioIndex.length; i += 1) {
+          urls.push(buildAudioUrl(state.audioIndex[i]));
+        }
+        window.NativeAudioBridge.pruneCache(urls);
+      }
+
       function loadAudioIndex() {
         setBrowserMessage("正在读取 audio/index.json...");
         fetch(appUrl("audio/index.json"), { cache: "no-cache" })
@@ -1199,6 +1211,7 @@
             state.audioIndex = normalizeAudioIndex(data);
             state.browserPath = [];
             renderAudioBrowser();
+            pruneAudioCache();
           })
           .catch(function () {
             state.audioIndex = null;

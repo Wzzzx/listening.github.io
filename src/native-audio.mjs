@@ -388,6 +388,12 @@ function clearCache() {
     .catch(noop);
 }
 
+function pruneCache(urls) {
+  return Promise.resolve()
+    .then(function () { return NativeAudio.pruneCache({ urls: urls || [] }); })
+    .catch(noop);
+}
+
 function exitApp() {
   return Promise.resolve()
     .then(function () { return App.exitApp(); })
@@ -395,7 +401,7 @@ function exitApp() {
 }
 
 if (typeof window !== "undefined") {
-  window.NativeAudioBridge = { create: create, clearCache: clearCache, exitApp: exitApp };
+  window.NativeAudioBridge = { create: create, clearCache: clearCache, pruneCache: pruneCache, exitApp: exitApp };
   if (window.Capacitor) {
     try {
       App.addListener("backButton", function () {
