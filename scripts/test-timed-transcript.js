@@ -63,6 +63,31 @@ for (const [time, index] of [[0, 0], [0.38, 0], [15.53, 0], [15.54, 1],
 api.state.transcriptCues = api.parse('00:01.00\na\none\n00:01.00\nb\ntwo').cues;
 assert.equal(api.indexAt(1), 1);
 
+// Long speaker turns are split into sentence-sized cues with interpolated start
+// times; continuous mode then advances while one person keeps talking.
+const longTurn = api.parse([
+  '00:10.00', 'Ann',
+  'First sentence here is short. Second sentence keeps going for a while so that the packer has to split it somewhere sensible. Third one is also fairly long and mentions a few extra details that nobody needs. Fourth ends the turn. ',
+  '00:40.00', 'Bob', 'Short reply.'
+].join('\n'));
+assert.equal(longTurn.type, 'timed-speaker');
+assert.equal(longTurn.cues.length, 3, 'long turn split into sentences, short turn kept whole');
+assert.equal(longTurn.cues[2].start, 40);
+assert.equal(
+  longTurn.lines.join(' ').replace(/\s+/g, ' ').trim(),
+  'First sentence here is short. Second sentence keeps going for a while so that the packer has to split it somewhere sensible. Third one is also fairly long and mentions a few extra details that nobody needs. Fourth ends the turn. Short reply.',
+  'splitting preserves the transcript text'
+);
+assert.ok(longTurn.cues[0].text.length <= 150, 'segments stay near the target length');
+assert.ok(longTurn.cues[1].start > longTurn.cues[0].start, 'segment starts increase');
+assert.ok(longTurn.cues[1].start < 40, 'interpolated starts stay inside the turn');
+assert.match(longTurn.cues[1].text, /^Third one/, 'split lands on a sentence boundary');
+// A long silent gap after a turn must not stretch its text across the silence.
+const gapTurn = api.parse('00:00.00\nAnn\n' + 'word '.repeat(100) + '\n05:00.00\nBob\nHi');
+assert.equal(gapTurn.cues.length, 5, 'punctuation-free turn is split at word boundaries');
+assert.ok(gapTurn.cues[3].end < 100, 'speech estimate wins over a five-minute gap');
+assert.equal(gapTurn.cues[4].start, 300);
+
 // "[MM:SS - MM:SS] text" exports: one ASR fragment per line, joined into sentences.
 const rangedSample = [
   '[00:00 - 00:03] This is an all-year English podcast.',
@@ -225,12 +250,12 @@ assert.ok(entry, 'real podcast fixture is in the audio catalog');
 const actualText = fs.readFileSync(path.join(root, entry.transcriptPath), 'utf8');
 const actual = api.parse(actualText);
 assert.equal(actual.type, 'timed-speaker');
-assert.equal(actual.cues.length, 224);
+assert.equal(actual.cues.length, 411, 'long turns are segmented for the real export');
 api.state.transcriptType = actual.type;
 api.state.transcriptCues = actual.cues;
 api.state.lyrics = actual.lines;
 api.render();
-assert.equal((scroller.innerHTML.match(/class="transcript-line"/g) || []).length, 224);
+assert.equal((scroller.innerHTML.match(/class="transcript-line"/g) || []).length, 411);
 assert.doesNotMatch(scroller.innerHTML, />James<|>Pierce<|>\d+:\d{2}\.\d{2}</);
 assert.match(scroller.innerHTML, /I love it\. I love it\./);
 scroller.scrollHeight = 46000;
@@ -242,16 +267,29 @@ api.els.audio.currentTime = 23.65;
 api.refresh(true);
 frame(1800);
 frame(2100);
-assert.equal(api.state.transcriptIndex, 3);
-assert.match(actual.cues[3].text, /^I love it/);
-assert.equal(scroller.scrollTop, 650);
+assert.equal(api.state.transcriptIndex, 5);
+assert.match(actual.cues[5].text, /^I love it/);
+assert.equal(scroller.scrollTop, 1050);
 api.els.audio.currentTime = 23.70;
 api.sync(false);
 frame(2200);
 frame(2500);
 assert.equal(actual.cues[api.state.transcriptIndex].text, 'Right into my eyes.');
-assert.equal(scroller.scrollTop, 850, 'real transcript advances and centers the next paragraph');
+assert.equal(scroller.scrollTop, 1250, 'real transcript advances and centers the next paragraph');
 api.stop();
+
+// The reported case: a single 3076-character turn used to sit still for minutes.
+const brigitEntry = catalog.files.find(file => file.transcriptPath && file.transcriptPath.includes('Brigit Murtaugh'));
+assert.ok(brigitEntry, 'long-turn podcast fixture is in the audio catalog');
+const brigit = api.parse(fs.readFileSync(path.join(root, brigitEntry.transcriptPath), 'utf8'));
+assert.equal(brigit.type, 'timed-speaker');
+assert.equal(brigit.cues.length, 444);
+assert.ok(Math.max(...brigit.cues.map(cue => cue.text.length)) <= 200,
+  'no paragraph is longer than the split threshold');
+const brigitGaps = brigit.cues.slice(1).map((cue, i) => cue.start - brigit.cues[i].start);
+assert.ok(Math.max(...brigitGaps) < 20,
+  'continuous mode never sits on one paragraph for a whole monologue');
+assert.ok(brigit.cues.some(cue => cue.part >= 10), 'the long turn is split into many sentences');
 
 // Exercise the real "All Ears English" export: "[MM:SS - MM:SS] text".
 const aeeEntry = catalog.files.find(file => file.transcriptPath && file.transcriptPath.includes('Is Everything Peachy'));

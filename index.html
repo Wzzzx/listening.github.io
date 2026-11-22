@@ -1778,6 +1778,12 @@
       var rangeEndPattern = /[.!?…。！？]["'”’)\]]*$/;
       var rangeMergeGap = 2;
       var rangeMergeLength = 400;
+      // A speaker turn is often exported as one very long line. Continuous mode
+      // scrolls on cue changes, so a 3000-character turn would both freeze the
+      // page for minutes and read as a wall of text.
+      var turnSplitLength = 200;
+      var turnSegmentLength = 150;
+      var turnSpeechRate = 14;
 
       function parseTranscript(text) {
         var raw = text.replace(/^\uFEFF/, "").split(/\r\n|\n|\r/);
@@ -1797,7 +1803,97 @@
         // Speaker turns can overlap and be exported slightly out of time order.
         // Keep both the displayed paragraphs and binary-search timeline aligned.
         cues.sort(function (a, b) { return a.start - b.start || a.sourceIndex - b.sourceIndex; });
+        cues = expandTurnCues(cues);
         return { type: "timed-speaker", cues: cues, lines: cues.map(function (cue) { return cue.text; }) };
+      }
+
+      // Each long turn becomes several sentence-sized cues whose start times are
+      // interpolated by character count inside the turn. Speech rate is steady
+      // enough for that to stay within a sentence, and every turn boundary
+      // realigns the natural search, so the error never accumulates.
+      function expandTurnCues(cues) {
+        var expanded = [];
+        var i;
+        var cue;
+        var next;
+        var total;
+        var estimate;
+        var span;
+        var parts;
+        var elapsed;
+        var j;
+        var partStart;
+        var partEnd;
+        for (i = 0; i < cues.length; i += 1) {
+          cue = cues[i];
+          next = cues[i + 1];
+          total = cue.text.length;
+          if (total <= turnSplitLength) {
+            expanded.push(cue);
+            continue;
+          }
+          estimate = Math.max(1, total / turnSpeechRate);
+          if (isFinite(cue.end) && cue.end > cue.start) {
+            span = cue.end - cue.start;
+          } else if (next && isFinite(next.start) && next.start > cue.start) {
+            // A long silence after the turn must not stretch the text across it.
+            span = Math.min(next.start - cue.start, estimate * 1.6);
+          } else {
+            span = estimate;
+          }
+          if (!(span > 0)) { span = estimate; }
+          parts = splitTurnText(cue.text, turnSegmentLength);
+          elapsed = 0;
+          for (j = 0; j < parts.length; j += 1) {
+            partStart = cue.start + (elapsed / total) * span;
+            elapsed += parts[j].length;
+            partEnd = cue.start + (elapsed / total) * span;
+            expanded.push({
+              start: partStart,
+              end: Math.max(partStart, partEnd),
+              speaker: cue.speaker,
+              text: parts[j],
+              sourceIndex: cue.sourceIndex,
+              part: j
+            });
+          }
+        }
+        return expanded;
+      }
+
+      // Split on terminal punctuation, then pack complete sentences into segments
+      // no longer than maxLength. A single sentence that long is cut at a space
+      // (or at the limit for scripts that do not use spaces).
+      function splitTurnText(text, maxLength) {
+        var pieces = String(text).match(/[^.!?…。！？]+[.!?…。！？]*["'”’)\]]*\s*/g) || [String(text)];
+        var segments = [];
+        var current = "";
+        var i;
+        var piece;
+        var cut;
+        for (i = 0; i < pieces.length; i += 1) {
+          piece = pieces[i];
+          if (trim(piece) === "") { continue; }
+          while (piece.length > maxLength) {
+            cut = piece.lastIndexOf(" ", maxLength);
+            if (cut <= 0) { cut = maxLength; }
+            if (trim(current) !== "") {
+              segments.push(trim(current));
+              current = "";
+            }
+            segments.push(trim(piece.slice(0, cut)));
+            piece = piece.slice(cut);
+          }
+          if (trim(piece) === "") { continue; }
+          if (trim(current) !== "" && current.length + piece.length > maxLength) {
+            segments.push(trim(current));
+            current = piece;
+          } else {
+            current += piece;
+          }
+        }
+        if (trim(current) !== "") { segments.push(trim(current)); }
+        return segments.length ? segments : [trim(text)];
       }
 
       // "[MM:SS - MM:SS] text" subtitle exports. Each line is an ASR fragment, so
