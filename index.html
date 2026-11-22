@@ -788,6 +788,7 @@
         audioLoadToken: 0,
         audioObjectUrl: "",
         currentAudioUrl: "",
+        wantsPlay: false,
         fileKey: "",
         fileName: "",
         lyrics: [],
@@ -895,7 +896,11 @@
           refreshTranscriptFollow();
           cacheCurrentAudio();
         };
-        els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
+        els.audio.onpause = function () {
+          state.wantsPlay = false;
+          updatePlayButton();
+          refreshTranscriptFollow();
+        };
         els.audio.onseeked = function () { refreshTranscriptFollow(true); };
         window.addEventListener("resize", function () { refreshTranscriptFollow(); });
         els.audio.ontimeupdate = function () {
@@ -1231,7 +1236,8 @@
       }
 
       // Audio is only cached while it is actually being played, and only when the
-      // user has not asked the browser to save data.
+      // user has not asked the browser to save data. The download waits a couple of
+      // seconds so the media element can establish its own stream first.
       function cacheCurrentAudio() {
         if (!state.currentAudioUrl || state.audioObjectUrl) {
           return;
@@ -1241,7 +1247,16 @@
           return;
         }
         requestPersistentStorage();
-        downloadToCache(state.currentAudioUrl);
+        var url = state.currentAudioUrl;
+        window.setTimeout(function () {
+          if (state.currentAudioUrl !== url || state.audioObjectUrl) {
+            return;
+          }
+          if (els.audio.paused && els.audio.currentTime < 5) {
+            return;
+          }
+          downloadToCache(url);
+        }, 2000);
       }
 
       function requestPersistentStorage() {
@@ -1416,33 +1431,38 @@
 
       // --- playback integration -------------------------------------------------
 
-      // Play from the cache when the episode is already stored, otherwise stream it.
-      // The old source is detached first so a tap on play during the lookup cannot
-      // restart the previous episode.
+      // Playback must never wait for the cache. The network source is applied right
+      // away so the first tap always plays; when the episode turns out to be cached,
+      // the element is switched to the blob while it is still paused, which keeps the
+      // cached copy free of network traffic. A tap that lands before the lookup
+      // finishes just keeps streaming instead of being interrupted.
       function loadAudioSource(path) {
         var token = state.audioLoadToken + 1;
         state.audioLoadToken = token;
         state.currentAudioUrl = path;
         els.audio.pause();
-        els.audio.removeAttribute("src");
+        applyAudioSource(path);
         releaseCachedAudio();
         if (!mediaCacheSupported()) {
-          applyAudioSource(path);
           return Promise.resolve();
         }
         return readCachedAudioUrl(path).then(function (objectUrl) {
-          if (token !== state.audioLoadToken) {
-            if (objectUrl) {
-              getUrlApi().revokeObjectURL(objectUrl);
-            }
+          if (!objectUrl) {
             return;
           }
-          state.audioObjectUrl = objectUrl || "";
-          applyAudioSource(state.audioObjectUrl || path);
+          if (token !== state.audioLoadToken || !els.audio.paused) {
+            getUrlApi().revokeObjectURL(objectUrl);
+            return;
+          }
+          var resumeAt = els.audio.currentTime || 0;
+          state.audioObjectUrl = objectUrl;
+          els.audio.src = objectUrl;
+          if (resumeAt > 0) {
+            els.audio.currentTime = resumeAt;
+          }
         }).catch(function () {
-          if (token === state.audioLoadToken) {
-            state.audioObjectUrl = "";
-            applyAudioSource(path);
+          if (token === state.audioLoadToken && state.audioObjectUrl) {
+            releaseCachedAudio();
           }
         });
       }
@@ -1798,15 +1818,23 @@
       }
 
       function togglePlay() {
-        if (!state.audioReady || !els.audio.src) {
+        if (!state.audioReady) {
           return;
         }
         if (els.audio.paused) {
+          state.wantsPlay = true;
           var promise = els.audio.play();
           if (promise && promise.catch) {
-            promise.catch(function () {});
+            promise.catch(function (error) {
+              // Switching the source to a cached blob can abort a play() that was
+              // already in flight; retry once while the user still wants playback.
+              if (state.wantsPlay && error && error.name === "AbortError") {
+                els.audio.play().catch(function () {});
+              }
+            });
           }
         } else {
+          state.wantsPlay = false;
           els.audio.pause();
         }
         updatePlayButton();

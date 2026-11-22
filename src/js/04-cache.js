@@ -94,7 +94,8 @@ function downloadToCache(path) {
 }
 
 // Audio is only cached while it is actually being played, and only when the
-// user has not asked the browser to save data.
+// user has not asked the browser to save data. The download waits a couple of
+// seconds so the media element can establish its own stream first.
 function cacheCurrentAudio() {
   if (!state.currentAudioUrl || state.audioObjectUrl) {
     return;
@@ -104,7 +105,16 @@ function cacheCurrentAudio() {
     return;
   }
   requestPersistentStorage();
-  downloadToCache(state.currentAudioUrl);
+  var url = state.currentAudioUrl;
+  window.setTimeout(function () {
+    if (state.currentAudioUrl !== url || state.audioObjectUrl) {
+      return;
+    }
+    if (els.audio.paused && els.audio.currentTime < 5) {
+      return;
+    }
+    downloadToCache(url);
+  }, 2000);
 }
 
 function requestPersistentStorage() {
@@ -279,33 +289,38 @@ function estimateStorageUsage() {
 
 // --- playback integration -------------------------------------------------
 
-// Play from the cache when the episode is already stored, otherwise stream it.
-// The old source is detached first so a tap on play during the lookup cannot
-// restart the previous episode.
+// Playback must never wait for the cache. The network source is applied right
+// away so the first tap always plays; when the episode turns out to be cached,
+// the element is switched to the blob while it is still paused, which keeps the
+// cached copy free of network traffic. A tap that lands before the lookup
+// finishes just keeps streaming instead of being interrupted.
 function loadAudioSource(path) {
   var token = state.audioLoadToken + 1;
   state.audioLoadToken = token;
   state.currentAudioUrl = path;
   els.audio.pause();
-  els.audio.removeAttribute("src");
+  applyAudioSource(path);
   releaseCachedAudio();
   if (!mediaCacheSupported()) {
-    applyAudioSource(path);
     return Promise.resolve();
   }
   return readCachedAudioUrl(path).then(function (objectUrl) {
-    if (token !== state.audioLoadToken) {
-      if (objectUrl) {
-        getUrlApi().revokeObjectURL(objectUrl);
-      }
+    if (!objectUrl) {
       return;
     }
-    state.audioObjectUrl = objectUrl || "";
-    applyAudioSource(state.audioObjectUrl || path);
+    if (token !== state.audioLoadToken || !els.audio.paused) {
+      getUrlApi().revokeObjectURL(objectUrl);
+      return;
+    }
+    var resumeAt = els.audio.currentTime || 0;
+    state.audioObjectUrl = objectUrl;
+    els.audio.src = objectUrl;
+    if (resumeAt > 0) {
+      els.audio.currentTime = resumeAt;
+    }
   }).catch(function () {
-    if (token === state.audioLoadToken) {
-      state.audioObjectUrl = "";
-      applyAudioSource(path);
+    if (token === state.audioLoadToken && state.audioObjectUrl) {
+      releaseCachedAudio();
     }
   });
 }

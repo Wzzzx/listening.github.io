@@ -23,6 +23,7 @@ var state = {
   audioLoadToken: 0,
   audioObjectUrl: "",
   currentAudioUrl: "",
+  wantsPlay: false,
   fileKey: "",
   fileName: "",
   lyrics: [],

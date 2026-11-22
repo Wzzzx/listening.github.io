@@ -81,7 +81,11 @@ function bindEvents() {
     refreshTranscriptFollow();
     cacheCurrentAudio();
   };
-  els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
+  els.audio.onpause = function () {
+    state.wantsPlay = false;
+    updatePlayButton();
+    refreshTranscriptFollow();
+  };
   els.audio.onseeked = function () { refreshTranscriptFollow(true); };
   window.addEventListener("resize", function () { refreshTranscriptFollow(); });
   els.audio.ontimeupdate = function () {

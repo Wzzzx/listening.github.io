@@ -14,15 +14,23 @@ function applyImmersiveRatio() {
 }
 
 function togglePlay() {
-  if (!state.audioReady || !els.audio.src) {
+  if (!state.audioReady) {
     return;
   }
   if (els.audio.paused) {
+    state.wantsPlay = true;
     var promise = els.audio.play();
     if (promise && promise.catch) {
-      promise.catch(function () {});
+      promise.catch(function (error) {
+        // Switching the source to a cached blob can abort a play() that was
+        // already in flight; retry once while the user still wants playback.
+        if (state.wantsPlay && error && error.name === "AbortError") {
+          els.audio.play().catch(function () {});
+        }
+      });
     }
   } else {
+    state.wantsPlay = false;
     els.audio.pause();
   }
   updatePlayButton();

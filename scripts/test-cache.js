@@ -10,6 +10,10 @@ function keyOf(request) {
   return typeof request === 'string' ? request : request.url;
 }
 
+function flush() {
+  return new Promise(function (resolve) { setTimeout(resolve, 0); });
+}
+
 function makeCacheStorage() {
   const entries = new Map();
   const cache = {
@@ -80,7 +84,7 @@ function boot(options = {}) {
     },
     requestAnimationFrame() { return 1; },
     cancelAnimationFrame() {},
-    setTimeout() { return 1; },
+    setTimeout(fn) { fn(); return 1; },
     clearTimeout() {},
     addEventListener() {}
   };
@@ -142,20 +146,41 @@ function installAudioTargets(api) {
   assert.match(objectUrl, /^blob:/);
   assert.equal(objects.get(objectUrl).size, 4, 'playback reads the cached bytes');
 
-  // Selecting a cached episode plays the blob; an uncached one streams instead.
+  // Playback never waits for the cache: the stream starts immediately and a
+  // cached copy replaces it only while the element is still paused.
   installAudioTargets(api);
-  await api.loadSource('audio/a.mp3');
+  const pending = api.loadSource('audio/a.mp3');
+  assert.equal(api.els.audio.src, 'audio/a.mp3', 'the first tap is never blocked by a cache lookup');
+  await pending;
   const cachedSrc = api.els.audio.src;
-  assert.match(cachedSrc, /^blob:/, 'cached episode plays from the cache');
+  assert.match(cachedSrc, /^blob:/, 'a cached episode upgrades to the blob while paused');
   assert.equal(api.state.audioObjectUrl, cachedSrc);
-  const fetchedBefore = fetched.length;
-  api.cacheAudioCurrent();
-  assert.equal(fetched.length, fetchedBefore, 'an episode already in cache is not downloaded again');
+
+  // If the tap lands during the lookup, playback must not be interrupted.
+  const racing = api.loadSource('audio/a.mp3');
+  api.els.audio.paused = false;
+  await racing;
+  assert.equal(api.els.audio.src, 'audio/a.mp3', 'playing audio keeps its stream');
+  assert.equal(api.state.audioObjectUrl, '', 'the unused blob is dropped');
+  assert.equal(objects.has(cachedSrc), false, 'and its object URL is revoked');
 
   await api.loadSource('audio/not-cached.mp3');
-  assert.equal(api.els.audio.src, 'audio/not-cached.mp3', 'missing episodes still stream');
-  assert.equal(api.state.audioObjectUrl, '', 'the old blob is released');
-  assert.equal(objects.has(cachedSrc), false, 'the previous object URL is revoked');
+  assert.equal(api.els.audio.src, 'audio/not-cached.mp3', 'missing episodes stream as before');
+  assert.equal(api.state.audioObjectUrl, '');
+
+  // Caching starts after playback is under way, and is skipped while idle.
+  const fetchedBefore = fetched.length;
+  api.els.audio.currentTime = 30;
+  api.cacheAudioCurrent();
+  await flush();
+  assert.equal(fetched.length, fetchedBefore + 1, 'a played episode is downloaded for next time');
+
+  const fetchedAfterDownload = fetched.length;
+  api.els.audio.paused = true;
+  api.els.audio.currentTime = 0;
+  api.cacheAudioCurrent();
+  await flush();
+  assert.equal(fetched.length, fetchedAfterDownload, 'stopping right away does not download');
 
   assert.equal(await api.cacheIndex({ files: [] }), true);
   assert.deepEqual(await api.readIndex(), { files: [] });
@@ -166,14 +191,14 @@ function installAudioTargets(api) {
 
   let info = await api.describe();
   assert.equal(info.supported, true);
-  assert.equal(info.audio, 1);
+  assert.equal(info.audio, 2, 'both the cached and the newly played episode are stored');
   assert.equal(info.transcripts, 1);
   assert.equal(info.bytes, 1234);
 
   // Pruning follows the catalog: removed episodes and their transcripts go.
   await api.download('audio/gone.mp3');
   await api.cacheText('audio/gone.txt', 'gone');
-  assert.equal(await api.prune(['audio/a.mp3', 'audio/a.txt']), 2, 'exactly the stale entries are dropped');
+  assert.equal(await api.prune(['audio/a.mp3', 'audio/a.txt']), 3, 'exactly the stale entries are dropped');
   let keys = Array.from(storage.entries.keys());
   assert.ok(keys.some(key => key.endsWith('/audio/a.mp3')));
   assert.ok(keys.some(key => key.endsWith('/audio/a.txt')));
@@ -212,3 +237,4 @@ function installAudioTargets(api) {
   console.error(error);
   process.exit(1);
 });
+
