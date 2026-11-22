@@ -14,7 +14,7 @@ function applyImmersiveRatio() {
 }
 
 function togglePlay() {
-  if (!state.audioReady) {
+  if (!state.audioReady || !els.audio.src) {
     return;
   }
   if (els.audio.paused) {

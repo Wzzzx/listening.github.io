@@ -143,6 +143,7 @@ function showPage(page) {
   } else if (page === "config") {
     addClass(els.configPage, "active");
     renderMarkList();
+    refreshCacheStatus();
   } else {
     addClass(els.playerPage, "active");
   }

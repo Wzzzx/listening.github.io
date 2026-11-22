@@ -6,6 +6,6 @@
   "scripts": {
     "build": "node scripts/build.js",
     "check": "node scripts/build.js --check",
-    "test": "node scripts/build.js --check && node scripts/test-timed-transcript.js && node scripts/test-continuous-mode.js"
+    "test": "node scripts/build.js --check && node scripts/test-timed-transcript.js && node scripts/test-continuous-mode.js && node scripts/test-cache.js"
   }
 }

@@ -25,13 +25,14 @@ const scripts = [
   ['01-state.js', 'storage keys, defaults, shared state, element cache'],
   ['02-bootstrap.js', 'init, element lookup, event binding'],
   ['03-settings.js', 'settings and per-file playback state'],
-  ['04-browser.js', 'audio index, folder browser, entry selection, transcript fetch'],
-  ['05-playback.js', 'transport, progress, marks and status text'],
-  ['06-transcript-parse.js', 'plain, speaker and range transcript parsing'],
-  ['07-transcript-follow.js', 'continuous-mode scrolling and rendering'],
-  ['08-reading.js', 'single-line view, mask mode, line jump'],
-  ['09-gestures.js', 'swipe actions and zone feedback'],
-  ['10-utils.js', 'formatting, URL building, DOM helpers']
+  ['04-cache.js', 'media cache: download, replay from cache, prune, status'],
+  ['05-browser.js', 'audio index, folder browser, entry selection, transcript fetch'],
+  ['06-playback.js', 'transport, progress, marks and status text'],
+  ['07-transcript-parse.js', 'plain, speaker and range transcript parsing'],
+  ['08-transcript-follow.js', 'continuous-mode scrolling and rendering'],
+  ['09-reading.js', 'single-line view, mask mode, line jump'],
+  ['10-gestures.js', 'swipe actions and zone feedback'],
+  ['11-utils.js', 'formatting, URL building, DOM helpers']
 ];
 
 const styleSlot = '<!--@styles-->\n';

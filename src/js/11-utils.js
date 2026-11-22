@@ -18,6 +18,17 @@ function normalizeMarkTime(seconds) {
   return Math.round(Math.max(0, seconds) * 10) / 10;
 }
 
+function formatBytes(bytes) {
+  var value = Number(bytes);
+  if (!isFinite(value) || value <= 0) {
+    return "0 MB";
+  }
+  if (value < 1024 * 1024) {
+    return Math.max(1, Math.round(value / 1024)) + " KB";
+  }
+  return (value / (1024 * 1024)).toFixed(value < 100 * 1024 * 1024 ? 1 : 0) + " MB";
+}
+
 function keepImmersiveRatiosValid(changed) {
   keepRatiosObjectValid(state.settings, changed);
 }

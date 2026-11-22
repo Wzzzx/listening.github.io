@@ -30,18 +30,34 @@ src/styles/05-config.css    配置页
 src/js/01-state.js          存储键、默认值、共享 state、元素缓存
 src/js/02-bootstrap.js      init、元素查找、事件绑定
 src/js/03-settings.js       设置与按音频保存的播放状态
-src/js/04-browser.js        音频索引、目录浏览、选集、字幕拉取
-src/js/05-playback.js       播放控制、进度、点位、状态栏文本
-src/js/06-transcript-parse.js 三种字幕格式的解析与长轮次切句
-src/js/07-transcript-follow.js 全文滚动跟随与渲染
-src/js/08-reading.js        单行视图、遮盖、行号跳转
-src/js/09-gestures.js       滑动动作与区域反馈
-src/js/10-utils.js          时间格式化、URL 拼接、DOM 工具
+src/js/04-cache.js          离线缓存：下载、回读、按目录清理、状态
+src/js/05-browser.js        音频索引、目录浏览、选集、字幕拉取
+src/js/06-playback.js       播放控制、进度、点位、状态栏文本
+src/js/07-transcript-parse.js 三种字幕格式的解析与长轮次切句
+src/js/08-transcript-follow.js 全文滚动跟随与渲染
+src/js/09-reading.js        单行视图、遮盖、行号跳转
+src/js/10-gestures.js       滑动动作与区域反馈
+src/js/11-utils.js          时间格式化、URL 拼接、DOM 工具
 scripts/build.js           拼接器（无第三方依赖）
-scripts/test-*.js          解析与跟随逻辑的测试
+scripts/test-*.js          解析、跟随与缓存逻辑的测试
 scripts/generate-audio-index.js 扫描 audio/ 生成 index.json
 compress.cmd               批量压缩 mp3 的辅助脚本（Windows）
 ```
+
+## 缓存
+
+- 首次播放某个音频时，后台把整个 mp3 下载进 Cache API（`listening-media-v1`）；
+  同一文件再次打开时以 blob URL 播放，秒开且不耗流量。
+- 台词在拉取成功后写入缓存；读取仍然优先走网络，所以改动过的字幕会立刻生效，
+  网络失败时才回退到缓存。
+- 每次打开页面都会重新读取 `audio/index.json`，成功后按当前目录清理缓存：
+  已被移出列表的音频和台词会被删除，替换过的音频（`?v=` 版本号变化）会重新下载。
+  读取目录失败时不会清理，保证离线或断网时不会把缓存清空。
+- 目录本身也缓存一份，断网时首页仍能列出已缓存的集数。
+- 配置页的「缓存」区显示已缓存的音频/台词数量和存储占用，可手动清除。
+- 单个文件超过 60 MB 不缓存；浏览器开启「节省流量」时不自动缓存音频。
+- 首次播放会同时发生「流式播放」和「整包下载」两次请求（浏览器 HTTP 缓存通常能
+  合并），这是没有 Service Worker 时的取舍：换取的是零配置、零额外部署文件。
 
 ## 约定
 

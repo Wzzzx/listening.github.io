@@ -747,6 +747,15 @@
           <textarea id="lyricsInput" placeholder="在这里输入台词，每行一句"></textarea>
         </div>
       </div>
+
+      <div class="config-section">
+        <h2>缓存</h2>
+        <div class="field">
+          <div class="mark-empty">播放时会自动缓存音频和台词，下次直接读本地；列表里已删除的条目会被自动清理。</div>
+        </div>
+        <button id="clearCacheBtn" type="button">清除缓存</button>
+        <div id="cacheStatus" class="mark-empty"></div>
+      </div>
     </div>
   </div>
 
@@ -776,7 +785,9 @@
         browserItems: [],
         transcriptLoadToken: 0,
         audioReady: false,
-        fileUrl: "",
+        audioLoadToken: 0,
+        audioObjectUrl: "",
+        currentAudioUrl: "",
         fileKey: "",
         fileName: "",
         lyrics: [],
@@ -861,6 +872,8 @@
         els.middleRatioInput = $("middleRatioInput");
         els.middleRatioValue = $("middleRatioValue");
         els.lyricsInput = $("lyricsInput");
+        els.clearCacheBtn = $("clearCacheBtn");
+        els.cacheStatus = $("cacheStatus");
         els.audio = $("audio");
       }
 
@@ -873,10 +886,15 @@
         els.lineJumpInput.oninput = onLineJumpInput;
         els.lineJumpInput.onchange = hideLineJump;
         els.markList.onclick = onMarkListClick;
+        els.clearCacheBtn.onclick = clearMediaCacheAndRefresh;
         bindProgressDrag();
         bindContinuousGestures();
 
-        els.audio.onplay = function () { updatePlayButton(); refreshTranscriptFollow(); };
+        els.audio.onplay = function () {
+          updatePlayButton();
+          refreshTranscriptFollow();
+          cacheCurrentAudio();
+        };
         els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
         els.audio.onseeked = function () { refreshTranscriptFollow(true); };
         window.addEventListener("resize", function () { refreshTranscriptFollow(); });
@@ -1110,12 +1128,380 @@
         } else if (page === "config") {
           addClass(els.configPage, "active");
           renderMarkList();
+          refreshCacheStatus();
         } else {
           addClass(els.playerPage, "active");
         }
         refreshTranscriptFollow();
       }
 
+      // Local media cache.
+      //
+      // The first time an episode plays, its mp3 is downloaded into the Cache API in
+      // the background. Transcripts and the catalog are stored there as well. Later
+      // visits read the mp3 back as a blob URL, so replay starts instantly and costs
+      // no mobile data. Whenever the catalog is fetched, entries that are no longer
+      // listed are pruned. Everything here is best-effort: without the Cache API the
+      // player keeps streaming straight from the network.
+      var mediaCacheName = "listening-media-v1";
+      var mediaCacheLimit = 60 * 1024 * 1024;
+      var mediaCacheOpen = null;
+      var mediaCacheInFlight = {};
+      var mediaCachePersistAsked = false;
+
+      function mediaCacheSupported() {
+        return !!(window.caches && typeof window.caches.open === "function");
+      }
+
+      function openMediaCache() {
+        if (!mediaCacheSupported()) {
+          return Promise.resolve(null);
+        }
+        if (!mediaCacheOpen) {
+          mediaCacheOpen = window.caches.open(mediaCacheName).catch(function () {
+            mediaCacheOpen = null;
+            return null;
+          });
+        }
+        return mediaCacheOpen;
+      }
+
+      // Cache keys are absolute URLs; the catalog uses paths relative to the page.
+      function mediaCacheKey(path) {
+        try {
+          return new window.URL(path, window.location.href).href;
+        } catch (e) {
+          return String(path);
+        }
+      }
+
+      function mediaCacheKind(url) {
+        var path = String(url).split("?")[0].toLowerCase();
+        if (/\.mp3$/.test(path)) { return "audio"; }
+        if (/\.txt$/.test(path)) { return "transcript"; }
+        return "other";
+      }
+
+      function cacheRequest(key) {
+        return new Request(key, { credentials: "same-origin" });
+      }
+
+      // --- write path -----------------------------------------------------------
+
+      function downloadToCache(path) {
+        var key = mediaCacheKey(path);
+        if (!mediaCacheSupported()) {
+          return Promise.resolve(false);
+        }
+        if (mediaCacheInFlight[key]) {
+          return mediaCacheInFlight[key];
+        }
+        var task = openMediaCache().then(function (cache) {
+          if (!cache) {
+            return false;
+          }
+          return cache.match(cacheRequest(key)).then(function (hit) {
+            if (hit) {
+              return true;
+            }
+            return fetch(key, { credentials: "same-origin" }).then(function (response) {
+              if (!response || !response.ok) {
+                return false;
+              }
+              var size = parseInt(response.headers.get("Content-Length") || "0", 10);
+              if (size > mediaCacheLimit) {
+                return false;
+              }
+              return cache.put(cacheRequest(key), response).then(function () {
+                return true;
+              });
+            });
+          });
+        }).catch(function () {
+          return false;
+        });
+        mediaCacheInFlight[key] = task;
+        task.then(function (stored) {
+          delete mediaCacheInFlight[key];
+          if (stored) {
+            refreshCacheStatus();
+          }
+        });
+        return task;
+      }
+
+      // Audio is only cached while it is actually being played, and only when the
+      // user has not asked the browser to save data.
+      function cacheCurrentAudio() {
+        if (!state.currentAudioUrl || state.audioObjectUrl) {
+          return;
+        }
+        var connection = window.navigator && window.navigator.connection;
+        if (connection && connection.saveData) {
+          return;
+        }
+        requestPersistentStorage();
+        downloadToCache(state.currentAudioUrl);
+      }
+
+      function requestPersistentStorage() {
+        var storage = window.navigator && window.navigator.storage;
+        if (mediaCachePersistAsked || !storage || typeof storage.persist !== "function") {
+          return;
+        }
+        mediaCachePersistAsked = true;
+        storage.persist().catch(function () {});
+      }
+
+      function cacheIndexPayload(data) {
+        if (!mediaCacheSupported() || !data) {
+          return Promise.resolve(false);
+        }
+        var key = mediaCacheKey("audio/index.json");
+        return openMediaCache().then(function (cache) {
+          if (!cache) {
+            return false;
+          }
+          return cache.put(cacheRequest(key), new Response(JSON.stringify(data), {
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+          })).then(function () {
+            return true;
+          });
+        }).catch(function () {
+          return false;
+        });
+      }
+
+      function cacheTranscriptText(path, text) {
+        if (!mediaCacheSupported() || !path) {
+          return Promise.resolve(false);
+        }
+        var key = mediaCacheKey(path);
+        return openMediaCache().then(function (cache) {
+          if (!cache) {
+            return false;
+          }
+          return cache.put(cacheRequest(key), new Response(String(text), {
+            headers: { "Content-Type": "text/plain; charset=utf-8" }
+          })).then(function () {
+            return true;
+          });
+        }).catch(function () {
+          return false;
+        });
+      }
+
+      // --- read path ------------------------------------------------------------
+
+      function readCachedResponse(path) {
+        if (!mediaCacheSupported()) {
+          return Promise.resolve(null);
+        }
+        var key = mediaCacheKey(path);
+        return openMediaCache().then(function (cache) {
+          return cache ? cache.match(cacheRequest(key)) : null;
+        }).catch(function () {
+          return null;
+        });
+      }
+
+      function readCachedAudioUrl(path) {
+        return readCachedResponse(path).then(function (response) {
+          return response ? response.blob() : null;
+        }).then(function (blob) {
+          return blob ? getUrlApi().createObjectURL(blob) : "";
+        }).catch(function () {
+          return "";
+        });
+      }
+
+      function readCachedIndexPayload() {
+        return readCachedResponse("audio/index.json").then(function (response) {
+          return response ? response.json() : null;
+        }).catch(function () {
+          return null;
+        });
+      }
+
+      function readCachedTranscriptText(path) {
+        return readCachedResponse(path).then(function (response) {
+          return response ? response.text() : "";
+        }).catch(function () {
+          return "";
+        });
+      }
+
+      // --- maintenance ----------------------------------------------------------
+
+      function pruneMediaCache(keepPaths) {
+        if (!mediaCacheSupported() || !keepPaths) {
+          return Promise.resolve(0);
+        }
+        var keep = {};
+        keep[mediaCacheKey("audio/index.json")] = true;
+        for (var i = 0; i < keepPaths.length; i += 1) {
+          if (keepPaths[i]) {
+            keep[mediaCacheKey(keepPaths[i])] = true;
+          }
+        }
+        return openMediaCache().then(function (cache) {
+          return cache ? cache.keys() : [];
+        }).then(function (requests) {
+          var jobs = [];
+          for (var i = 0; i < requests.length; i += 1) {
+            if (!keep[requests[i].url]) {
+              jobs.push(removeCachedRequest(requests[i]));
+            }
+          }
+          return Promise.all(jobs).then(function () {
+            return jobs.length;
+          });
+        }).catch(function () {
+          return 0;
+        });
+      }
+
+      function removeCachedRequest(request) {
+        return openMediaCache().then(function (cache) {
+          return cache ? cache.delete(request) : false;
+        }).catch(function () {
+          return false;
+        });
+      }
+
+      function clearMediaCache() {
+        if (!mediaCacheSupported()) {
+          return Promise.resolve(false);
+        }
+        mediaCacheOpen = null;
+        mediaCacheInFlight = {};
+        return window.caches.delete(mediaCacheName).catch(function () {
+          return false;
+        });
+      }
+
+      function describeCache() {
+        var result = { supported: mediaCacheSupported(), audio: 0, transcripts: 0, bytes: 0 };
+        if (!result.supported) {
+          return Promise.resolve(result);
+        }
+        return openMediaCache().then(function (cache) {
+          return cache ? cache.keys() : [];
+        }).then(function (requests) {
+          for (var i = 0; i < requests.length; i += 1) {
+            var kind = mediaCacheKind(requests[i].url);
+            if (kind === "audio") { result.audio += 1; }
+            if (kind === "transcript") { result.transcripts += 1; }
+          }
+          return estimateStorageUsage();
+        }).then(function (bytes) {
+          result.bytes = bytes;
+          return result;
+        }).catch(function () {
+          return result;
+        });
+      }
+
+      function estimateStorageUsage() {
+        var storage = window.navigator && window.navigator.storage;
+        if (!storage || typeof storage.estimate !== "function") {
+          return Promise.resolve(0);
+        }
+        return storage.estimate().then(function (usage) {
+          return usage && isFinite(usage.usage) ? usage.usage : 0;
+        }).catch(function () {
+          return 0;
+        });
+      }
+
+      // --- playback integration -------------------------------------------------
+
+      // Play from the cache when the episode is already stored, otherwise stream it.
+      // The old source is detached first so a tap on play during the lookup cannot
+      // restart the previous episode.
+      function loadAudioSource(path) {
+        var token = state.audioLoadToken + 1;
+        state.audioLoadToken = token;
+        state.currentAudioUrl = path;
+        els.audio.pause();
+        els.audio.removeAttribute("src");
+        releaseCachedAudio();
+        if (!mediaCacheSupported()) {
+          applyAudioSource(path);
+          return Promise.resolve();
+        }
+        return readCachedAudioUrl(path).then(function (objectUrl) {
+          if (token !== state.audioLoadToken) {
+            if (objectUrl) {
+              getUrlApi().revokeObjectURL(objectUrl);
+            }
+            return;
+          }
+          state.audioObjectUrl = objectUrl || "";
+          applyAudioSource(state.audioObjectUrl || path);
+        }).catch(function () {
+          if (token === state.audioLoadToken) {
+            state.audioObjectUrl = "";
+            applyAudioSource(path);
+          }
+        });
+      }
+
+      function applyAudioSource(src) {
+        els.audio.src = src;
+        els.audio.currentTime = 0;
+        seekToPendingOpenMark();
+        updateMarkButtons();
+        updateFileProgress();
+      }
+
+      function releaseCachedAudio() {
+        if (!state.audioObjectUrl) {
+          return;
+        }
+        getUrlApi().revokeObjectURL(state.audioObjectUrl);
+        state.audioObjectUrl = "";
+      }
+
+      // --- configuration UI -----------------------------------------------------
+
+      function refreshCacheStatus() {
+        if (!els.cacheStatus) {
+          return;
+        }
+        describeCache().then(function (info) {
+          if (!info.supported) {
+            els.cacheStatus.innerHTML = "当前浏览器不支持本地缓存";
+            if (els.clearCacheBtn) {
+              els.clearCacheBtn.disabled = true;
+            }
+            return;
+          }
+          if (els.clearCacheBtn) {
+            els.clearCacheBtn.disabled = false;
+          }
+          els.cacheStatus.innerHTML = "已缓存 " + info.audio + " 个音频、" + info.transcripts +
+            " 份台词 · 占用约 " + formatBytes(info.bytes);
+        });
+      }
+
+      function clearMediaCacheAndRefresh() {
+        if (!mediaCacheSupported()) {
+          return;
+        }
+        if (els.clearCacheBtn) {
+          els.clearCacheBtn.disabled = true;
+        }
+        if (els.cacheStatus) {
+          els.cacheStatus.innerHTML = "正在清除...";
+        }
+        clearMediaCache().then(function () {
+          refreshCacheStatus();
+        });
+      }
+      // The catalog is read fresh on every visit; the cached copy is only a fallback
+      // for when the network is gone. Pruning runs after a successful fetch, never
+      // against the fallback, so an offline start cannot wipe the cache.
       function loadAudioIndex() {
         setBrowserMessage("正在读取 audio/index.json...");
         fetch("audio/index.json", { cache: "no-cache" })
@@ -1129,11 +1515,40 @@
             state.audioIndex = normalizeAudioIndex(data);
             state.browserPath = [];
             renderAudioBrowser();
+            cacheIndexPayload(data);
+            if (state.audioIndex.length) {
+              pruneCatalogCache();
+            }
+            refreshCacheStatus();
           })
           .catch(function () {
-            state.audioIndex = null;
-            setBrowserMessage("无法读取 audio/index.json，请先运行 node scripts/generate-audio-index.js");
+            readCachedIndexPayload().then(function (data) {
+              if (!data) {
+                state.audioIndex = null;
+                setBrowserMessage("无法读取 audio/index.json，请先运行 node scripts/generate-audio-index.js");
+                return;
+              }
+              state.audioIndex = normalizeAudioIndex(data);
+              state.browserPath = [];
+              renderAudioBrowser();
+              refreshCacheStatus();
+            });
           });
+      }
+
+      // Drop cached audio and transcripts that the current catalog no longer lists.
+      function pruneCatalogCache() {
+        var keep = [];
+        var i;
+        var entry;
+        for (i = 0; i < state.audioIndex.length; i += 1) {
+          entry = state.audioIndex[i];
+          keep.push(buildAudioUrl(entry));
+          if (entry.transcriptUrl) {
+            keep.push(entry.transcriptUrl);
+          }
+        }
+        return pruneMediaCache(keep);
       }
 
       function normalizeAudioIndex(data) {
@@ -1310,10 +1725,6 @@
         if (!entry || !entry.url) {
           return;
         }
-        if (state.fileUrl) {
-          getUrlApi().revokeObjectURL(state.fileUrl);
-        }
-        state.fileUrl = "";
         state.fileKey = entry.url;
         state.fileName = entry.name || entry.title || "audio.mp3";
         state.audioReady = true;
@@ -1323,9 +1734,7 @@
         renderMarkList();
         clearMarkJumpAnchor();
         els.audio.pause();
-        els.audio.src = buildAudioUrl(entry);
-        els.audio.currentTime = 0;
-        seekToPendingOpenMark();
+        loadAudioSource(buildAudioUrl(entry));
         els.fileName.innerHTML = escapeHtml(state.fileName);
         updateFileNameScroll();
         setLyricsText("");
@@ -1337,6 +1746,8 @@
         showPage("player");
       }
 
+      // Transcripts are read from the network so an edited file is picked up, and are
+      // written to the cache on the way through. A failed fetch falls back to cache.
       function loadTranscript(entry) {
         var token = state.transcriptLoadToken + 1;
         state.transcriptLoadToken = token;
@@ -1351,53 +1762,24 @@
             return response.text();
           })
           .then(function (text) {
-            if (state.transcriptLoadToken === token) {
-              setLyricsText(text);
+            if (state.transcriptLoadToken !== token) {
+              return;
             }
+            setLyricsText(text);
+            cacheTranscriptText(entry.transcriptUrl, text);
           })
           .catch(function () {
-            if (state.transcriptLoadToken === token) {
-              setLyricsText("");
-            }
+            readCachedTranscriptText(entry.transcriptUrl).then(function (text) {
+              if (state.transcriptLoadToken === token) {
+                setLyricsText(text || "");
+              }
+            });
           });
       }
 
       function setLyricsText(text) {
         els.lyricsInput.value = text;
         updateLyrics(text);
-      }
-
-      function onFileSelected() {
-        var input = els.startFileInput;
-        var file = input.files && input.files[0];
-        if (!file) {
-          return;
-        }
-        stopTranscriptFollow();
-        state.transcriptIndex = -1;
-        if (state.fileUrl) {
-          getUrlApi().revokeObjectURL(state.fileUrl);
-        }
-        state.fileUrl = getUrlApi().createObjectURL(file);
-        state.fileKey = "local:" + file.name + ":" + file.size + ":" + file.lastModified;
-        state.fileName = file.name || "已选择音频";
-        state.audioReady = true;
-        state.lineIndex = 0;
-        restorePlaybackState();
-        prepareOpenMarkSeek();
-        renderMarkList();
-        clearMarkJumpAnchor();
-        els.audio.src = state.fileUrl;
-        els.audio.currentTime = 0;
-        seekToPendingOpenMark();
-        els.fileName.innerHTML = escapeHtml(state.fileName);
-        updateFileNameScroll();
-        els.audio.pause();
-        applyImmersiveRatio();
-        updatePlayButton();
-        updateMarkButtons();
-        updateFileProgress();
-        showPage("player");
       }
 
       function applyImmersiveRatio() {
@@ -1416,7 +1798,7 @@
       }
 
       function togglePlay() {
-        if (!state.audioReady) {
+        if (!state.audioReady || !els.audio.src) {
           return;
         }
         if (els.audio.paused) {
@@ -2399,6 +2781,17 @@
 
       function normalizeMarkTime(seconds) {
         return Math.round(Math.max(0, seconds) * 10) / 10;
+      }
+
+      function formatBytes(bytes) {
+        var value = Number(bytes);
+        if (!isFinite(value) || value <= 0) {
+          return "0 MB";
+        }
+        if (value < 1024 * 1024) {
+          return Math.max(1, Math.round(value / 1024)) + " KB";
+        }
+        return (value / (1024 * 1024)).toFixed(value < 100 * 1024 * 1024 ? 1 : 0) + " MB";
       }
 
       function keepImmersiveRatiosValid(changed) {

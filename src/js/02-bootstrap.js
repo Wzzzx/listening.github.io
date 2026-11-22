@@ -58,6 +58,8 @@ function cacheElements() {
   els.middleRatioInput = $("middleRatioInput");
   els.middleRatioValue = $("middleRatioValue");
   els.lyricsInput = $("lyricsInput");
+  els.clearCacheBtn = $("clearCacheBtn");
+  els.cacheStatus = $("cacheStatus");
   els.audio = $("audio");
 }
 
@@ -70,10 +72,15 @@ function bindEvents() {
   els.lineJumpInput.oninput = onLineJumpInput;
   els.lineJumpInput.onchange = hideLineJump;
   els.markList.onclick = onMarkListClick;
+  els.clearCacheBtn.onclick = clearMediaCacheAndRefresh;
   bindProgressDrag();
   bindContinuousGestures();
 
-  els.audio.onplay = function () { updatePlayButton(); refreshTranscriptFollow(); };
+  els.audio.onplay = function () {
+    updatePlayButton();
+    refreshTranscriptFollow();
+    cacheCurrentAudio();
+  };
   els.audio.onpause = function () { updatePlayButton(); refreshTranscriptFollow(); };
   els.audio.onseeked = function () { refreshTranscriptFollow(true); };
   window.addEventListener("resize", function () { refreshTranscriptFollow(); });

@@ -1,3 +1,6 @@
+// The catalog is read fresh on every visit; the cached copy is only a fallback
+// for when the network is gone. Pruning runs after a successful fetch, never
+// against the fallback, so an offline start cannot wipe the cache.
 function loadAudioIndex() {
   setBrowserMessage("正在读取 audio/index.json...");
   fetch("audio/index.json", { cache: "no-cache" })
@@ -11,11 +14,40 @@ function loadAudioIndex() {
       state.audioIndex = normalizeAudioIndex(data);
       state.browserPath = [];
       renderAudioBrowser();
+      cacheIndexPayload(data);
+      if (state.audioIndex.length) {
+        pruneCatalogCache();
+      }
+      refreshCacheStatus();
     })
     .catch(function () {
-      state.audioIndex = null;
-      setBrowserMessage("无法读取 audio/index.json，请先运行 node scripts/generate-audio-index.js");
+      readCachedIndexPayload().then(function (data) {
+        if (!data) {
+          state.audioIndex = null;
+          setBrowserMessage("无法读取 audio/index.json，请先运行 node scripts/generate-audio-index.js");
+          return;
+        }
+        state.audioIndex = normalizeAudioIndex(data);
+        state.browserPath = [];
+        renderAudioBrowser();
+        refreshCacheStatus();
+      });
     });
+}
+
+// Drop cached audio and transcripts that the current catalog no longer lists.
+function pruneCatalogCache() {
+  var keep = [];
+  var i;
+  var entry;
+  for (i = 0; i < state.audioIndex.length; i += 1) {
+    entry = state.audioIndex[i];
+    keep.push(buildAudioUrl(entry));
+    if (entry.transcriptUrl) {
+      keep.push(entry.transcriptUrl);
+    }
+  }
+  return pruneMediaCache(keep);
 }
 
 function normalizeAudioIndex(data) {
@@ -192,10 +224,6 @@ function selectAudioEntry(entry) {
   if (!entry || !entry.url) {
     return;
   }
-  if (state.fileUrl) {
-    getUrlApi().revokeObjectURL(state.fileUrl);
-  }
-  state.fileUrl = "";
   state.fileKey = entry.url;
   state.fileName = entry.name || entry.title || "audio.mp3";
   state.audioReady = true;
@@ -205,9 +233,7 @@ function selectAudioEntry(entry) {
   renderMarkList();
   clearMarkJumpAnchor();
   els.audio.pause();
-  els.audio.src = buildAudioUrl(entry);
-  els.audio.currentTime = 0;
-  seekToPendingOpenMark();
+  loadAudioSource(buildAudioUrl(entry));
   els.fileName.innerHTML = escapeHtml(state.fileName);
   updateFileNameScroll();
   setLyricsText("");
@@ -219,6 +245,8 @@ function selectAudioEntry(entry) {
   showPage("player");
 }
 
+// Transcripts are read from the network so an edited file is picked up, and are
+// written to the cache on the way through. A failed fetch falls back to cache.
 function loadTranscript(entry) {
   var token = state.transcriptLoadToken + 1;
   state.transcriptLoadToken = token;
@@ -233,52 +261,23 @@ function loadTranscript(entry) {
       return response.text();
     })
     .then(function (text) {
-      if (state.transcriptLoadToken === token) {
-        setLyricsText(text);
+      if (state.transcriptLoadToken !== token) {
+        return;
       }
+      setLyricsText(text);
+      cacheTranscriptText(entry.transcriptUrl, text);
     })
     .catch(function () {
-      if (state.transcriptLoadToken === token) {
-        setLyricsText("");
-      }
+      readCachedTranscriptText(entry.transcriptUrl).then(function (text) {
+        if (state.transcriptLoadToken === token) {
+          setLyricsText(text || "");
+        }
+      });
     });
 }
 
 function setLyricsText(text) {
   els.lyricsInput.value = text;
   updateLyrics(text);
-}
-
-function onFileSelected() {
-  var input = els.startFileInput;
-  var file = input.files && input.files[0];
-  if (!file) {
-    return;
-  }
-  stopTranscriptFollow();
-  state.transcriptIndex = -1;
-  if (state.fileUrl) {
-    getUrlApi().revokeObjectURL(state.fileUrl);
-  }
-  state.fileUrl = getUrlApi().createObjectURL(file);
-  state.fileKey = "local:" + file.name + ":" + file.size + ":" + file.lastModified;
-  state.fileName = file.name || "已选择音频";
-  state.audioReady = true;
-  state.lineIndex = 0;
-  restorePlaybackState();
-  prepareOpenMarkSeek();
-  renderMarkList();
-  clearMarkJumpAnchor();
-  els.audio.src = state.fileUrl;
-  els.audio.currentTime = 0;
-  seekToPendingOpenMark();
-  els.fileName.innerHTML = escapeHtml(state.fileName);
-  updateFileNameScroll();
-  els.audio.pause();
-  applyImmersiveRatio();
-  updatePlayButton();
-  updateMarkButtons();
-  updateFileProgress();
-  showPage("player");
 }
 
