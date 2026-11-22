@@ -4,6 +4,8 @@
   "private": true,
   "description": "Static web audio player for the listening.github.io site",
   "scripts": {
-    "test": "node scripts/test-timed-transcript.js && node scripts/test-continuous-mode.js"
+    "build": "node scripts/build.js",
+    "check": "node scripts/build.js --check",
+    "test": "node scripts/build.js --check && node scripts/test-timed-transcript.js && node scripts/test-continuous-mode.js"
   }
 }

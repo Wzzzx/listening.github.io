@@ -1,0 +1,146 @@
+.player-page {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.player-page.active {
+  display: flex;
+}
+
+.topbar {
+  flex: 0 0 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #273027;
+  background: #f7f8f4;
+  z-index: 2;
+}
+
+.topbar button {
+  flex: 0 0 auto;
+  width: 72px;
+  padding: 0 6px;
+}
+
+.file-name-box {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 1px solid #c6d0c3;
+  border-radius: 6px;
+  background: #ffffff;
+  height: 38px;
+  line-height: 36px;
+  touch-action: none;
+}
+
+.file-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: #d7e8d1;
+  z-index: 0;
+}
+
+.file-marks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.file-mark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(92, 119, 88, 0.65);
+  transform: translateX(-50%);
+}
+
+.file-name {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  min-width: 100%;
+  padding-left: 10px;
+}
+
+.progress-drag-panel {
+  position: absolute;
+  top: 58px;
+  left: 12px;
+  right: 12px;
+  display: none;
+  padding: 14px;
+  border: 2px solid #202520;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(32, 37, 32, 0.2);
+  z-index: 5;
+  touch-action: none;
+}
+
+.progress-drag-panel.active {
+  display: block;
+}
+
+.progress-drag-track {
+  position: relative;
+  height: 42px;
+  overflow: hidden;
+  border: 1px solid #9fb19f;
+  border-radius: 6px;
+  background: #eef3ea;
+}
+
+.progress-drag-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: #b9d7ad;
+}
+
+.progress-drag-handle {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 6px;
+  height: 34px;
+  border-radius: 4px;
+  background: #202520;
+  transform: translateX(-3px);
+}
+
+.progress-drag-time {
+  position: relative;
+  z-index: 1;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  color: #202522;
+  font-size: 18px;
+}
+
+.file-name.scrolling {
+  animation: marquee 11s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  35% { transform: translateX(0); }
+  100% { transform: translateX(-60%); }
+}
+

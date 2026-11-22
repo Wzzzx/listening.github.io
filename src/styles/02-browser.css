@@ -1,0 +1,93 @@
+.start-page {
+  padding: 28px 22px;
+}
+
+.start-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 12px;
+}
+
+.browser-header {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.browser-header > span {
+  display: none;
+}
+
+.browser-back {
+  flex: 0 0 auto;
+  width: 76px;
+  padding: 0 8px;
+}
+
+.browser-path {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 40px;
+  line-height: 38px;
+  padding: 0 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 1px solid #c6d0c3;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.browser-list {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid #d2dacd;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.browser-item {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-width: 0 0 1px 0;
+  border-color: #e1e7dd;
+  border-radius: 0;
+  background: #ffffff;
+  text-align: left;
+}
+
+.browser-item:last-child {
+  border-bottom: 0;
+}
+
+.browser-icon {
+  flex: 0 0 auto;
+  width: 42px;
+  text-align: center;
+}
+
+.browser-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.browser-message {
+  padding: 18px 14px;
+  color: #697268;
+  line-height: 1.5;
+}
+

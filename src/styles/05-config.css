@@ -1,0 +1,135 @@
+.config-page {
+  z-index: 5;
+  overflow: hidden;
+}
+
+.config-page.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-header {
+  flex: 0 0 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #c3cabf;
+  background: #f7f8f4;
+}
+
+.config-header button {
+  width: 72px;
+  padding: 0 6px;
+}
+
+.config-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.config-body {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px;
+}
+
+.config-section {
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid #d2dacd;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.config-section h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #354239;
+}
+
+.field input[type="number"],
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid #bcc8bb;
+  border-radius: 6px;
+  background: #fbfcf8;
+  color: #202522;
+  padding: 9px;
+}
+
+.field input[type="range"] {
+  width: 100%;
+}
+
+.field textarea {
+  min-height: 220px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.inline-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.inline-check input {
+  width: 20px;
+  height: 20px;
+}
+
+.range-value {
+  float: right;
+  color: #59645a;
+  font-size: 14px;
+}
+
+.mark-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mark-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 1px solid #d2dacd;
+  border-radius: 6px;
+  background: #f7f9f4;
+}
+
+.mark-time {
+  flex: 1 1 auto;
+  color: #202522;
+}
+
+.mark-delete {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 12px;
+}
+
+.mark-empty {
+  color: #7b837b;
+  line-height: 1.5;
+}
