@@ -1,14 +1,2 @@
 node_modules/
 .npm-cache/
-dist/
-
-# Android build output
-android/.gradle/
-android/build/
-android/app/build/
-android/local.properties
-android/.idea/
-*.keystore
-*.jks
-# Stable debug key so sideloaded builds update in place.
-!android/app/debug.keystore
